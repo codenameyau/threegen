@@ -21,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/codenameyau/threegen/issues"
   },
-  "homepage": "https://github.com/codenameyau/threegen"
+  "homepage": "https://github.com/codenameyau/threegen",
+  "devDependencies": {
+    "gulp": "^3.8.1",
+    "gulp-rev": "^0.4.1",
+    "gulp-uglify": "^0.3.1",
+    "gulp-usemin": "^0.3.5",
+    "rimraf": "^2.2.8"
+  }
 }
