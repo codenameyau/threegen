@@ -1,0 +1,25 @@
+{
+  "name": "threegen",
+  "version": "0.0.0",
+  "description": "Three.js game engine",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/codenameyau/threegen.git"
+  },
+  "keywords": [
+    "threejs",
+    "game",
+    "engine",
+    "graphics"
+  ],
+  "author": "Jorge Yau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codenameyau/threegen/issues"
+  },
+  "homepage": "https://github.com/codenameyau/threegen"
+}
