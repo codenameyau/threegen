@@ -1,7 +1,27 @@
 threegen
 ========
 
-Three.js game engine. Lots of learning to do.
+Three.js game engine.
+
+##ThreeGen Architecture
+
+###Core Engine
+* Keyboard input
+* Mouse input
+* Timing system
+* World model
+* Artificial intelligence
+* Audio system
+
+###Rendering Engine
+* Extended on Three.js
+* Animation system
+* Camera perspective
+* Lighting
+
+###Physics Engine
+* Collision detection
+* Player movement
 
 
 ##Learning Resources
