@@ -1,10 +1,9 @@
-/*-------JSHint Directives-------*/
-/* exported THREEGEN             */
-/*-------------------------------*/
+/*************************************
+ * ThreeGen - Settings Configuration *
+ *************************************/
 
-/*******************
- * Manage Settings *
- *******************/
+
+/* exported THREEGEN */
 var THREEGEN = {
 
   SETTINGS : {
@@ -36,6 +35,5 @@ var THREEGEN = {
 
 
   },
-
 };
 

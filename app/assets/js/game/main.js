@@ -4,27 +4,8 @@
 'use strict';
 
 
-/********************
- * Global Variables *
- ********************/
-
-// Built-in
-var game;
-
-
 /***********************
  * Game Initialization *
  ***********************/
-
-function initializeGame() {
-
-  game = new THREEGEN.Game();
-  game.start();
-
-}
-
-
-/**********************
- * Render and Animate *
- **********************/
-initializeGame();
+var game = new THREEGEN.Game();
+game.start();

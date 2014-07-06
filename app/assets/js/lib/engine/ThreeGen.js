@@ -9,44 +9,6 @@
  ********************/
 
 
-
-/******************
- * Public Methods *
- ******************/
-THREEGEN.prototype.Game = function() {
-
-  // Initialize: Load settings
-  var settings = THREEGEN.SETTINGS;
-
-  // Initialize: Scene and window resize listener
-  var initScene = function() {
-    this.scene = new THREE.Scene();
-    var canvasWidth  = window.innerWidth;
-    var canvasHeight = window.innerHeight;
-    window.addEventListener('resize', resizeWindow, false);
-  };
-
-  // Initialize: Threejs Camera
-  var initScene = function() {
-    var aspectRatio  = canvasWidth/canvasHeight;
-    camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
-    camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
-    camera.lookAt(scene.position);
-    scene.add(camera);
-  };
-
-  // Threejs Essentials
-  initScene();
-  initCamera();
-  initRenderer();
-
-  // Third party plugins
-  initControls();
-  initStats();
-  initGui();
-};
-
-
 /********************
  * Helper Utitilies *
  ********************/
@@ -76,7 +38,6 @@ function basicCrate(size) {
   return crate;
 }
 
-
 /***********************
  * Rendering Functions *
  ***********************/
@@ -102,10 +63,68 @@ function resizeWindow() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function addToDOM(object) {
+THREEGEN.addToDOM = function(object) {
   var container = document.getElementById('canvas-body');
   container.appendChild(object);
-}
+};
+
+
+/******************
+ * Public Methods *
+ ******************/
+THREEGEN.prototype.Game = function() {
+
+  // Initialize: Load settings
+  var settings = THREEGEN.SETTINGS;
+  var canvasWidth  = window.innerWidth;
+  var canvasHeight = window.innerHeight;
+  var aspectRatio  = canvasWidth/canvasHeight;
+
+  // Initialize: Threejs Scene
+  var initScene = function() {
+    this.scene = new THREE.Scene();
+    window.addEventListener('resize', resizeWindow, false);
+  };
+
+  // Initialize: Threejs Camera
+  var initCamera = function() {
+    this.camera = new THREE.PerspectiveCamera(
+      settings.CAMERA.fov,
+      aspectRatio,
+      settings.CAMERA.near,
+      settings.CAMERA.far
+    );
+    this.camera.position.set(
+      settings.CAMERA.zoomX,
+      settings.CAMERA.zoomY,
+      settings.CAMERA.zoomZ
+    );
+    this.camera.lookAt(this.scene.position);
+    this.scene.add(this.camera);
+  };
+
+  // Initialize: Threejs Renderer
+  var initRenderer = function() {
+    this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
+    this.renderer.setSize(canvasWidth, canvasHeight);
+    this.addToDOM(this.renderer.domElement);
+  };
+
+  // Threejs Essentials
+  initScene();
+  initCamera();
+  initRenderer();
+
+  // Third party plugins
+  initControls();
+  initStats();
+  initGui();
+};
+
+
+
+
+
 
 
 /************************
@@ -113,19 +132,6 @@ function addToDOM(object) {
  ************************/
 
 function initializeScene() {
-
-
-  // Camera and set initial view
-  var aspectRatio  = canvasWidth/canvasHeight;
-  camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
-  camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
-  camera.lookAt(scene.position);
-  scene.add(camera);
-
-  // Add WebGL renderer to DOM
-  renderer = new THREE.WebGLRenderer(RENDERER);
-  renderer.setSize(canvasWidth, canvasHeight);
-  addToDOM(renderer.domElement);
 
 
   /**********************
