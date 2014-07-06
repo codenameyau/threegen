@@ -1,147 +1,189 @@
 /*-------JSHint Directives-------*/
-/* global THREE                  */
+/* global THREE, Stats, dat      */
 /* exported THREEGEN             */
 /*-------------------------------*/
 'use strict';
 
-// Global variables
-var delta;
 
-// Function Constructor
-function GameEngine(scene) {
+/********************
+ * Global Variables *
+ ********************/
 
- /**************************
-  * GameEngine: Properties *
-  **************************/
-  this.entities = {};
-  this.gravity  = -10;
-  this.entityCount = 0;
-  this.scene = scene;
-  this.clock = new THREE.Clock();
+// Game-engine
+var THREEGEN = {};
 
- /*******************************
-  * GameEngine: Private Methods *
-  *******************************/
+// Built-in
+var scene, camera, renderer;
+
+// Plugins
+var controls, stats, gui;
+
+
+/*******************
+ * Manage Settings *
+ *******************/
+THREEGEN.SETTINGS = {
+  CAMERA : {
+    fov : 45,
+    near : 1,
+    far : 1000,
+    zoomX : 0,
+    zoomY : 20,
+    zoomZ : 50,
+  },
+
+  CONTROLS : {
+    enabled : true,
+    userPan : true,
+    userPanSpeed : 1,
+    minDistance : 10.0,
+    maxDistance : 200.0,
+    maxPolarAngle : (Math.PI/180) * 80,
+  },
+
+  RENDERER : {
+    antialias : false,
+  },
+};
+
+
+/********************
+ * Helper Utitilies *
+ ********************/
+
+function basicFloorGrid(lines, steps, gridColor) {
+  lines = lines || 20;
+  steps = steps || 2;
+  gridColor = gridColor || 0xFFFFFF;
+  var floorGrid = new THREE.Geometry();
+  var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
+  for (var i = -lines; i <= lines; i += steps) {
+    floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
+  }
+  return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
+}
+
+function basicCrate(size) {
+  size = size || 5;
+  var textureImage = 'assets/js/game/res/texture/crate-small.jpg';
+  var geometry = new THREE.BoxGeometry( size, size, size );
+  var crateTexture = new THREE.ImageUtils.loadTexture( textureImage );
+  var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
+  var crate = new THREE.Mesh( geometry, crateMaterial );
+  return crate;
+}
+
+
+/***********************
+ * Rendering Functions *
+ ***********************/
+
+function renderScene() {
+  renderer.render( scene, camera );
+}
+
+function updateScene() {
+  stats.update();
+  controls.update();
+}
+
+function animateScene() {
+  window.requestAnimationFrame( animateScene );
+  renderScene();
+  updateScene();
+}
+
+function resizeWindow() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function addToDOM(object) {
+  var container = document.getElementById('canvas-body');
+  container.appendChild(object);
+}
+
+
+/************************
+ * Scene Initialization *
+ ************************/
+
+function initializeScene() {
+
+  /*************************
+   * Initialize Essentials *
+   *************************/
+
+  // Scene and window resize listener
+  scene = new THREE.Scene();
+  var canvasWidth  = window.innerWidth;
+  var canvasHeight = window.innerHeight;
+  window.addEventListener('resize', resizeWindow, false);
+
+  // Camera and set initial view
+  var aspectRatio  = canvasWidth/canvasHeight;
+  camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
+  camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
+  camera.lookAt(scene.position);
+  scene.add(camera);
+
+  // Add WebGL renderer to DOM
+  renderer = new THREE.WebGLRenderer(RENDERER);
+  renderer.setSize(canvasWidth, canvasHeight);
+  addToDOM(renderer.domElement);
+
+
+  /**********************
+   * Initialize Plugins *
+   **********************/
+
+  // OrbitControls using mouse
+  controls = new THREE.OrbitControls(camera);
+  for (var key in CONTROLS) { controls[key] = CONTROLS[key]; }
+  controls.addEventListener('change', renderScene);
+
+  // Stats fps/ms box
+  stats = new Stats();
+  stats.setMode(0); // 0 -> fps, 1 -> ms
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.bottom = '0px';
+  stats.domElement.style.zIndex = 100;
+  addToDOM(stats.domElement);
+
+  // Dat gui (top right controls)
+  gui = new dat.GUI( {height: 5 * 32 - 1} );
+
+
+  /***************
+   * Custom Code *
+   ***************/
+
+  // Example: light sources
+  var lightAmbient = new THREE.AmbientLight(0x666666);
+  var lightSource = new THREE.PointLight(0x888888);
+  lightSource.position.set(0, 50, 80);
+  scene.add(lightAmbient);
+  scene.add(lightSource);
+
+  // Example: basic floor grid
+  scene.add(basicFloorGrid(20, 2));
+
+  // Example: crate with texture
+  var crateSize = 5;
+  crate = basicCrate(crateSize);
+  crate.position.set(0, crateSize/2, 0);
+  scene.add(crate);
 
 }
 
-/******************************
- * GameEngine: Public Methods *
- ******************************/
-GameEngine.prototype.update = function() {
 
-  // Clock delta
-  delta = this.clock.getDelta();
+/**********************
+ * Render and Animate *
+ **********************/
 
-  // Update entity positions
-  for (var item in this.entities) {
-    var entity = this.entities[item];
-
-    // Update positions of movable objects
-    if (entity.collision > 0) {
-
-      // Object is falling -> update position
-      if (entity.mesh.position.y > 0) {
-        entity.mesh.position.x += entity.velocity.x;
-        entity.mesh.position.y += entity.velocity.y;
-        entity.mesh.position.z += entity.velocity.z;
-      }
-
-      // Object hits ground -> delete
-      else {
-        this.destroy(item);
-        continue;
-      }
-
-      // Increase acceleration
-      entity.velocity.x += entity.acceleration.x * delta;
-      entity.velocity.y += entity.acceleration.y * delta;
-      entity.velocity.z += entity.acceleration.z * delta;
-
-    }
-  }
-
-};
-
-
-// Add an object that interacts with world
-GameEngine.prototype.add = function(object, options) {
-  // Check default arguments
-  var setCollision = this.hasProperty(options, 'collision', 1);
-  var maxBounce = this.hasProperty(options, 'maxBounce', 5);
-  var bounciness = this.hasProperty(options, 'bounciness', 0);
-
-  // Default velocity (x,y,z)
-  var vX = this.hasProperty(options, 'vX', 0);
-  var vY = this.hasProperty(options, 'vY', 0);
-  var vZ = this.hasProperty(options, 'vZ', 0);
-
-  // Default acceleration (x,y,z)
-  var aX = this.hasProperty(options, 'aX', 0);
-  var aY = this.hasProperty(options, 'aY', this.gravity);
-  var aZ = this.hasProperty(options, 'aZ', 0);
-
-  // Create entity with incremental ID
-  var objectID = this.entityCount;
-  this.entityCount += 1;
-
-  // Define entity properties
-  this.entities[objectID] = {
-    velocity : new THREE.Vector3(vX, vY, vZ),
-    acceleration : new THREE.Vector3(aX, aY, aZ),
-    collision : setCollision,
-    maxBounce : maxBounce,
-    bounciness : bounciness,
-    bounces : 0,
-    mesh : object,
-  };
-
-  // Returns entity id
-  this.scene.add(object);
-  return objectID;
-};
-
-
-// Include an object which does not interact with world
-GameEngine.prototype.include = function(object) {
-  var options = {
-    collision: 0,
-    bounciness: 0,
-    vX: 0,
-    vY: 0,
-    vZ: 0,
-    aX: 0,
-    aY: 0,
-    aZ: 0
-  };
-  this.add(object, options);
-};
-
-
-// Destroy entity from world
-GameEngine.prototype.destroy = function(objectID) {
-  var entity = this.entities[objectID];
-  this.scene.remove(entity.mesh);
-  delete this.entities[objectID];
-};
-
-/*******************************
- * GameEngine: Private Methods *
- *******************************/
-
-// Checks that object has property, otherwise return default value
-GameEngine.prototype.hasProperty = function(object, property, value) {
-  if (object && typeof object[property] !== 'undefined') {
-    value = object[property];
-  }
-  return value;
-};
-
-
-// Export: THREEGEN
-var THREEGEN = {
-
-  // Export: GameEngine
-  GameEngine : GameEngine,
-
-};
+initializeScene();
+animateScene();

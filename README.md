@@ -1,28 +1,38 @@
 threegen
 ========
 
-Three.js game engine.
+Three.js game engine
+
+[Documentation](https://github.com/codenameyau/threegen/wiki)
 
 ##ThreeGen Architecture
 
 ###Core Engine
+* Timing system
 * Keyboard input
 * Mouse input
-* Timing system
 * World model
-* Artificial intelligence
 * Audio system
+* Resource loader
+* Mathematics
+* Utilities
 
 ###Rendering Engine
-* Extended on Three.js
+* Three.js renderer
 * Animation system
 * Camera perspective
 * Lighting
 
 ###Physics Engine
 * Collision detection
-* Player movement
+* entity movement
 
+##Game
+* Documentation
+* Scene graph
+* Entity (game object)
+* Artificial intelligence
+* Level editor
 
 ##Learning Resources
 
