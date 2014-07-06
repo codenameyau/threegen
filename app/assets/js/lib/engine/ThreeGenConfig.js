@@ -1,12 +1,12 @@
 /*************************************
  * ThreeGen - Settings Configuration *
  *************************************/
+'use strict';
 
+/* exported ThreeGen */
+function ThreeGen() {
 
-/* exported THREEGEN */
-var THREEGEN = {
-
-  SETTINGS : {
+  this.SETTINGS = {
 
     // Settings: Camera
     CAMERA : {
@@ -19,7 +19,7 @@ var THREEGEN = {
     },
 
     // Settings: Mouse Controls
-    MOUSE_CONTROLS : {
+    ORBIT_CONTROLS : {
       enabled : true,
       userPan : true,
       userPanSpeed : 1,
@@ -33,7 +33,5 @@ var THREEGEN = {
       antialias : false,
     },
 
-
-  },
-};
-
+  };
+}

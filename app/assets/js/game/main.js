@@ -1,5 +1,5 @@
 /*-------JSHint Directives-----*/
-/* global THREEGEN             */
+/* global ThreeGen             */
 /*-----------------------------*/
 'use strict';
 
@@ -7,5 +7,5 @@
 /***********************
  * Game Initialization *
  ***********************/
-var game = new THREEGEN.Game();
-game.start();
+var engine = new ThreeGen();
+engine.start();

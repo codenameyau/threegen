@@ -1,5 +1,5 @@
 /*-------JSHint Directive-------------*/
-/* global THREE, THREEGEN, Stats, dat */
+/* global THREE, ThreeGen, Stats, dat */
 /*------------------------------------*/
 'use strict';
 
@@ -9,9 +9,9 @@
  ********************/
 
 
-/********************
- * Helper Utitilies *
- ********************/
+/*********************
+ * Utility Functions *
+ *********************/
 
 function basicFloorGrid(lines, steps, gridColor) {
   lines = lines || 20;
@@ -42,40 +42,39 @@ function basicCrate(size) {
  * Rendering Functions *
  ***********************/
 
-function renderScene() {
-  renderer.render( scene, camera );
-}
+// function renderScene() {
+//   renderer.render( scene, camera );
+// }
 
-function updateScene() {
-  stats.update();
-  controls.update();
-}
+// function updateScene() {
+//   stats.update();
+//   controls.update();
+// }
 
-function animateScene() {
-  window.requestAnimationFrame( animateScene );
-  renderScene();
-  updateScene();
-}
+// function animateScene() {
+//   window.requestAnimationFrame( animateScene );
+//   renderScene();
+//   updateScene();
+// }
 
-function resizeWindow() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+ThreeGen.prototype.resizeWindow = function() {
+  this.camera.aspect = window.innerWidth / window.innerHeight;
+  this.camera.updateProjectionMatrix();
+  this.renderer.setSize(window.innerWidth, window.innerHeight);
+};
 
-THREEGEN.addToDOM = function(object) {
+ThreeGen.prototype.addToDOM = function(object) {
   var container = document.getElementById('canvas-body');
   container.appendChild(object);
 };
 
-
 /******************
  * Public Methods *
  ******************/
-THREEGEN.prototype.Game = function() {
+ThreeGen.prototype.start = function() {
 
   // Initialize: Load settings
-  var settings = THREEGEN.SETTINGS;
+  var settings = ThreeGen.SETTINGS;
   var canvasWidth  = window.innerWidth;
   var canvasHeight = window.innerHeight;
   var aspectRatio  = canvasWidth/canvasHeight;
@@ -83,7 +82,7 @@ THREEGEN.prototype.Game = function() {
   // Initialize: Threejs Scene
   var initScene = function() {
     this.scene = new THREE.Scene();
-    window.addEventListener('resize', resizeWindow, false);
+    window.addEventListener('resize', this.resizeWindow, false);
   };
 
   // Initialize: Threejs Camera
@@ -110,6 +109,28 @@ THREEGEN.prototype.Game = function() {
     this.addToDOM(this.renderer.domElement);
   };
 
+  // Initialize: Orbit Controls
+  var initControls = function() {
+    this.controls = new THREE.OrbitControls(this.camera);
+    for (var k in settings.CONTROLS) {this.controls[k] = settings.CONTROLS[k];}
+    this.controls.addEventListener('change', this.renderScene);
+  };
+
+  // Initialize: FPS/ms moniter
+  var initStats = function() {
+    this.stats = new Stats();
+    this.stats.setMode(0); // 0 -> fps, 1 -> ms
+    this.stats.domElement.style.position = 'absolute';
+    this.stats.domElement.style.bottom = '0px';
+    this.stats.domElement.style.zIndex = 100;
+    this.addToDOM(this.stats.domElement);
+  };
+
+  // Initialize: Dat gui
+  var initGui = function() {
+    this.gui = new dat.GUI( {height: 5 * 32 - 1} );
+  };
+
   // Threejs Essentials
   initScene();
   initCamera();
@@ -131,56 +152,26 @@ THREEGEN.prototype.Game = function() {
  * Scene Initialization *
  ************************/
 
-function initializeScene() {
-
-
-  /**********************
-   * Initialize Plugins *
-   **********************/
-
-  // OrbitControls using mouse
-  controls = new THREE.OrbitControls(camera);
-  for (var key in CONTROLS) { controls[key] = CONTROLS[key]; }
-  controls.addEventListener('change', renderScene);
-
-  // Stats fps/ms box
-  stats = new Stats();
-  stats.setMode(0); // 0 -> fps, 1 -> ms
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.bottom = '0px';
-  stats.domElement.style.zIndex = 100;
-  addToDOM(stats.domElement);
-
-  // Dat gui (top right controls)
-  gui = new dat.GUI( {height: 5 * 32 - 1} );
-
+// function initializeScene() {
 
   /***************
    * Custom Code *
    ***************/
 
   // Example: light sources
-  var lightAmbient = new THREE.AmbientLight(0x666666);
-  var lightSource = new THREE.PointLight(0x888888);
-  lightSource.position.set(0, 50, 80);
-  scene.add(lightAmbient);
-  scene.add(lightSource);
+  // var lightAmbient = new THREE.AmbientLight(0x666666);
+  // var lightSource = new THREE.PointLight(0x888888);
+  // lightSource.position.set(0, 50, 80);
+  // scene.add(lightAmbient);
+  // scene.add(lightSource);
 
-  // Example: basic floor grid
-  scene.add(basicFloorGrid(20, 2));
+  // // Example: basic floor grid
+  // scene.add(basicFloorGrid(20, 2));
 
-  // Example: crate with texture
-  var crateSize = 5;
-  crate = basicCrate(crateSize);
-  crate.position.set(0, crateSize/2, 0);
-  scene.add(crate);
+  // // Example: crate with texture
+  // var crateSize = 5;
+  // crate = basicCrate(crateSize);
+  // crate.position.set(0, crateSize/2, 0);
+  // scene.add(crate);
 
-}
-
-
-/**********************
- * Render and Animate *
- **********************/
-
-initializeScene();
-animateScene();
+// }
