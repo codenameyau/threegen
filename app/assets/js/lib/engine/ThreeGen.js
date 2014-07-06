@@ -1,7 +1,6 @@
-/*-------JSHint Directives-------*/
-/* global THREE, Stats, dat      */
-/* exported THREEGEN             */
-/*-------------------------------*/
+/*-------JSHint Directive-------------*/
+/* global THREE, THREEGEN, Stats, dat */
+/*------------------------------------*/
 'use strict';
 
 
@@ -9,41 +8,42 @@
  * Global Variables *
  ********************/
 
-// Game-engine
-var THREEGEN = {};
-
-// Built-in
-var scene, camera, renderer;
-
-// Plugins
-var controls, stats, gui;
 
 
-/*******************
- * Manage Settings *
- *******************/
-THREEGEN.SETTINGS = {
-  CAMERA : {
-    fov : 45,
-    near : 1,
-    far : 1000,
-    zoomX : 0,
-    zoomY : 20,
-    zoomZ : 50,
-  },
+/******************
+ * Public Methods *
+ ******************/
+THREEGEN.prototype.Game = function() {
 
-  CONTROLS : {
-    enabled : true,
-    userPan : true,
-    userPanSpeed : 1,
-    minDistance : 10.0,
-    maxDistance : 200.0,
-    maxPolarAngle : (Math.PI/180) * 80,
-  },
+  // Initialize: Load settings
+  var settings = THREEGEN.SETTINGS;
 
-  RENDERER : {
-    antialias : false,
-  },
+  // Initialize: Scene and window resize listener
+  var initScene = function() {
+    this.scene = new THREE.Scene();
+    var canvasWidth  = window.innerWidth;
+    var canvasHeight = window.innerHeight;
+    window.addEventListener('resize', resizeWindow, false);
+  };
+
+  // Initialize: Threejs Camera
+  var initScene = function() {
+    var aspectRatio  = canvasWidth/canvasHeight;
+    camera = new THREE.PerspectiveCamera( CAMERA.fov, aspectRatio, CAMERA.near, CAMERA.far );
+    camera.position.set( CAMERA.zoomX, CAMERA.zoomY, CAMERA.zoomZ );
+    camera.lookAt(scene.position);
+    scene.add(camera);
+  };
+
+  // Threejs Essentials
+  initScene();
+  initCamera();
+  initRenderer();
+
+  // Third party plugins
+  initControls();
+  initStats();
+  initGui();
 };
 
 
@@ -114,15 +114,6 @@ function addToDOM(object) {
 
 function initializeScene() {
 
-  /*************************
-   * Initialize Essentials *
-   *************************/
-
-  // Scene and window resize listener
-  scene = new THREE.Scene();
-  var canvasWidth  = window.innerWidth;
-  var canvasHeight = window.innerHeight;
-  window.addEventListener('resize', resizeWindow, false);
 
   // Camera and set initial view
   var aspectRatio  = canvasWidth/canvasHeight;
