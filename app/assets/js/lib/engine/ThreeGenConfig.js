@@ -8,6 +8,11 @@ function ThreeGen() {
 
   this.settings = {
 
+    // Settings: World
+    WORLD : {
+      domElement : 'canvas-body',
+    },
+
     // Settings: Camera
     CAMERA : {
       fov : 45,

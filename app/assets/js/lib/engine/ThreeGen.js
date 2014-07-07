@@ -12,8 +12,7 @@
 /*********************
  * Utility Functions *
  *********************/
-
-function basicFloorGrid(lines, steps, gridColor) {
+ThreeGen.prototype.basicFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
   gridColor = gridColor || 0xFFFFFF;
@@ -26,9 +25,9 @@ function basicFloorGrid(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
   return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
-}
+};
 
-function basicCrate(size) {
+ThreeGen.prototype.basicCrate = function(size) {
   size = size || 5;
   var textureImage = 'assets/js/game/res/texture/crate-small.jpg';
   var geometry = new THREE.BoxGeometry( size, size, size );
@@ -36,26 +35,26 @@ function basicCrate(size) {
   var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
   var crate = new THREE.Mesh( geometry, crateMaterial );
   return crate;
-}
+};
+
 
 /***********************
  * Rendering Functions *
  ***********************/
+ThreeGen.prototype.renderScene = function() {
+  this.renderer.render(this.scene, this.camera);
+};
 
-// function renderScene() {
-//   renderer.render( scene, camera );
-// }
+ThreeGen.prototype.updateScene = function() {
+  this.stats.update();
+  this.controls.update();
+};
 
-// function updateScene() {
-//   stats.update();
-//   controls.update();
-// }
-
-// function animateScene() {
-//   window.requestAnimationFrame( animateScene );
-//   renderScene();
-//   updateScene();
-// }
+ThreeGen.prototype.animateScene = function() {
+  window.requestAnimationFrame(this.animateScene);
+  this.renderScene();
+  this.updateScene();
+};
 
 ThreeGen.prototype.resizeWindow = function() {
   this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -64,9 +63,10 @@ ThreeGen.prototype.resizeWindow = function() {
 };
 
 ThreeGen.prototype.addToDOM = function(object) {
-  var container = document.getElementById('canvas-body');
+  var container = document.getElementById(this.settings.WORLD.domElement);
   container.appendChild(object);
 };
+
 
 /******************
  * Public Methods *
@@ -119,39 +119,18 @@ ThreeGen.prototype.start = function() {
   // Initialize: Dat gui
   this.gui = new dat.GUI( {height: 5 * 32 - 1} );
 
+  // Custom code
+  var lightAmbient = new THREE.AmbientLight(0x666666);
+  this.scene.add(lightAmbient);
 
+  // Example: basic floor grid
+  this.scene.add(this.basicFloorGrid(20, 2));
+
+  // Example: crate with texture
+  var floorCrate = this.basicCrate(5);
+  this.scene.add(floorCrate);
+
+  // Run scene
+  this.renderScene();
+  this.animateScene();
 };
-
-
-
-
-
-
-
-/************************
- * Scene Initialization *
- ************************/
-
-// function initializeScene() {
-
-  /***************
-   * Custom Code *
-   ***************/
-
-  // Example: light sources
-  // var lightAmbient = new THREE.AmbientLight(0x666666);
-  // var lightSource = new THREE.PointLight(0x888888);
-  // lightSource.position.set(0, 50, 80);
-  // scene.add(lightAmbient);
-  // scene.add(lightSource);
-
-  // // Example: basic floor grid
-  // scene.add(basicFloorGrid(20, 2));
-
-  // // Example: crate with texture
-  // var crateSize = 5;
-  // crate = basicCrate(crateSize);
-  // crate.position.set(0, crateSize/2, 0);
-  // scene.add(crate);
-
-// }

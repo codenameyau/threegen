@@ -9,4 +9,3 @@
  ***********************/
 var engine = new ThreeGen();
 engine.start();
-console.log(engine);
