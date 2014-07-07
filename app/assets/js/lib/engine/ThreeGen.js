@@ -7,6 +7,33 @@
 /********************
  * Global Variables *
  ********************/
+var scene, camera, renderer;
+var controls, stats, gui;
+
+
+/***********************
+ * Rendering Functions *
+ ***********************/
+function renderScene() {
+  renderer.render(scene, camera);
+}
+
+function updateScene() {
+  stats.update();
+  controls.update();
+}
+
+function animateScene() {
+  window.requestAnimationFrame(animateScene);
+  renderScene();
+  updateScene();
+}
+
+function resizeWindow() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
 
 
 /*********************
@@ -38,41 +65,15 @@ ThreeGen.prototype.basicCrate = function(size) {
 };
 
 
-/***********************
- * Rendering Functions *
- ***********************/
-ThreeGen.prototype.renderScene = function() {
-  this.renderer.render(this.scene, this.camera);
-};
-
-ThreeGen.prototype.updateScene = function() {
-  this.stats.update();
-  this.controls.update();
-};
-
-ThreeGen.prototype.animateScene = function() {
-  window.requestAnimationFrame(this.animateScene);
-  this.renderScene();
-  this.updateScene();
-};
-
-ThreeGen.prototype.resizeWindow = function() {
-  this.camera.aspect = window.innerWidth / window.innerHeight;
-  this.camera.updateProjectionMatrix();
-  this.renderer.setSize(window.innerWidth, window.innerHeight);
-};
-
+/******************
+ * Public Methods *
+ ******************/
 ThreeGen.prototype.addToDOM = function(object) {
   var container = document.getElementById(this.settings.WORLD.domElement);
   container.appendChild(object);
 };
 
-
-/******************
- * Public Methods *
- ******************/
 ThreeGen.prototype.start = function() {
-
   // Initialize: Load settings
   var settings = this.settings;
   var canvasWidth  = window.innerWidth;
@@ -80,57 +81,57 @@ ThreeGen.prototype.start = function() {
   var aspectRatio  = canvasWidth/canvasHeight;
 
   // Initialize: Threejs Scene
-  this.scene = new THREE.Scene();
-  window.addEventListener('resize', this.resizeWindow, false);
+  scene = new THREE.Scene();
+  window.addEventListener('resize', resizeWindow, false);
 
   // Initialize: Threejs Camera
-  this.camera = new THREE.PerspectiveCamera(
+  camera = new THREE.PerspectiveCamera(
     settings.CAMERA.fov,
     aspectRatio,
     settings.CAMERA.near,
     settings.CAMERA.far
   );
-  this.camera.position.set(
+  camera.position.set(
     settings.CAMERA.zoomX,
     settings.CAMERA.zoomY,
     settings.CAMERA.zoomZ
   );
-  this.camera.lookAt(this.scene.position);
-  this.scene.add(this.camera);
+  camera.lookAt(scene.position);
+  scene.add(camera);
 
   // Initialize: Threejs Renderer
-  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
-  this.renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(this.renderer.domElement);
+  renderer = new THREE.WebGLRenderer(settings.RENDERER);
+  renderer.setSize(canvasWidth, canvasHeight);
+  this.addToDOM(renderer.domElement);
 
   // Initialize: Orbit Controls
-  this.controls = new THREE.OrbitControls(this.camera);
-  for (var k in settings.CONTROLS) {this.controls[k] = settings.CONTROLS[k];}
-  this.controls.addEventListener('change', this.renderScene);
+  controls = new THREE.OrbitControls(camera);
+  for (var k in settings.CONTROLS) {controls[k] = settings.CONTROLS[k];}
+  controls.addEventListener('change', renderScene);
 
   // Initialize: FPS/ms moniter
-  this.stats = new Stats();
-  this.stats.setMode(0); // 0 -> fps, 1 -> ms
-  this.stats.domElement.style.position = 'absolute';
-  this.stats.domElement.style.bottom = '0px';
-  this.stats.domElement.style.zIndex = 100;
-  this.addToDOM(this.stats.domElement);
+  stats = new Stats();
+  stats.setMode(0); // 0 -> fps, 1 -> ms
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.bottom = '0px';
+  stats.domElement.style.zIndex = 100;
+  this.addToDOM(stats.domElement);
 
   // Initialize: Dat gui
-  this.gui = new dat.GUI( {height: 5 * 32 - 1} );
+  gui = new dat.GUI( {height: 5 * 32 - 1} );
 
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
-  this.scene.add(lightAmbient);
+  scene.add(lightAmbient);
 
   // Example: basic floor grid
-  this.scene.add(this.basicFloorGrid(20, 2));
+  scene.add(this.basicFloorGrid(20, 2));
 
   // Example: crate with texture
   var floorCrate = this.basicCrate(5);
-  this.scene.add(floorCrate);
+  scene.add(floorCrate);
 
   // Run scene
-  this.renderScene();
-  this.animateScene();
+  renderScene();
+  animateScene();
 };
