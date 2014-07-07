@@ -6,7 +6,7 @@
 /* exported ThreeGen */
 function ThreeGen() {
 
-  this.SETTINGS = {
+  this.settings = {
 
     // Settings: Camera
     CAMERA : {

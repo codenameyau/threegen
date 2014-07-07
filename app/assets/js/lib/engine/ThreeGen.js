@@ -74,72 +74,52 @@ ThreeGen.prototype.addToDOM = function(object) {
 ThreeGen.prototype.start = function() {
 
   // Initialize: Load settings
-  var settings = ThreeGen.SETTINGS;
+  var settings = this.settings;
   var canvasWidth  = window.innerWidth;
   var canvasHeight = window.innerHeight;
   var aspectRatio  = canvasWidth/canvasHeight;
 
   // Initialize: Threejs Scene
-  var initScene = function() {
-    this.scene = new THREE.Scene();
-    window.addEventListener('resize', this.resizeWindow, false);
-  };
+  this.scene = new THREE.Scene();
+  window.addEventListener('resize', this.resizeWindow, false);
 
   // Initialize: Threejs Camera
-  var initCamera = function() {
-    this.camera = new THREE.PerspectiveCamera(
-      settings.CAMERA.fov,
-      aspectRatio,
-      settings.CAMERA.near,
-      settings.CAMERA.far
-    );
-    this.camera.position.set(
-      settings.CAMERA.zoomX,
-      settings.CAMERA.zoomY,
-      settings.CAMERA.zoomZ
-    );
-    this.camera.lookAt(this.scene.position);
-    this.scene.add(this.camera);
-  };
+  this.camera = new THREE.PerspectiveCamera(
+    settings.CAMERA.fov,
+    aspectRatio,
+    settings.CAMERA.near,
+    settings.CAMERA.far
+  );
+  this.camera.position.set(
+    settings.CAMERA.zoomX,
+    settings.CAMERA.zoomY,
+    settings.CAMERA.zoomZ
+  );
+  this.camera.lookAt(this.scene.position);
+  this.scene.add(this.camera);
 
   // Initialize: Threejs Renderer
-  var initRenderer = function() {
-    this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
-    this.renderer.setSize(canvasWidth, canvasHeight);
-    this.addToDOM(this.renderer.domElement);
-  };
+  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
+  this.renderer.setSize(canvasWidth, canvasHeight);
+  this.addToDOM(this.renderer.domElement);
 
   // Initialize: Orbit Controls
-  var initControls = function() {
-    this.controls = new THREE.OrbitControls(this.camera);
-    for (var k in settings.CONTROLS) {this.controls[k] = settings.CONTROLS[k];}
-    this.controls.addEventListener('change', this.renderScene);
-  };
+  this.controls = new THREE.OrbitControls(this.camera);
+  for (var k in settings.CONTROLS) {this.controls[k] = settings.CONTROLS[k];}
+  this.controls.addEventListener('change', this.renderScene);
 
   // Initialize: FPS/ms moniter
-  var initStats = function() {
-    this.stats = new Stats();
-    this.stats.setMode(0); // 0 -> fps, 1 -> ms
-    this.stats.domElement.style.position = 'absolute';
-    this.stats.domElement.style.bottom = '0px';
-    this.stats.domElement.style.zIndex = 100;
-    this.addToDOM(this.stats.domElement);
-  };
+  this.stats = new Stats();
+  this.stats.setMode(0); // 0 -> fps, 1 -> ms
+  this.stats.domElement.style.position = 'absolute';
+  this.stats.domElement.style.bottom = '0px';
+  this.stats.domElement.style.zIndex = 100;
+  this.addToDOM(this.stats.domElement);
 
   // Initialize: Dat gui
-  var initGui = function() {
-    this.gui = new dat.GUI( {height: 5 * 32 - 1} );
-  };
+  this.gui = new dat.GUI( {height: 5 * 32 - 1} );
 
-  // Threejs Essentials
-  initScene();
-  initCamera();
-  initRenderer();
 
-  // Third party plugins
-  initControls();
-  initStats();
-  initGui();
 };
 
 
