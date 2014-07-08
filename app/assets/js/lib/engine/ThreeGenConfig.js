@@ -44,7 +44,8 @@ function ThreeGen() {
 
     // Settings: Player
     PLAYER : {
-      movementSpeed : 35,
+      fowardSpeed   : 45,
+      backwardSpeed : 25,
       rotationSpeed : 2.5,
     },
 

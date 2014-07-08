@@ -60,6 +60,7 @@ ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
 };
 
+
 /****************************
  * Physics Engine Functions *
  ****************************/
@@ -102,21 +103,19 @@ ThreeGen.prototype.applyPhysics = function() {
  * Core Engine Functions *
  *************************/
 ThreeGen.prototype.updatePlayer = function() {
-  var moveDistance  = this.settings.PLAYER.movementSpeed * this.delta;
-  var rotationAngle = this.settings.PLAYER.rotationSpeed * this.delta;
 
   // Keyboard event handlers
   if (this.keyboard.pressed('w')) {
-    this.player.translateZ(-moveDistance);
+    this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.delta);
   }
   if (this.keyboard.pressed('s')) {
-    this.player.translateZ(moveDistance);
+    this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.delta);
   }
   if (this.keyboard.pressed('a')) {
-    this.player.rotation.y += rotationAngle;
+    this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.delta;
   }
   if (this.keyboard.pressed('d')) {
-    this.player.rotation.y -= rotationAngle;
+    this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
   }
   if (this.keyboard.pressed('space')) {
     this.player.position.y += 1;
@@ -203,12 +202,23 @@ ThreeGen.prototype.start = function() {
 
 ThreeGen.prototype.addEntity = function(object, options) {
 
-  // Default velocity (x,y,z)
+  // Set length, width, height
+  var length = this.hasProperty(options, 'length', 10);
+  var width  = this.hasProperty(options, 'width',  10);
+  var height = this.hasProperty(options, 'height', 10);
+
+  // Set position (x,y,z)
+  var posX = this.hasProperty(options, 'posX', 0);
+  var posY = this.hasProperty(options, 'posY', height/2);
+  var posZ = this.hasProperty(options, 'posZ', 0);
+  object.position.set(posX, posY, posZ);
+
+  // Set velocity (x,y,z)
   var vX = this.hasProperty(options, 'vX', 0);
   var vY = this.hasProperty(options, 'vY', 0);
   var vZ = this.hasProperty(options, 'vZ', 0);
 
-  // Default acceleration (x,y,z)
+  // Set acceleration (x,y,z)
   var aX = this.hasProperty(options, 'aX', 0);
   var aY = this.hasProperty(options, 'aY', this.gravity);
   var aZ = this.hasProperty(options, 'aZ', 0);
@@ -217,11 +227,10 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
   object.collision = this.hasProperty(options, 'collision', 1);
-
-  // Define entity properties
-  this.entities.push(object);
+  object.dimensions = {length: length, width: width, height: height};
 
   // Add entity to scene
+  this.entities.push(object);
   this.scene.add(object);
 };
 
@@ -230,14 +239,14 @@ ThreeGen.prototype.setPlayer = function(object, options) {
   // Bind player to object
   this.player = new THREE.Object3D();
   this.player.add(object);
-  this.addEntity(this.player);
+  this.addEntity(this.player, options);
 
   // Focus target cam on player
-  var view = this.settings.CAMERA;
+  var cam = this.settings.CAMERA;
   this.camera.addTarget({
     name: 'player',
     targetObject: this.player,
-    cameraPosition: new THREE.Vector3(view.distX, view.distY, view.distZ),
+    cameraPosition: new THREE.Vector3(cam.distX, cam.distY, cam.distZ),
     fixed: false,
     stiffness: 0.1,
     matchRotation: true
