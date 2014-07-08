@@ -39,7 +39,7 @@ function resizeWindow() {
 /*********************
  * Utility Functions *
  *********************/
-ThreeGen.prototype.basicFloorGrid = function(lines, steps, gridColor) {
+ThreeGen.prototype.floorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
   gridColor = gridColor || 0xFFFFFF;
@@ -54,25 +54,16 @@ ThreeGen.prototype.basicFloorGrid = function(lines, steps, gridColor) {
   return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
 };
 
-ThreeGen.prototype.basicCrate = function(size) {
-  size = size || 5;
-  var textureImage = 'assets/js/game/res/texture/crate-small.jpg';
-  var geometry = new THREE.BoxGeometry( size, size, size );
-  var crateTexture = new THREE.ImageUtils.loadTexture( textureImage );
-  var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
-  var crate = new THREE.Mesh( geometry, crateMaterial );
-  return crate;
-};
-
 
 /******************
  * Public Methods *
  ******************/
 ThreeGen.prototype.addToDOM = function(object) {
-  var container = document.getElementById(this.settings.WORLD.domElement);
+  var container = document.getElementById(this.settings.META.domElement);
   container.appendChild(object);
 };
 
+// Starts engine and render scene
 ThreeGen.prototype.start = function() {
   // Initialize: Load settings
   var settings = this.settings;
@@ -106,7 +97,7 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: Orbit Controls
   controls = new THREE.OrbitControls(camera);
-  for (var k in settings.CONTROLS) {controls[k] = settings.CONTROLS[k];}
+  for (var k in settings.ORBIT_CONTROLS) {controls[k] = settings.ORBIT_CONTROLS[k];}
   controls.addEventListener('change', renderScene);
 
   // Initialize: FPS/ms moniter
@@ -125,7 +116,7 @@ ThreeGen.prototype.start = function() {
   scene.add(lightAmbient);
 
   // Example: basic floor grid
-  scene.add(this.basicFloorGrid(20, 2));
+  scene.add(this.floorGrid(20, 2));
 
   // Example: crate with texture
   var floorCrate = this.basicCrate(5);
@@ -134,4 +125,11 @@ ThreeGen.prototype.start = function() {
   // Run scene
   renderScene();
   animateScene();
+};
+
+// Adds player entity which camera follows
+ThreeGen.prototype.setPlayer = function(object) {
+  console.log(stats);
+  console.log(object);
+  scene.add(object);
 };
