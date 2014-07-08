@@ -1,33 +1,31 @@
-/*-------JSHint Directive-------------*/
-/* global THREE, ThreeGen, Stats, dat */
-/*------------------------------------*/
+/*-------JSHint Directive---------*/
+/* global THREE, ThreeGen, Stats  */
+/*--------------------------------*/
 'use strict';
-
 
 
 /***********************
  * Rendering Functions *
  ***********************/
-function renderScene(renderer, scene, camera) {
-  renderer.render(scene, camera);
-}
+ThreeGen.prototype.renderScene = function() {
+  this.renderer.render(this.scene, this.camera);
+};
 
-function updateScene() {
-  stats.update();
-  controls.update();
-}
+ThreeGen.prototype.updateScene = function() {
+  this.stats.update();
+};
 
-function animateScene() {
-  window.requestAnimationFrame(animateScene);
-  renderScene();
-  updateScene();
-}
+ThreeGen.prototype.animateScene = function() {
+  window.requestAnimationFrame(this.animateScene.bind(this));
+  this.updateScene();
+  this.renderScene();
+};
 
-function resizeWindow() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+ThreeGen.prototype.resizeWindow = function() {
+  this.camera.aspect = window.innerWidth / window.innerHeight;
+  this.camera.updateProjectionMatrix();
+  this.renderer.setSize(window.innerWidth, window.innerHeight);
+};
 
 
 /*********************
@@ -67,7 +65,7 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: Threejs Scene
   this.scene = new THREE.Scene();
-  window.addEventListener('resize', resizeWindow, false);
+  window.addEventListener('resize', this.resizeWindow.bind(this), false);
 
   // Initialize: Threejs Camera
   this.camera = new THREE.PerspectiveCamera(
@@ -89,11 +87,6 @@ ThreeGen.prototype.start = function() {
   this.renderer.setSize(canvasWidth, canvasHeight);
   this.addToDOM(this.renderer.domElement);
 
-  // Initialize: Orbit Controls
-  this.controls = new THREE.OrbitControls(this.camera);
-  for (var k in settings.ORBIT_CONTROLS) {this.controls[k] = settings.ORBIT_CONTROLS[k];}
-  this.controls.addEventListener('change', renderScene);
-
   // Initialize: FPS/ms moniter
   this.stats = new Stats();
   this.stats.setMode(0); // 0 -> fps, 1 -> ms
@@ -102,24 +95,19 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
 
-  // Initialize: Dat gui
-  this.gui = new dat.GUI( {height: 5 * 32 - 1} );
-
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
   this.scene.add(lightAmbient);
 
   // Example: basic floor grid
   this.scene.add(this.floorGrid(20, 2));
-  console.log(this);
 
   // Run scene
-  renderScene(this.renderer, this.scene, this.camera);
+  this.renderScene();
+  this.animateScene();
 };
 
 // Adds player entity which camera follows
 ThreeGen.prototype.setPlayer = function(object) {
-  console.log(this);
-  console.log(object);
   this.scene.add(object);
 };
