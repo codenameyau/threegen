@@ -4,17 +4,11 @@
 'use strict';
 
 
-/********************
- * Global Variables *
- ********************/
-var scene, camera, renderer;
-var controls, stats, gui;
-
 
 /***********************
  * Rendering Functions *
  ***********************/
-function renderScene() {
+function renderScene(renderer, scene, camera) {
   renderer.render(scene, camera);
 }
 
@@ -72,64 +66,60 @@ ThreeGen.prototype.start = function() {
   var aspectRatio  = canvasWidth/canvasHeight;
 
   // Initialize: Threejs Scene
-  scene = new THREE.Scene();
+  this.scene = new THREE.Scene();
   window.addEventListener('resize', resizeWindow, false);
 
   // Initialize: Threejs Camera
-  camera = new THREE.PerspectiveCamera(
+  this.camera = new THREE.PerspectiveCamera(
     settings.CAMERA.fov,
     aspectRatio,
     settings.CAMERA.near,
     settings.CAMERA.far
   );
-  camera.position.set(
+  this.camera.position.set(
     settings.CAMERA.zoomX,
     settings.CAMERA.zoomY,
     settings.CAMERA.zoomZ
   );
-  camera.lookAt(scene.position);
-  scene.add(camera);
+  this.camera.lookAt(this.scene.position);
+  this.scene.add(this.camera);
 
   // Initialize: Threejs Renderer
-  renderer = new THREE.WebGLRenderer(settings.RENDERER);
-  renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(renderer.domElement);
+  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
+  this.renderer.setSize(canvasWidth, canvasHeight);
+  this.addToDOM(this.renderer.domElement);
 
   // Initialize: Orbit Controls
-  controls = new THREE.OrbitControls(camera);
-  for (var k in settings.ORBIT_CONTROLS) {controls[k] = settings.ORBIT_CONTROLS[k];}
-  controls.addEventListener('change', renderScene);
+  this.controls = new THREE.OrbitControls(this.camera);
+  for (var k in settings.ORBIT_CONTROLS) {this.controls[k] = settings.ORBIT_CONTROLS[k];}
+  this.controls.addEventListener('change', renderScene);
 
   // Initialize: FPS/ms moniter
-  stats = new Stats();
-  stats.setMode(0); // 0 -> fps, 1 -> ms
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.bottom = '0px';
-  stats.domElement.style.zIndex = 100;
-  this.addToDOM(stats.domElement);
+  this.stats = new Stats();
+  this.stats.setMode(0); // 0 -> fps, 1 -> ms
+  this.stats.domElement.style.position = 'absolute';
+  this.stats.domElement.style.bottom = '0px';
+  this.stats.domElement.style.zIndex = 100;
+  this.addToDOM(this.stats.domElement);
 
   // Initialize: Dat gui
-  gui = new dat.GUI( {height: 5 * 32 - 1} );
+  this.gui = new dat.GUI( {height: 5 * 32 - 1} );
 
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
-  scene.add(lightAmbient);
+  this.scene.add(lightAmbient);
 
   // Example: basic floor grid
-  scene.add(this.floorGrid(20, 2));
-
-  // Example: crate with texture
-  var floorCrate = this.basicCrate(5);
-  scene.add(floorCrate);
+  this.scene.add(this.floorGrid(20, 2));
+  console.log(this);
 
   // Run scene
-  renderScene();
-  animateScene();
+  renderScene(this.renderer, this.scene, this.camera);
 };
 
 // Adds player entity which camera follows
 ThreeGen.prototype.setPlayer = function(object) {
-  console.log(stats);
+  console.log(this);
   console.log(object);
-  scene.add(object);
+  this.scene.add(object);
 };
