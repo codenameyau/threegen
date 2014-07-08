@@ -1,5 +1,6 @@
 /*-------JSHint Directive---------*/
-/* global THREE, ThreeGen, Stats  */
+/* global THREE, THREEx           */
+/* global ThreeGen, Stats         */
 /*--------------------------------*/
 'use strict';
 
@@ -13,6 +14,22 @@ ThreeGen.prototype.renderScene = function() {
 
 ThreeGen.prototype.updateScene = function() {
   this.stats.update();
+  // var delta = this.clock.getDelta();
+
+  // Check for keyboard
+  if (this.keyboard.pressed('w')) {
+    console.log('up');
+  }
+  if (this.keyboard.pressed('a')) {
+    console.log('left');
+  }
+  if (this.keyboard.pressed('s')) {
+    console.log('down');
+  }
+  if (this.keyboard.pressed('d')) {
+    console.log('right');
+  }
+
 };
 
 ThreeGen.prototype.animateScene = function() {
@@ -31,6 +48,10 @@ ThreeGen.prototype.resizeWindow = function() {
 /*********************
  * Utility Functions *
  *********************/
+ThreeGen.prototype.degToRad = function(degrees) {
+  return Math.PI/180 * degrees;
+};
+
 ThreeGen.prototype.floorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
@@ -82,10 +103,16 @@ ThreeGen.prototype.start = function() {
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
 
+  // Initialize: Clock
+  this.clock = new THREE.Clock();
+
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
   this.renderer.setSize(canvasWidth, canvasHeight);
   this.addToDOM(this.renderer.domElement);
+
+  // Initialize: Keyboard controls
+  this.keyboard = new THREEx.KeyboardState();
 
   // Initialize: FPS/ms moniter
   this.stats = new Stats();
@@ -98,8 +125,6 @@ ThreeGen.prototype.start = function() {
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
   this.scene.add(lightAmbient);
-
-  // Example: basic floor grid
   this.scene.add(this.floorGrid(20, 2));
 
   // Run scene
@@ -110,4 +135,5 @@ ThreeGen.prototype.start = function() {
 // Adds player entity which camera follows
 ThreeGen.prototype.setPlayer = function(object) {
   this.scene.add(object);
+  this.player = object;
 };
