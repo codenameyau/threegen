@@ -16,6 +16,7 @@ ThreeGen.prototype.updateScene = function() {
   this.stats.update();
   this.delta = this.clock.getDelta();
   this.updatePlayer();
+  this.applyPhysics();
   this.camera.update();
 };
 
@@ -39,6 +40,11 @@ ThreeGen.prototype.degToRad = function(degrees) {
   return Math.PI/180 * degrees;
 };
 
+ThreeGen.prototype.hasProperty = function(object, property, value) {
+  if (object && typeof object[property] !== 'undefined') {value = object[property];}
+  return value;
+};
+
 ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
@@ -54,6 +60,43 @@ ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
 };
 
+/****************************
+ * Physics Engine Functions *
+ ****************************/
+ThreeGen.prototype.enablePhysics = function() {
+  this.gravity = this.settings.PHYSICS.gravity;
+};
+
+ThreeGen.prototype.applyPhysics = function() {
+  // Apply gravity
+  // for (var item in this.entities) {
+  //   var entity = this.entities[item];
+
+  //   // Update positions of movable objects
+  //   if (entity.collision > 0) {
+
+  //     // Object is falling -> update position
+  //     if (entity.mesh.position.y > 0) {
+  //       entity.mesh.position.x += entity.velocity.x;
+  //       entity.mesh.position.y += entity.velocity.y;
+  //       entity.mesh.position.z += entity.velocity.z;
+  //     }
+
+  //     // Object hits ground -> delete
+  //     else {
+  //       this.destroy(item);
+  //       continue;
+  //     }
+
+  //     // Increase acceleration
+  //     entity.velocity.x += entity.acceleration.x * this.delta;
+  //     entity.velocity.y += entity.acceleration.y * this.delta;
+  //     entity.velocity.z += entity.acceleration.z * this.delta;
+
+  //   }
+  // }
+
+};
 
 /*************************
  * Core Engine Functions *
@@ -74,6 +117,9 @@ ThreeGen.prototype.updatePlayer = function() {
   }
   if (this.keyboard.pressed('d')) {
     this.player.rotation.y -= rotationAngle;
+  }
+  if (this.keyboard.pressed('space')) {
+    this.player.position.y += 1;
   }
 
   // Update children of player
@@ -114,6 +160,11 @@ ThreeGen.prototype.start = function() {
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
 
+  // Check to enable floor grid
+  if (this.settings.META.floorGrid) {
+    this.enableFloorGrid(80, 5, 0x22AA22);
+  }
+
   // Initialize: Clock
   this.clock = new THREE.Clock();
   this.delta = this.clock.getDelta();
@@ -134,6 +185,12 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
 
+  // Setup entities
+  this.entities = [];
+
+  // Setup physics
+  this.enablePhysics();
+
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
   this.scene.add(lightAmbient);
@@ -143,12 +200,37 @@ ThreeGen.prototype.start = function() {
   this.animateScene();
 };
 
-ThreeGen.prototype.setPlayer = function(object, s) {
+
+ThreeGen.prototype.addEntity = function(object, options) {
+
+  // Default velocity (x,y,z)
+  var vX = this.hasProperty(options, 'vX', 0);
+  var vY = this.hasProperty(options, 'vY', 0);
+  var vZ = this.hasProperty(options, 'vZ', 0);
+
+  // Default acceleration (x,y,z)
+  var aX = this.hasProperty(options, 'aX', 0);
+  var aY = this.hasProperty(options, 'aY', this.gravity);
+  var aZ = this.hasProperty(options, 'aZ', 0);
+
+  // Extend Threejs object
+  object.velocity = new THREE.Vector3(vX, vY, vZ);
+  object.acceleration = new THREE.Vector3(aX, aY, aZ);
+  object.collision = this.hasProperty(options, 'collision', 1);
+
+  // Define entity properties
+  this.entities.push(object);
+
+  // Add entity to scene
+  this.scene.add(object);
+};
+
+
+ThreeGen.prototype.setPlayer = function(object, options) {
   // Bind player to object
   this.player = new THREE.Object3D();
   this.player.add(object);
-  this.player.position.set(s.posX, s.posY+s.height/2, s.posZ);
-  this.scene.add(this.player);
+  this.addEntity(this.player);
 
   // Focus target cam on player
   var view = this.settings.CAMERA;

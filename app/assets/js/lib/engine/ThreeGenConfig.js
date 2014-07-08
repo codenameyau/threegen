@@ -8,10 +8,15 @@ function ThreeGen() {
 
   this.settings = {
 
-    // Settings: Meta data
     META : {
+      // DOM element name
       domElement : 'canvas-body',
-      statsMode : 1, // 0 -> fps, 1 -> ms
+
+      // floorGrid: 0 -> disable, 1 -> enable
+      floorGrid : 1,
+
+      // Stats: 0 -> fps, 1 -> ms
+      statsMode : 1,
     },
 
     // Settings: Files paths
@@ -41,6 +46,11 @@ function ThreeGen() {
     PLAYER : {
       movementSpeed : 35,
       rotationSpeed : 2.5,
+    },
+
+    // Setting: Physics
+    PHYSICS : {
+      gravity : -10,
     },
 
   };

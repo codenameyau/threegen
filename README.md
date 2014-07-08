@@ -8,19 +8,18 @@ Three.js game engine
 ##ThreeGen Architecture
 
 ###Core Engine
-* Timing system
-* Keyboard input
+* [+] Timing system
+* [+] Keyboard input
 * Mouse input
 * World model
 * Audio system
 * Resource loader
-* Mathematics
 * Utilities
 
 ###Rendering Engine
-* Three.js renderer
+* [+] Three.js renderer
+* [+] TargetCamera perspective
 * Animation system
-* Camera perspective
 * Lighting
 
 ###Physics Engine
@@ -33,6 +32,7 @@ Three.js game engine
 * Entity (game object)
 * Artificial intelligence
 * Level editor
+
 
 ##Learning Resources
 
