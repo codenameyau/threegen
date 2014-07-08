@@ -39,7 +39,7 @@ ThreeGen.prototype.degToRad = function(degrees) {
   return Math.PI/180 * degrees;
 };
 
-ThreeGen.prototype.floorGrid = function(lines, steps, gridColor) {
+ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;
   gridColor = gridColor || 0xFFFFFF;
@@ -51,7 +51,7 @@ ThreeGen.prototype.floorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
-  return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
+  this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
 };
 
 
@@ -88,7 +88,6 @@ ThreeGen.prototype.addToDOM = function(object) {
   container.appendChild(object);
 };
 
-// Starts engine and render scene
 ThreeGen.prototype.start = function() {
   // Initialize: Load settings
   var settings = this.settings;
@@ -129,28 +128,27 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: FPS/ms moniter
   this.stats = new Stats();
-  this.stats.setMode(0); // 0 -> fps, 1 -> ms
+  this.stats.setMode(this.settings.META.statsMode); // 0 -> fps, 1 -> ms
   this.stats.domElement.style.position = 'absolute';
-  this.stats.domElement.style.bottom = '0px';
+  this.stats.domElement.style.top = '0px';
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
 
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
   this.scene.add(lightAmbient);
-  this.scene.add(this.floorGrid(60, 4));
 
   // Run scene
   this.renderScene();
   this.animateScene();
 };
 
-// Adds player entity which camera follows
 ThreeGen.prototype.setPlayer = function(object, s) {
   // Bind player to object
-  this.player = object;
+  this.player = new THREE.Object3D();
+  this.player.add(object);
   this.player.position.set(s.posX, s.posY+s.height/2, s.posZ);
-  this.scene.add(object);
+  this.scene.add(this.player);
 
   // Focus target cam on player
   var view = this.settings.CAMERA;

@@ -11,6 +11,7 @@ function ThreeGen() {
     // Settings: Meta data
     META : {
       domElement : 'canvas-body',
+      statsMode : 1, // 0 -> fps, 1 -> ms
     },
 
     // Settings: Files paths
