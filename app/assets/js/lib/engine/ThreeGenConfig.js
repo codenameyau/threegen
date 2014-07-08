@@ -23,14 +23,23 @@ function ThreeGen() {
       fov : 45,
       near : 1,
       far : 3000,
-      zoomX : 0,
-      zoomY : 20,
-      zoomZ : 50,
+      startX : 0,
+      startY : 50,
+      startZ : 50,
+      distX : 0,
+      distY : 10,
+      distZ : 50,
     },
 
     // Settings: Renderer
     RENDERER : {
       antialias : false,
+    },
+
+    // Settings: Player
+    PLAYER : {
+      movementSpeed : 35,
+      rotationSpeed : 2.5,
     },
 
   };
