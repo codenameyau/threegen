@@ -14,21 +14,10 @@ ThreeGen.prototype.renderScene = function() {
 
 ThreeGen.prototype.updateScene = function() {
   this.stats.update();
-  // var delta = this.clock.getDelta();
+  this.delta = this.clock.getDelta();
 
   // Check for keyboard
-  if (this.keyboard.pressed('w')) {
-    console.log('up');
-  }
-  if (this.keyboard.pressed('a')) {
-    console.log('left');
-  }
-  if (this.keyboard.pressed('s')) {
-    console.log('down');
-  }
-  if (this.keyboard.pressed('d')) {
-    console.log('right');
-  }
+  this.updatePlayer();
 
 };
 
@@ -65,6 +54,40 @@ ThreeGen.prototype.floorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
   return new THREE.Line(floorGrid, gridLine, THREE.LinePieces);
+};
+
+
+/*************************
+ * Core Engine Functions *
+ *************************/
+ThreeGen.prototype.updatePlayer = function() {
+  var moveDistance = 20 * this.delta;
+  var rotationAngle = Math.PI / 1.5 * this.delta;
+
+  if (this.keyboard.pressed('w')) {
+    this.player.translateZ(-moveDistance);
+  }
+  if (this.keyboard.pressed('s')) {
+    this.player.translateZ(moveDistance);
+  }
+  if (this.keyboard.pressed('a')) {
+    this.player.rotation.y += rotationAngle;
+  }
+  if (this.keyboard.pressed('d')) {
+    this.player.rotation.y -= rotationAngle;
+  }
+  // Update player chase-cam
+  // var relativeCameraOffset = new THREE.Vector3(
+  //   this.settings.CAMERA.zoomX,
+  //   this.settings.CAMERA.zoomY,
+  //   this.settings.CAMERA.zoomZ);
+  // var cameraOffset = relativeCameraOffset.applyMatrix4(this.player.matrixWorld);
+  // this.camera.position.x = cameraOffset.x;
+  // this.camera.position.y = cameraOffset.y;
+  // this.camera.position.z = cameraOffset.z;
+  // this.camera.lookAt( this.player.position );
+
+  // Update children of player
 };
 
 
@@ -105,6 +128,7 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: Clock
   this.clock = new THREE.Clock();
+  this.delta = this.clock.getDelta();
 
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
@@ -125,7 +149,7 @@ ThreeGen.prototype.start = function() {
   // Custom code
   var lightAmbient = new THREE.AmbientLight(0x666666);
   this.scene.add(lightAmbient);
-  this.scene.add(this.floorGrid(20, 2));
+  this.scene.add(this.floorGrid(60, 4));
 
   // Run scene
   this.renderScene();
@@ -133,7 +157,8 @@ ThreeGen.prototype.start = function() {
 };
 
 // Adds player entity which camera follows
-ThreeGen.prototype.setPlayer = function(object) {
+ThreeGen.prototype.setPlayer = function(object, s) {
   this.scene.add(object);
   this.player = object;
+  this.player.position.set(s.posX, s.posY+s.height/2, s.posZ);
 };
