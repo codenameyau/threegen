@@ -8,6 +8,7 @@ function ThreeGen() {
 
   this.settings = {
 
+    // Settings: Game
     META : {
       // DOM element name
       domElement : 'canvas-body',
@@ -19,10 +20,12 @@ function ThreeGen() {
       statsMode : 1,
     },
 
+
     // Settings: Files paths
     PATHS : {
       textures : 'assets/js/game/res/texture/',
     },
+
 
     // Settings: Camera
     CAMERA : {
@@ -37,10 +40,12 @@ function ThreeGen() {
       distZ : 50,
     },
 
+
     // Settings: Renderer
     RENDERER : {
       antialias : false,
     },
+
 
     // Settings: Player
     PLAYER : {
@@ -48,6 +53,19 @@ function ThreeGen() {
       backwardSpeed : 25,
       rotationSpeed : 2.5,
     },
+
+
+    // Settings: Entities
+    ENTITIES : {
+
+      // Add any type of stats
+      stats : {
+        health : 10,
+        stamina : 10,
+      },
+
+    },
+
 
     // Setting: Physics
     PHYSICS : {

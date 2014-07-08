@@ -40,7 +40,7 @@ ThreeGen.prototype.degToRad = function(degrees) {
   return Math.PI/180 * degrees;
 };
 
-ThreeGen.prototype.hasProperty = function(object, property, value) {
+ThreeGen.prototype.checkProperty = function(object, property, value) {
   if (object && typeof object[property] !== 'undefined') {value = object[property];}
   return value;
 };
@@ -185,7 +185,8 @@ ThreeGen.prototype.start = function() {
   this.addToDOM(this.stats.domElement);
 
   // Setup entities
-  this.entities = [];
+  this.entities = {};
+  this.entityCount = 0;
 
   // Setup physics
   this.enablePhysics();
@@ -203,43 +204,50 @@ ThreeGen.prototype.start = function() {
 ThreeGen.prototype.addEntity = function(object, options) {
 
   // Set length, width, height
-  var length = this.hasProperty(options, 'length', 10);
-  var width  = this.hasProperty(options, 'width',  10);
-  var height = this.hasProperty(options, 'height', 10);
+  var length = this.checkProperty(options, 'length', 10);
+  var width  = this.checkProperty(options, 'width',  10);
+  var height = this.checkProperty(options, 'height', 10);
 
   // Set position (x,y,z)
-  var posX = this.hasProperty(options, 'posX', 0);
-  var posY = this.hasProperty(options, 'posY', height/2);
-  var posZ = this.hasProperty(options, 'posZ', 0);
-  object.position.set(posX, posY, posZ);
+  var posX = this.checkProperty(options, 'posX', 0);
+  var posY = this.checkProperty(options, 'posY', height/2);
+  var posZ = this.checkProperty(options, 'posZ', 0);
 
   // Set velocity (x,y,z)
-  var vX = this.hasProperty(options, 'vX', 0);
-  var vY = this.hasProperty(options, 'vY', 0);
-  var vZ = this.hasProperty(options, 'vZ', 0);
+  var vX = this.checkProperty(options, 'vX', 0);
+  var vY = this.checkProperty(options, 'vY', 0);
+  var vZ = this.checkProperty(options, 'vZ', 0);
 
   // Set acceleration (x,y,z)
-  var aX = this.hasProperty(options, 'aX', 0);
-  var aY = this.hasProperty(options, 'aY', this.gravity);
-  var aZ = this.hasProperty(options, 'aZ', 0);
+  var aX = this.checkProperty(options, 'aX', 0);
+  var aY = this.checkProperty(options, 'aY', this.gravity);
+  var aZ = this.checkProperty(options, 'aZ', 0);
 
-  // Extend Threejs object
+  // Extend Threejs mesh object
+  object.dimensions = {length: length, width: width, height: height};
+  object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
-  object.collision = this.hasProperty(options, 'collision', 1);
-  object.dimensions = {length: length, width: width, height: height};
+  object.collision = this.checkProperty(options, 'collision', 1);
+  object.entityID = this.entityCount;
+  object.stats = this.settings.ENTITIES.stats;
 
   // Add entity to scene
-  this.entities.push(object);
+  this.entities[this.entityCount] = object;
+  this.entityCount += 1;
   this.scene.add(object);
+  return object;
 };
 
 
-ThreeGen.prototype.setPlayer = function(object, options) {
+ThreeGen.prototype.getEntity = function(id) {
+  return this.entities[id];
+};
+
+
+ThreeGen.prototype.setPlayer = function(entityID) {
   // Bind player to object
-  this.player = new THREE.Object3D();
-  this.player.add(object);
-  this.addEntity(this.player, options);
+  this.player = this.getEntity(entityID);
 
   // Focus target cam on player
   var cam = this.settings.CAMERA;
