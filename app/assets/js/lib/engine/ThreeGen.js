@@ -45,22 +45,6 @@ ThreeGen.prototype.checkProperty = function(object, property, value) {
   return value;
 };
 
-ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
-  lines = lines || 20;
-  steps = steps || 2;
-  gridColor = gridColor || 0xFFFFFF;
-  var floorGrid = new THREE.Geometry();
-  var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
-  for (var i = -lines; i <= lines; i += steps) {
-    floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
-    floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
-    floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
-    floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
-  }
-  this.addEntity(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
-    {collision: 0, height: 0});
-};
-
 
 /****************************
  * Physics Engine Functions *
@@ -71,16 +55,24 @@ ThreeGen.prototype.enablePhysics = function() {
 
 ThreeGen.prototype.applyPhysics = function() {
 
-  // Apply gravity
   for (var item in this.entities) {
     var entity = this.entities[item];
-    // Update positions of movable objects
+    // Check for collision
     if (entity.collision > 0) {
-      entity.position.y += entity.velocity.y * this.delta;
-      entity.velocity.y += entity.acceleration.y * this.delta;
+      // Apply gravity
+      if (entity.floating && entity.position.y > -entity.dimensions.base) {
+        if (entity.velocity.y > this.settings.PLAYER.jumpMaxVelocity) {
+          entity.velocity.y = this.settings.PLAYER.jumpMaxVelocity;
+        }
+        entity.position.y += entity.velocity.y * this.delta;
+        entity.velocity.y += entity.acceleration.y * this.delta;
+        if (entity.position.y < 0) {
+          entity.floating = false;
+        }
+      }
+
     }
   }
-
 };
 
 /*************************
@@ -90,17 +82,35 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Keyboard event handlers
   if (this.keyboard.pressed('w')) {
-    this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.delta);
+    if (!this.player.floating) {
+      this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.settings.PLAYER.airVelocity * this.delta);
+    }
+    else {
+      this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.delta);
+    }
   }
+
   if (this.keyboard.pressed('s')) {
-    this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.delta);
+    if (this.player.floating) {
+      this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.settings.PLAYER.airVelocity * this.delta);
+    }
+    else {
+      this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.delta);
+    }
   }
+
   if (this.keyboard.pressed('a')) {
-    this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.delta;
+    if (!this.player.floating) {
+      this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.delta;
+    }
   }
+
   if (this.keyboard.pressed('d')) {
-    this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
+    if (!this.player.floating) {
+      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
+    }
   }
+
   if (this.keyboard.pressed('space') && !this.player.floating) {
     this.player.velocity.y += this.settings.PLAYER.jumpVelocity;
     this.player.floating = true;
@@ -204,7 +214,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var aZ = this.checkProperty(options, 'aZ', 0);
 
   // Extend Threejs mesh object
-  object.dimensions = {length: length, width: width, height: height};
+  object.dimensions = {length: length, width: width, height: height, base: height/2};
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
@@ -247,4 +257,21 @@ ThreeGen.prototype.setPlayer = function(entityID) {
     matchRotation: true
   });
   this.camera.setTarget('player');
+};
+
+
+ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
+  lines = lines || 20;
+  steps = steps || 2;
+  gridColor = gridColor || 0xFFFFFF;
+  var floorGrid = new THREE.Geometry();
+  var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
+  for (var i = -lines; i <= lines; i += steps) {
+    floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
+  }
+  this.addEntity(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
+    {collision: 0, height: 0});
 };

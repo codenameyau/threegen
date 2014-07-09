@@ -46,9 +46,11 @@ function ThreeGen() {
 
     // Settings: Player
     PLAYER : {
-      fowardSpeed   : 45,
+      fowardSpeed   : 35,
       backwardSpeed : 25,
       jumpVelocity : 30,
+      jumpMaxVelocity : 30,
+      airVelocity : 1.0,
       rotationSpeed : 2.5,
     },
 
@@ -67,7 +69,7 @@ function ThreeGen() {
 
     // Setting: Physics
     PHYSICS : {
-      gravity : -10,
+      gravity : -30,
     },
 
   };
