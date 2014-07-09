@@ -10,6 +10,9 @@
 var engine = new ThreeGen();
 engine.start();
 
+// Enable floor grid
+engine.enableFloorGrid(80, 5, 0x22AA22);
+
 // Create crate
 var playerSettings = {height: 5, width: 5, length: 5};
 var textureImage = engine.settings.PATHS.textures + 'crate-small.jpg';
@@ -19,5 +22,5 @@ var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
 var crate = new THREE.Mesh( geometry, crateMaterial );
 
 // Add crate to scene and set it be the player
-var entity = engine.addEntity(crate, playerSettings);
-engine.setPlayer(entity.entityID);
+var entityID = engine.addEntity(crate, playerSettings);
+engine.setPlayer(entityID);

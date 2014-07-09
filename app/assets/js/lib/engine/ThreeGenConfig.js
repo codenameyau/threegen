@@ -13,9 +13,6 @@ function ThreeGen() {
       // DOM element name
       domElement : 'canvas-body',
 
-      // floorGrid: 0 -> disable, 1 -> enable
-      floorGrid : 1,
-
       // Stats: 0 -> fps, 1 -> ms
       statsMode : 1,
     },
@@ -51,6 +48,7 @@ function ThreeGen() {
     PLAYER : {
       fowardSpeed   : 45,
       backwardSpeed : 25,
+      jumpVelocity : 30,
       rotationSpeed : 2.5,
     },
 

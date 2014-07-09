@@ -57,7 +57,8 @@ ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
-  this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces));
+  this.addEntity(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
+    {collision: 0, height: 0});
 };
 
 
@@ -69,33 +70,16 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 ThreeGen.prototype.applyPhysics = function() {
+
   // Apply gravity
-  // for (var item in this.entities) {
-  //   var entity = this.entities[item];
-
-  //   // Update positions of movable objects
-  //   if (entity.collision > 0) {
-
-  //     // Object is falling -> update position
-  //     if (entity.mesh.position.y > 0) {
-  //       entity.mesh.position.x += entity.velocity.x;
-  //       entity.mesh.position.y += entity.velocity.y;
-  //       entity.mesh.position.z += entity.velocity.z;
-  //     }
-
-  //     // Object hits ground -> delete
-  //     else {
-  //       this.destroy(item);
-  //       continue;
-  //     }
-
-  //     // Increase acceleration
-  //     entity.velocity.x += entity.acceleration.x * this.delta;
-  //     entity.velocity.y += entity.acceleration.y * this.delta;
-  //     entity.velocity.z += entity.acceleration.z * this.delta;
-
-  //   }
-  // }
+  for (var item in this.entities) {
+    var entity = this.entities[item];
+    // Update positions of movable objects
+    if (entity.collision > 0) {
+      entity.position.y += entity.velocity.y * this.delta;
+      entity.velocity.y += entity.acceleration.y * this.delta;
+    }
+  }
 
 };
 
@@ -117,8 +101,9 @@ ThreeGen.prototype.updatePlayer = function() {
   if (this.keyboard.pressed('d')) {
     this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
   }
-  if (this.keyboard.pressed('space')) {
-    this.player.position.y += 1;
+  if (this.keyboard.pressed('space') && !this.player.floating) {
+    this.player.velocity.y += this.settings.PLAYER.jumpVelocity;
+    this.player.floating = true;
   }
 
   // Update children of player
@@ -158,11 +143,6 @@ ThreeGen.prototype.start = function() {
   );
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
-
-  // Check to enable floor grid
-  if (this.settings.META.floorGrid) {
-    this.enableFloorGrid(80, 5, 0x22AA22);
-  }
 
   // Initialize: Clock
   this.clock = new THREE.Clock();
@@ -229,6 +209,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
   object.collision = this.checkProperty(options, 'collision', 1);
+  object.floating = this.checkProperty(options, 'floating', false);
   object.entityID = this.entityCount;
   object.stats = this.settings.ENTITIES.stats;
 
@@ -236,12 +217,18 @@ ThreeGen.prototype.addEntity = function(object, options) {
   this.entities[this.entityCount] = object;
   this.entityCount += 1;
   this.scene.add(object);
-  return object;
+  return object.entityID;
 };
 
 
 ThreeGen.prototype.getEntity = function(id) {
   return this.entities[id];
+};
+
+
+ThreeGen.prototype.deleteEntity = function(id) {
+  this.scene.remove(this.entities[id]);
+  delete this.entities[id];
 };
 
 
