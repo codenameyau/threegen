@@ -5,147 +5,17 @@
 'use strict';
 
 
-/***********************
- * Rendering Functions *
- ***********************/
-ThreeGen.prototype.renderScene = function() {
-  this.renderer.render(this.scene, this.camera);
-};
-
-ThreeGen.prototype.updateScene = function() {
-  this.stats.update();
-  this.clock.delta = this.clock.getDelta();
-  this.updatePlayer();
-  this.applyPhysics();
-  this.camera.update();
-};
-
-ThreeGen.prototype.animateScene = function() {
-  window.requestAnimationFrame(this.animateScene.bind(this));
-  this.updateScene();
-  this.renderScene();
-};
-
-ThreeGen.prototype.resizeWindow = function() {
-  this.camera.aspect = window.innerWidth / window.innerHeight;
-  this.camera.updateProjectionMatrix();
-  this.renderer.setSize(window.innerWidth, window.innerHeight);
-};
 
 
-/*********************
- * Utility Functions *
- *********************/
-ThreeGen.prototype.degToRad = function(degrees) {
-  return Math.PI/180 * degrees;
-};
-
-ThreeGen.prototype.checkProperty = function(object, property, value) {
-  if (object && typeof object[property] !== 'undefined') {value = object[property];}
-  return value;
-};
-
-
-/****************************
- * Physics Engine Functions *
- ****************************/
-ThreeGen.prototype.enablePhysics = function() {
-  this.gravity = this.settings.PHYSICS.gravity;
-};
-
-ThreeGen.prototype.applyPhysics = function() {
-
-  for (var item in this.entities) {
-    var entity = this.entities[item];
-    // Check for collision
-    if (entity.collision > 0) {
-      // Apply gravity
-      if (entity.floating && entity.position.y > -entity.dimensions.base) {
-        if (entity.velocity.y > this.settings.PLAYER.jumpMaxVelocity) {
-          entity.velocity.y = this.settings.PLAYER.jumpMaxVelocity;
-        }
-        entity.position.y += entity.velocity.y * this.clock.delta;
-        entity.velocity.y += entity.acceleration.y * this.clock.delta;
-        if (entity.position.y < 0) {
-          entity.floating = false;
-        }
-      }
-
-    }
-  }
-};
 
 /*************************
  * Core Engine Functions *
  *************************/
-ThreeGen.prototype.updatePlayer = function() {
-
-  // Key: w - move front
-  if (this.keyboard.pressed('w')) {
-    if (!this.player.floating) {
-      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
-        this.settings.PLAYER.airVelocity * this.clock.delta);
-    }
-    else {
-      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
-        this.clock.delta);
-    }
-  }
-
-  // Key: s - move back
-  if (this.keyboard.pressed('s')) {
-    if (this.player.floating) {
-      this.player.translateZ(this.settings.PLAYER.backSpeed *
-        this.settings.PLAYER.airVelocity * this.clock.delta);
-    }
-    else {
-      this.player.translateZ(this.settings.PLAYER.backSpeed *
-        this.clock.delta);
-    }
-  }
-
-  // Key: a - rotate left
-  if (this.keyboard.pressed('a')) {
-    if (this.player.floating) {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
-        this.settings.PLAYER.airRotation * this.clock.delta;
-    }
-    else {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
-        this.clock.delta;
-    }
-  }
-
-  // Key: w - rotate right
-  if (this.keyboard.pressed('d')) {
-    if (this.player.floating) {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
-        this.settings.PLAYER.airRotation * this.clock.delta;
-    }
-    else {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
-        this.clock.delta;
-    }
-  }
-
-  // Key: space - jump
-  if (this.keyboard.pressed('space') && !this.player.floating) {
-    this.player.velocity.y += this.settings.PLAYER.jumpVelocity;
-    this.player.floating = true;
-  }
-
-  // Update children of player
-};
 
 
 /******************
  * Public Methods *
  ******************/
-ThreeGen.prototype.addToDOM = function(object) {
-  var container = document.getElementById(this.settings.META.domElement);
-  container.appendChild(object);
-};
-
 ThreeGen.prototype.start = function() {
   // Initialize: Load settings
   var settings = this.settings;
@@ -297,16 +167,20 @@ ThreeGen.prototype.setPlayer = function(entityID) {
 };
 
 
-ThreeGen.prototype.loadModel = function(modelFile) {
-  console.log(this);
+ThreeGen.prototype.addModel = function(modelFile) {
   var filePath = this.settings.PATHS.models + modelFile;
-  console.log(filePath);
-  return this.jsonLoader.load(filePath, function(geometry, materials) {
-    var material = new THREE.MeshFaceMaterial(materials);
-    for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
-    var model = new THREE.Mesh(geometry, material);
-    return model;
-  });
+
+  // var callbackModel = function(geometry, materials, engine) {
+  //   var material = new THREE.MeshFaceMaterial(materials);
+  //   for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
+  //   var model = new THREE.Mesh(geometry, material);
+  //   engine.scene.add(model);
+  // };
+  // var addModel = function(filePath, engine) {
+  //   loader(filePath, callback);
+  // };
+  // addModel(filePath, this);
+
 };
 
 

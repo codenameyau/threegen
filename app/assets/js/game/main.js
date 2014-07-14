@@ -22,7 +22,7 @@ var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
 var crate = new THREE.Mesh( geometry, crateMaterial );
 
 // Android model
-var android = engine.loadModel('android-animation.js');
+var android = engine.addModel('android-animation.js');
 console.log(android);
 
 // Add crate to scene and set it be the player
