@@ -100,13 +100,19 @@ ThreeGen.prototype.updatePlayer = function() {
   }
 
   if (this.keyboard.pressed('a')) {
-    if (!this.player.floating) {
+    if (this.player.floating) {
+      this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
+    }
+    else {
       this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.delta;
     }
   }
 
   if (this.keyboard.pressed('d')) {
-    if (!this.player.floating) {
+    if (this.player.floating) {
+      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
+    }
+    else {
       this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
     }
   }

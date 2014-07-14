@@ -52,6 +52,7 @@ function ThreeGen() {
       jumpMaxVelocity : 30,
       airVelocity : 1.0,
       rotationSpeed : 2.5,
+      airRotation : 0.1,
     },
 
 
@@ -69,7 +70,7 @@ function ThreeGen() {
 
     // Setting: Physics
     PHYSICS : {
-      gravity : -30,
+      gravity : -40,
     },
 
   };
