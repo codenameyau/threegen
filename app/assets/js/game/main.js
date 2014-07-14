@@ -10,21 +10,23 @@
 var engine = new ThreeGen();
 engine.start();
 
+// Add Lighting
+var lightAmbient = new THREE.AmbientLight(0x9a9a9a);
+engine.scene.add(lightAmbient);
+
 // Enable floor grid
 engine.enableFloorGrid(120, 5, 0x22AA22);
+var settings = {height: 12, width: 5, length: 5, animated: true};
+
+// Android model
+engine.addModel('android-animation.js');
 
 // Create crate
-var playerSettings = {height: 12, width: 5, length: 5, animated: true};
 var textureImage = engine.settings.PATHS.textures + 'crate-small.jpg';
-var geometry = new THREE.BoxGeometry( playerSettings.width, playerSettings.height, playerSettings.length );
+var geometry = new THREE.BoxGeometry(5, 5, 5);
 var crateTexture = new THREE.ImageUtils.loadTexture( textureImage );
 var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
 var crate = new THREE.Mesh( geometry, crateMaterial );
-
-// Android model
-var android = engine.addModel('android-animation.js');
-console.log(android);
-
-// Add crate to scene and set it be the player
-var entityID = engine.addEntity(crate, playerSettings);
+var entityID = engine.addEntity(crate, settings);
 engine.setPlayer(entityID);
+

@@ -11,7 +11,7 @@ ThreeGen.prototype.setPlayer = function(entityID) {
   // Bind player to object
   this.player = this.getEntity(entityID);
 
-  // Focus target cam on player
+  // Set target cam on player
   var cam = this.settings.CAMERA;
   this.camera.addTarget({
     name: 'player',

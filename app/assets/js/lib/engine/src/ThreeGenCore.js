@@ -64,30 +64,6 @@ ThreeGen.prototype.start = function() {
   // Setup physics
   this.enablePhysics();
 
-  // Custom code
-  var lightAmbient = new THREE.AmbientLight(0x666666);
-  this.scene.add(lightAmbient);
-
   // Run scene
-  this.renderScene();
   this.animateScene();
-};
-
-
-
-
-ThreeGen.prototype.addModel = function(modelFile) {
-  var filePath = this.settings.PATHS.models + modelFile;
-
-  // var callbackModel = function(geometry, materials, engine) {
-  //   var material = new THREE.MeshFaceMaterial(materials);
-  //   for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
-  //   var model = new THREE.Mesh(geometry, material);
-  //   engine.scene.add(model);
-  // };
-  // var addModel = function(filePath, engine) {
-  //   loader(filePath, callback);
-  // };
-  // addModel(filePath, this);
-
 };

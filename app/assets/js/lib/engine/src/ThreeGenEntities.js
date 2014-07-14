@@ -24,7 +24,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
   // Set position (x,y,z)
   var posX = this.checkProperty(options, 'posX', 0);
-  var posY = this.checkProperty(options, 'posY', height/2);
+  var posY = this.checkProperty(options, 'posY', 0);
   var posZ = this.checkProperty(options, 'posZ', 0);
 
   // Set velocity (x,y,z)
@@ -70,3 +70,16 @@ ThreeGen.prototype.addEntity = function(object, options) {
   return object.entityID;
 };
 
+
+ThreeGen.prototype.addModel = function(modelFile) {
+  var filePath   = this.settings.PATHS.models + modelFile;
+  var engineRef  = this;
+
+  this.jsonLoader.load(filePath, function(geometry, materials) {
+    var material = new THREE.MeshFaceMaterial(materials);
+    for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
+    var model = new THREE.Mesh(geometry, material);
+    engineRef.addEntity(model);
+  });
+
+};
