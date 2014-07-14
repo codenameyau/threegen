@@ -27,7 +27,7 @@ ThreeGen.prototype.setPlayer = function(entityID) {
 
 ThreeGen.prototype.updatePlayer = function() {
 
-  // Key: w - move front
+  // Key: 'w' - move front
   if (this.keyboard.pressed('w')) {
     if (!this.player.falling) {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed *
@@ -39,7 +39,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
-  // Key: s - move back
+  // Key: 's' - move back
   if (this.keyboard.pressed('s')) {
     if (this.player.falling) {
       this.player.translateZ(this.settings.PLAYER.backSpeed *
@@ -51,7 +51,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
-  // Key: a - rotate left
+  // Key: 'a' - rotate left
   if (this.keyboard.pressed('a')) {
     if (this.player.falling) {
       this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
@@ -63,7 +63,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
-  // Key: w - rotate right
+  // Key: 'w' - rotate right
   if (this.keyboard.pressed('d')) {
     if (this.player.falling) {
       this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
@@ -75,7 +75,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
-  // Key: space - jump
+  // Key: 'space' - jump
   if (this.keyboard.pressed('space') && !this.player.falling) {
     this.player.velocity.y += this.settings.PLAYER.jumpVelocity;
     this.player.falling = true;

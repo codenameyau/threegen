@@ -48,7 +48,7 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: FPS/ms moniter
   this.stats = new Stats();
-  this.stats.setMode(this.settings.META.statsMode); // 0 -> fps, 1 -> ms
+  this.stats.setMode(this.settings.META.statsMode);
   this.stats.domElement.style.position = 'absolute';
   this.stats.domElement.style.top = '0px';
   this.stats.domElement.style.zIndex = 100;

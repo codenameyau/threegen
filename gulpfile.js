@@ -1,11 +1,14 @@
 /*!
- * threejs-boilerplate - gulpfile.js
+ * ThreeGen - gulpfile.js
+ * codenameyau.github.io
+ * MIT License (c) 2014
+ *
  * Description: Generates dist folder for deployment
- * Feel free to use gulp-imagemin to compress images
  *
  * Run: gulp
  */
 'use strict';
+
 
 // Import node packages
 var gulp = require('gulp');
@@ -14,10 +17,9 @@ var uglify = require('gulp-uglify');
 var usemin = require('gulp-usemin');
 var rev = require('gulp-rev');
 
-
 // File paths
 var PATHS = {
-  images : 'app/assets/img/**',
+  resources : 'app/assets/js/game/res/**',
   index : 'app/index.html',
   favicon : 'app/favicon.ico',
 };
@@ -38,13 +40,13 @@ gulp.task('usemin', ['clean'], function() {
     .pipe(gulp.dest('dist/'));
 });
 
-// Copy static images (todo: gulp-imagemin)
-gulp.task('images', ['clean'], function() {
+// Copy game resources (gulp-imagemin optional)
+gulp.task('resources', ['clean'], function() {
   gulp.src(PATHS.favicon)
     .pipe(gulp.dest('dist/'));
-  gulp.src(PATHS.images)
-    .pipe(gulp.dest('dist/assets/img'));
+  gulp.src(PATHS.resources)
+    .pipe(gulp.dest('dist/assets/js/game/res'));
 });
 
 // Generate dist folder for production
-gulp.task('default', ['clean', 'usemin', 'images']);
+gulp.task('default', ['clean', 'usemin', 'resources']);
