@@ -49,11 +49,10 @@ function ThreeGen() {
     PLAYER : {
       frontSpeed : 35,
       backSpeed : 25,
-      jumpVelocity : 30,
-      jumpMaxVelocity : 30,
-      airVelocity : 1.0,
-      rotationSpeed : 2.5,
-      airRotation : 0.1,
+      jumpMultiplier : 3.0,
+      airMultiplier : 1.0,
+      rotationMultiplier : 2.5,
+      airRotationMultiplier : 0.2,
     },
 
 
@@ -71,7 +70,7 @@ function ThreeGen() {
 
     // Setting: Physics
     PHYSICS : {
-      gravity : -40,
+      gravity : -60,
     },
 
 

@@ -16,10 +16,10 @@ engine.scene.add(lightAmbient);
 
 // Enable floor grid
 engine.enableFloorGrid(120, 5, 0x22AA22);
-var settings = {height: 12, width: 5, length: 5, animated: true};
+var settings = {animated: true};
 
 // Android model
-engine.addModel('android-animation.js');
+// engine.addModel('android-animation.js');
 
 // Create crate
 var geometry = new THREE.BoxGeometry(5, 5, 5);

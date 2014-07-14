@@ -37,5 +37,5 @@ ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
     floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
   }
   this.addEntity(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
-    {collision: 0, height: 0});
+    {collision: 0, posY: 0});
 };

@@ -15,6 +15,7 @@ Three.js game engine
 * Audio system
 * Resource loader
 * Utilities
+* Loading
 
 ###Rendering Engine
 * [+] Three.js renderer

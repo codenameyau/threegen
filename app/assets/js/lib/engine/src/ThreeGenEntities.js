@@ -17,14 +17,21 @@ ThreeGen.prototype.deleteEntity = function(id) {
 
 ThreeGen.prototype.addEntity = function(object, options) {
 
-  // Set length, width, height
-  var length = this.checkProperty(options, 'length', 10);
-  var width  = this.checkProperty(options, 'width',  10);
-  var height = this.checkProperty(options, 'height', 10);
-
+  // Compute geometry bounds and dimensions
+  object.geometry.computeBoundingSphere();
+  object.geometry.computeBoundingBox();
+  var boundMin = object.geometry.boundingBox.min;
+  var boundMax = object.geometry.boundingBox.max;
+  object.dimensions = {
+    height : boundMax.y - boundMin.y,
+    width : boundMax.x - boundMin.x,
+    length : boundMax.z - boundMin.z,
+    base : (boundMax.y - boundMin.y)/2,
+  };
+  console.log(object.dimensions);
   // Set position (x,y,z)
   var posX = this.checkProperty(options, 'posX', 0);
-  var posY = this.checkProperty(options, 'posY', 0);
+  var posY = this.checkProperty(options, 'posY', object.dimensions.base);
   var posZ = this.checkProperty(options, 'posZ', 0);
 
   // Set velocity (x,y,z)
@@ -45,7 +52,6 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.collision = this.checkProperty(options, 'collision', 1);
   object.falling = this.checkProperty(options, 'falling', true);
   object.animated = this.checkProperty(options, 'animated', false);
-  object.dimensions = {length: length, width: width, height: height, base: height/2};
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
@@ -72,8 +78,8 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
 
 ThreeGen.prototype.addModel = function(modelFile) {
-  var filePath   = this.settings.PATHS.models + modelFile;
-  var engineRef  = this;
+  var filePath  = this.settings.PATHS.models + modelFile;
+  var engineRef = this;
 
   this.jsonLoader.load(filePath, function(geometry, materials) {
     var material = new THREE.MeshFaceMaterial(materials);

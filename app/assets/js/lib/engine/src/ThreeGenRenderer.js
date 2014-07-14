@@ -13,8 +13,8 @@ ThreeGen.prototype.renderScene = function() {
 
 
 ThreeGen.prototype.updateScene = function() {
-  this.stats.update();
   this.clock.delta = this.clock.getDelta();
+  this.stats.update();
   this.updatePlayer();
   this.applyPhysics();
   this.camera.update();
