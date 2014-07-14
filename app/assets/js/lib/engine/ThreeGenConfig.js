@@ -21,6 +21,7 @@ function ThreeGen() {
     // Settings: Files paths
     PATHS : {
       textures : 'assets/js/game/res/texture/',
+      models : 'assets/js/game/res/models/',
     },
 
 
@@ -46,8 +47,8 @@ function ThreeGen() {
 
     // Settings: Player
     PLAYER : {
-      fowardSpeed   : 35,
-      backwardSpeed : 25,
+      frontSpeed : 35,
+      backSpeed : 25,
       jumpVelocity : 30,
       jumpMaxVelocity : 30,
       airVelocity : 1.0,

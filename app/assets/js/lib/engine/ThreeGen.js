@@ -14,7 +14,7 @@ ThreeGen.prototype.renderScene = function() {
 
 ThreeGen.prototype.updateScene = function() {
   this.stats.update();
-  this.delta = this.clock.getDelta();
+  this.clock.delta = this.clock.getDelta();
   this.updatePlayer();
   this.applyPhysics();
   this.camera.update();
@@ -64,8 +64,8 @@ ThreeGen.prototype.applyPhysics = function() {
         if (entity.velocity.y > this.settings.PLAYER.jumpMaxVelocity) {
           entity.velocity.y = this.settings.PLAYER.jumpMaxVelocity;
         }
-        entity.position.y += entity.velocity.y * this.delta;
-        entity.velocity.y += entity.acceleration.y * this.delta;
+        entity.position.y += entity.velocity.y * this.clock.delta;
+        entity.velocity.y += entity.acceleration.y * this.clock.delta;
         if (entity.position.y < 0) {
           entity.floating = false;
         }
@@ -83,40 +83,48 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: w - move front
   if (this.keyboard.pressed('w')) {
     if (!this.player.floating) {
-      this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.settings.PLAYER.airVelocity * this.delta);
+      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
+        this.settings.PLAYER.airVelocity * this.clock.delta);
     }
     else {
-      this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.delta);
+      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
+        this.clock.delta);
     }
   }
 
   // Key: s - move back
   if (this.keyboard.pressed('s')) {
     if (this.player.floating) {
-      this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.settings.PLAYER.airVelocity * this.delta);
+      this.player.translateZ(this.settings.PLAYER.backSpeed *
+        this.settings.PLAYER.airVelocity * this.clock.delta);
     }
     else {
-      this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.delta);
+      this.player.translateZ(this.settings.PLAYER.backSpeed *
+        this.clock.delta);
     }
   }
 
   // Key: a - rotate left
   if (this.keyboard.pressed('a')) {
     if (this.player.floating) {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
+      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
+        this.settings.PLAYER.airRotation * this.clock.delta;
     }
     else {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.delta;
+      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
+        this.clock.delta;
     }
   }
 
   // Key: w - rotate right
   if (this.keyboard.pressed('d')) {
     if (this.player.floating) {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
+      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
+        this.settings.PLAYER.airRotation * this.clock.delta;
     }
     else {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.delta;
+      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
+        this.clock.delta;
     }
   }
 
@@ -166,7 +174,7 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: Clock
   this.clock = new THREE.Clock();
-  this.delta = this.clock.getDelta();
+  this.clock.delta = this.clock.getDelta();
 
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
@@ -183,6 +191,9 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.top = '0px';
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
+
+  // Initialize: JSON loader
+  this.jsonLoader = new THREE.JSONLoader();
 
   // Setup entities
   this.entities = {};
@@ -283,6 +294,19 @@ ThreeGen.prototype.setPlayer = function(entityID) {
     matchRotation: true
   });
   this.camera.setTarget('player');
+};
+
+
+ThreeGen.prototype.loadModel = function(modelFile) {
+  console.log(this);
+  var filePath = this.settings.PATHS.models + modelFile;
+  console.log(filePath);
+  return this.jsonLoader.load(filePath, function(geometry, materials) {
+    var material = new THREE.MeshFaceMaterial(materials);
+    for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
+    var model = new THREE.Mesh(geometry, material);
+    return model;
+  });
 };
 
 
