@@ -1,147 +1,93 @@
-/*-------JSHint Directives-------*/
-/* global THREE                  */
-/* exported THREEGEN             */
-/*-------------------------------*/
+/*-------JSHint Directive---------*/
+/* global THREE, THREEx           */
+/* global ThreeGen, Stats         */
+/*--------------------------------*/
 'use strict';
 
-// Global variables
-var delta;
 
-// Function Constructor
-function GameEngine(scene) {
+/******************
+ * Public Methods *
+ ******************/
+ThreeGen.prototype.start = function() {
+  // Initialize: Load settings
+  var settings = this.settings;
+  var canvasWidth  = window.innerWidth;
+  var canvasHeight = window.innerHeight;
+  var aspectRatio  = canvasWidth/canvasHeight;
 
- /**************************
-  * GameEngine: Properties *
-  **************************/
-  this.entities = {};
-  this.gravity  = -10;
-  this.entityCount = 0;
-  this.scene = scene;
+  // Initialize: Threejs Scene
+  this.scene = new THREE.Scene();
+  window.addEventListener('resize', this.resizeWindow.bind(this), false);
+
+  // Initialize: Threejs Camera
+  this.camera = new THREE.TargetCamera(
+    settings.CAMERA.fov,
+    aspectRatio,
+    settings.CAMERA.near,
+    settings.CAMERA.far
+  );
+  this.camera.position.set(
+    settings.CAMERA.startX,
+    settings.CAMERA.startY,
+    settings.CAMERA.startZ
+  );
+  this.camera.lookAt(this.scene.position);
+  this.scene.add(this.camera);
+
+  // Initialize: Clock
   this.clock = new THREE.Clock();
+  this.clock.delta = this.clock.getDelta();
 
- /*******************************
-  * GameEngine: Private Methods *
-  *******************************/
+  // Initialize: Threejs Renderer
+  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
+  this.renderer.setSize(canvasWidth, canvasHeight);
+  this.addToDOM(this.renderer.domElement);
 
-}
+  // Initialize: Keyboard controls
+  this.keyboard = new THREEx.KeyboardState();
 
-/******************************
- * GameEngine: Public Methods *
- ******************************/
-GameEngine.prototype.update = function() {
+  // Initialize: FPS/ms moniter
+  this.stats = new Stats();
+  this.stats.setMode(this.settings.META.statsMode); // 0 -> fps, 1 -> ms
+  this.stats.domElement.style.position = 'absolute';
+  this.stats.domElement.style.top = '0px';
+  this.stats.domElement.style.zIndex = 100;
+  this.addToDOM(this.stats.domElement);
 
-  // Clock delta
-  delta = this.clock.getDelta();
+  // Initialize: JSON loader
+  this.jsonLoader = new THREE.JSONLoader();
 
-  // Update entity positions
-  for (var item in this.entities) {
-    var entity = this.entities[item];
+  // Setup entities
+  this.entities = {};
+  this.entityCount = 0;
 
-    // Update positions of movable objects
-    if (entity.collision > 0) {
+  // Setup physics
+  this.enablePhysics();
 
-      // Object is falling -> update position
-      if (entity.mesh.position.y > 0) {
-        entity.mesh.position.x += entity.velocity.x;
-        entity.mesh.position.y += entity.velocity.y;
-        entity.mesh.position.z += entity.velocity.z;
-      }
+  // Custom code
+  var lightAmbient = new THREE.AmbientLight(0x666666);
+  this.scene.add(lightAmbient);
 
-      // Object hits ground -> delete
-      else {
-        this.destroy(item);
-        continue;
-      }
-
-      // Increase acceleration
-      entity.velocity.x += entity.acceleration.x * delta;
-      entity.velocity.y += entity.acceleration.y * delta;
-      entity.velocity.z += entity.acceleration.z * delta;
-
-    }
-  }
-
+  // Run scene
+  this.renderScene();
+  this.animateScene();
 };
 
 
-// Add an object that interacts with world
-GameEngine.prototype.add = function(object, options) {
-  // Check default arguments
-  var setCollision = this.hasProperty(options, 'collision', 1);
-  var maxBounce = this.hasProperty(options, 'maxBounce', 5);
-  var bounciness = this.hasProperty(options, 'bounciness', 0);
-
-  // Default velocity (x,y,z)
-  var vX = this.hasProperty(options, 'vX', 0);
-  var vY = this.hasProperty(options, 'vY', 0);
-  var vZ = this.hasProperty(options, 'vZ', 0);
-
-  // Default acceleration (x,y,z)
-  var aX = this.hasProperty(options, 'aX', 0);
-  var aY = this.hasProperty(options, 'aY', this.gravity);
-  var aZ = this.hasProperty(options, 'aZ', 0);
-
-  // Create entity with incremental ID
-  var objectID = this.entityCount;
-  this.entityCount += 1;
-
-  // Define entity properties
-  this.entities[objectID] = {
-    velocity : new THREE.Vector3(vX, vY, vZ),
-    acceleration : new THREE.Vector3(aX, aY, aZ),
-    collision : setCollision,
-    maxBounce : maxBounce,
-    bounciness : bounciness,
-    bounces : 0,
-    mesh : object,
-  };
-
-  // Returns entity id
-  this.scene.add(object);
-  return objectID;
-};
 
 
-// Include an object which does not interact with world
-GameEngine.prototype.include = function(object) {
-  var options = {
-    collision: 0,
-    bounciness: 0,
-    vX: 0,
-    vY: 0,
-    vZ: 0,
-    aX: 0,
-    aY: 0,
-    aZ: 0
-  };
-  this.add(object, options);
-};
+ThreeGen.prototype.addModel = function(modelFile) {
+  var filePath = this.settings.PATHS.models + modelFile;
 
-
-// Destroy entity from world
-GameEngine.prototype.destroy = function(objectID) {
-  var entity = this.entities[objectID];
-  this.scene.remove(entity.mesh);
-  delete this.entities[objectID];
-};
-
-/*******************************
- * GameEngine: Private Methods *
- *******************************/
-
-// Checks that object has property, otherwise return default value
-GameEngine.prototype.hasProperty = function(object, property, value) {
-  if (object && typeof object[property] !== 'undefined') {
-    value = object[property];
-  }
-  return value;
-};
-
-
-// Export: THREEGEN
-var THREEGEN = {
-
-  // Export: GameEngine
-  GameEngine : GameEngine,
+  // var callbackModel = function(geometry, materials, engine) {
+  //   var material = new THREE.MeshFaceMaterial(materials);
+  //   for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
+  //   var model = new THREE.Mesh(geometry, material);
+  //   engine.scene.add(model);
+  // };
+  // var addModel = function(filePath, engine) {
+  //   loader(filePath, callback);
+  // };
+  // addModel(filePath, this);
 
 };

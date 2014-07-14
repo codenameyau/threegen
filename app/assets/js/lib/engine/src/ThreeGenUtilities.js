@@ -1,5 +1,5 @@
 /*-------JSHint Directive---------*/
-/* global ThreeGen                */
+/* global THREE, ThreeGen         */
 /*--------------------------------*/
 'use strict';
 
@@ -21,4 +21,21 @@ ThreeGen.prototype.degToRad = function(degrees) {
 ThreeGen.prototype.checkProperty = function(object, property, value) {
   if (object && typeof object[property] !== 'undefined') {value = object[property];}
   return value;
+};
+
+
+ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
+  lines = lines || 20;
+  steps = steps || 2;
+  gridColor = gridColor || 0xFFFFFF;
+  var floorGrid = new THREE.Geometry();
+  var gridLine = new THREE.LineBasicMaterial( {color: gridColor} );
+  for (var i = -lines; i <= lines; i += steps) {
+    floorGrid.vertices.push(new THREE.Vector3(-lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( lines, 0, i));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, -lines));
+    floorGrid.vertices.push(new THREE.Vector3( i, 0, lines));
+  }
+  this.addEntity(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
+    {collision: 0, height: 0});
 };

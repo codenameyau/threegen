@@ -1,5 +1,5 @@
 /*-------JSHint Directive---------*/
-/* global ThreeGen                */
+/* global THREE, ThreeGen         */
 /*--------------------------------*/
 'use strict';
 
@@ -7,6 +7,24 @@
 /***************************
  * Player Entity Functions *
  ***************************/
+ThreeGen.prototype.setPlayer = function(entityID) {
+  // Bind player to object
+  this.player = this.getEntity(entityID);
+
+  // Focus target cam on player
+  var cam = this.settings.CAMERA;
+  this.camera.addTarget({
+    name: 'player',
+    targetObject: this.player,
+    cameraPosition: new THREE.Vector3(cam.distX, cam.distY, cam.distZ),
+    fixed: false,
+    stiffness: 0.1,
+    matchRotation: true
+  });
+  this.camera.setTarget('player');
+};
+
+
 ThreeGen.prototype.updatePlayer = function() {
 
   // Key: w - move front
