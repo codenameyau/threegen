@@ -19,7 +19,7 @@ engine.enableFloorGrid(120, 5, 0x22AA22);
 var settings = {animated: true};
 
 // Android model
-// engine.addModel('android-animation.js');
+engine.addModel('android-animation.js', {posZ: -20});
 
 // Create crate
 var geometry = new THREE.BoxGeometry(5, 5, 5);

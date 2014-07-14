@@ -31,7 +31,7 @@ ThreeGen.prototype.updatePlayer = function() {
   if (this.keyboard.pressed('w')) {
     if (!this.player.falling) {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed *
-        this.settings.PLAYER.airVelocity * this.clock.delta);
+        this.settings.PLAYER.airMultiplier * this.clock.delta);
     }
     else {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed *
@@ -43,7 +43,7 @@ ThreeGen.prototype.updatePlayer = function() {
   if (this.keyboard.pressed('s')) {
     if (this.player.falling) {
       this.player.translateZ(this.settings.PLAYER.backSpeed *
-        this.settings.PLAYER.airVelocity * this.clock.delta);
+        this.settings.PLAYER.airMultiplier * this.clock.delta);
     }
     else {
       this.player.translateZ(this.settings.PLAYER.backSpeed *
@@ -54,11 +54,11 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'a' - rotate left
   if (this.keyboard.pressed('a')) {
     if (this.player.falling) {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
-        this.settings.PLAYER.airRotation * this.clock.delta;
+      this.player.rotation.y += this.settings.PLAYER.rotationMultiplier *
+        this.settings.PLAYER.airRotationMultiplier * this.clock.delta;
     }
     else {
-      this.player.rotation.y += this.settings.PLAYER.rotationSpeed *
+      this.player.rotation.y += this.settings.PLAYER.rotationMultiplier *
         this.clock.delta;
     }
   }
@@ -66,21 +66,19 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'w' - rotate right
   if (this.keyboard.pressed('d')) {
     if (this.player.falling) {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
-        this.settings.PLAYER.airRotation * this.clock.delta;
+      this.player.rotation.y -= this.settings.PLAYER.rotationMultiplier *
+        this.settings.PLAYER.airRotationMultiplier * this.clock.delta;
     }
     else {
-      this.player.rotation.y -= this.settings.PLAYER.rotationSpeed *
+      this.player.rotation.y -= this.settings.PLAYER.rotationMultiplier *
         this.clock.delta;
     }
   }
 
   // Key: 'space' - jump
   if (this.keyboard.pressed('space') && !this.player.falling) {
-    this.player.velocity.y += 30;
+    this.player.velocity.y += this.player.dimensions.height * this.settings.PLAYER.jumpMultiplier;
     this.player.falling = true;
-    console.log(this.player.geometry.boundingBox);
-
   }
   // Update children of player
 };

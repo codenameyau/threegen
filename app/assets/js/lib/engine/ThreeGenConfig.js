@@ -49,9 +49,9 @@ function ThreeGen() {
     PLAYER : {
       frontSpeed : 35,
       backSpeed : 25,
-      jumpMultiplier : 3.0,
+      jumpMultiplier : 8.0,
       airMultiplier : 1.0,
-      rotationMultiplier : 2.5,
+      rotationMultiplier : 2.0,
       airRotationMultiplier : 0.2,
     },
 

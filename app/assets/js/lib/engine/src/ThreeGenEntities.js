@@ -24,11 +24,11 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var boundMax = object.geometry.boundingBox.max;
   object.dimensions = {
     height : boundMax.y - boundMin.y,
-    width : boundMax.x - boundMin.x,
+    width  : boundMax.x - boundMin.x,
     length : boundMax.z - boundMin.z,
-    base : (boundMax.y - boundMin.y)/2,
+    base  : (boundMax.y - boundMin.y)/2,
   };
-  console.log(object.dimensions);
+
   // Set position (x,y,z)
   var posX = this.checkProperty(options, 'posX', 0);
   var posY = this.checkProperty(options, 'posY', object.dimensions.base);
@@ -77,15 +77,14 @@ ThreeGen.prototype.addEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.addModel = function(modelFile) {
+ThreeGen.prototype.addModel = function(modelFile, settings) {
   var filePath  = this.settings.PATHS.models + modelFile;
   var engineRef = this;
-
   this.jsonLoader.load(filePath, function(geometry, materials) {
     var material = new THREE.MeshFaceMaterial(materials);
     for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
     var model = new THREE.Mesh(geometry, material);
-    engineRef.addEntity(model);
+    engineRef.addEntity(model, settings);
   });
-
 };
+
