@@ -43,7 +43,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
   // Extend Threejs mesh object
   object.collision = this.checkProperty(options, 'collision', 1);
-  object.floating = this.checkProperty(options, 'floating', false);
+  object.falling = this.checkProperty(options, 'falling', true);
   object.animated = this.checkProperty(options, 'animated', false);
   object.dimensions = {length: length, width: width, height: height, base: height/2};
   object.position.set(posX, posY, posZ);

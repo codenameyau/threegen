@@ -22,11 +22,8 @@ var settings = {height: 12, width: 5, length: 5, animated: true};
 engine.addModel('android-animation.js');
 
 // Create crate
-var textureImage = engine.settings.PATHS.textures + 'crate-small.jpg';
 var geometry = new THREE.BoxGeometry(5, 5, 5);
-var crateTexture = new THREE.ImageUtils.loadTexture( textureImage );
-var crateMaterial = new THREE.MeshLambertMaterial({ map: crateTexture });
-var crate = new THREE.Mesh( geometry, crateMaterial );
+var crateTexture = engine.loadTexture('crate-small.jpg');
+var crate = new THREE.Mesh( geometry, crateTexture );
 var entityID = engine.addEntity(crate, settings);
 engine.setPlayer(entityID);
-
