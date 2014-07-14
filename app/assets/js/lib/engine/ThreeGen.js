@@ -80,7 +80,7 @@ ThreeGen.prototype.applyPhysics = function() {
  *************************/
 ThreeGen.prototype.updatePlayer = function() {
 
-  // Keyboard event handlers
+  // Key: w - move front
   if (this.keyboard.pressed('w')) {
     if (!this.player.floating) {
       this.player.translateZ(-this.settings.PLAYER.fowardSpeed * this.settings.PLAYER.airVelocity * this.delta);
@@ -90,6 +90,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
+  // Key: s - move back
   if (this.keyboard.pressed('s')) {
     if (this.player.floating) {
       this.player.translateZ(this.settings.PLAYER.backwardSpeed * this.settings.PLAYER.airVelocity * this.delta);
@@ -99,6 +100,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
+  // Key: a - rotate left
   if (this.keyboard.pressed('a')) {
     if (this.player.floating) {
       this.player.rotation.y += this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
@@ -108,6 +110,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
+  // Key: w - rotate right
   if (this.keyboard.pressed('d')) {
     if (this.player.floating) {
       this.player.rotation.y -= this.settings.PLAYER.rotationSpeed * this.settings.PLAYER.airRotation * this.delta;
@@ -117,6 +120,7 @@ ThreeGen.prototype.updatePlayer = function() {
     }
   }
 
+  // Key: space - jump
   if (this.keyboard.pressed('space') && !this.player.floating) {
     this.player.velocity.y += this.settings.PLAYER.jumpVelocity;
     this.player.floating = true;
@@ -219,15 +223,31 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var aY = this.checkProperty(options, 'aY', this.gravity);
   var aZ = this.checkProperty(options, 'aZ', 0);
 
+  // Set animations
+  var animDuration = this.checkProperty(options, 'duration', 1000);
+  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
+
   // Extend Threejs mesh object
+  object.collision = this.checkProperty(options, 'collision', 1);
+  object.floating = this.checkProperty(options, 'floating', false);
+  object.animated = this.checkProperty(options, 'animated', false);
   object.dimensions = {length: length, width: width, height: height, base: height/2};
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
-  object.collision = this.checkProperty(options, 'collision', 1);
-  object.floating = this.checkProperty(options, 'floating', false);
   object.entityID = this.entityCount;
   object.stats = this.settings.ENTITIES.stats;
+
+  // Configure animations
+  object.animation = {
+    offset : 0,
+    walking : false,
+    duration : animDuration,
+    keyframes : animKeyFrames,
+    interpolation : animDuration / animKeyFrames,
+    lastKeyFrame : 0,
+    currentKeyFrame : 0,
+  };
 
   // Add entity to scene
   this.entities[this.entityCount] = object;
