@@ -86,9 +86,11 @@ ThreeGen.prototype.addModel = function(modelFile, settings) {
   var engineRef = this;
   this.jsonLoader.load(filePath, function(geometry, materials) {
     var material = new THREE.MeshFaceMaterial(materials);
-    for (var i = 0; i < materials.length; i++) {materials[i].morphTargets = true;}
+    for (var i = 0; i < materials.length; i++) {
+      materials[i].morphTargets = true;
+    }
     var model = new THREE.Mesh(geometry, material);
     engineRef.addEntity(model, settings);
   });
+  return this.entityCount;
 };
-

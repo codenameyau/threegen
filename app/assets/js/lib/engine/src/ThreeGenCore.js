@@ -9,15 +9,22 @@
  * Public Methods *
  ******************/
 ThreeGen.prototype.start = function() {
+
   // Initialize: Load settings
   var settings = this.settings;
   var canvasWidth  = window.innerWidth;
   var canvasHeight = window.innerHeight;
   var aspectRatio  = canvasWidth/canvasHeight;
 
+  // Initialize: Clock
+  this.clock = new THREE.Clock();
+  this.clock.delta = this.clock.getDelta();
+
   // Initialize: Threejs Scene
   this.scene = new THREE.Scene();
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
+  window.addEventListener('focus', this.resumeClock.bind(this));
+  window.addEventListener('blur', this.pauseClock.bind(this));
 
   // Initialize: Threejs Camera
   this.camera = new THREE.TargetCamera(
@@ -33,10 +40,6 @@ ThreeGen.prototype.start = function() {
   );
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
-
-  // Initialize: Clock
-  this.clock = new THREE.Clock();
-  this.clock.delta = this.clock.getDelta();
 
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
@@ -66,4 +69,14 @@ ThreeGen.prototype.start = function() {
 
   // Run scene
   this.animateScene();
+};
+
+
+ThreeGen.prototype.resumeClock = function() {
+  this.clock.start();
+};
+
+
+ThreeGen.prototype.pauseClock = function() {
+  this.clock.stop();
 };

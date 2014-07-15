@@ -18,7 +18,8 @@ engine.scene.add(lightAmbient);
 engine.enableFloorGrid(120, 5, 0x22AA22);
 
 // Android model
-engine.addModel('android-animation.js', {posZ: -20, posY: 30});
+var android = engine.addModel('android-animation.js', {posZ: -20, posY: 30});
+console.log(android);
 
 // Create crates
 var smallBoxGeometry = new THREE.BoxGeometry(5, 5, 5);

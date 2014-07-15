@@ -3,42 +3,62 @@ threegen
 
 Three.js game engine
 
-[Documentation](https://github.com/codenameyau/threegen/wiki)
+[Documentation Link](https://github.com/codenameyau/threegen/wiki)
+
 
 ##ThreeGen Architecture
 
 ###Core Engine
-* [+] Timing system
+* [+] Clock system
 * [+] Keyboard input
-* Mouse input
+* [+] Clock pause and resume
+* [+] Utilities
 * World model
+* Mouse input
 * Audio system
-* Resource loader
-* Utilities
-* Loading
+* Loading screens
+* Memory optimization
 
 ###Rendering Engine
 * [+] Three.js renderer
 * [+] TargetCamera perspective
+* [+] Lighting
 * Animation system
-* Lighting
 
 ###Physics Engine
+* [+] Updater (incomplete)
+* [+] Gravity
+* Entity movement
 * Collision detection
-* entity movement
 
-##Game
+###Utilities
+* [+] Debug grid
+* [+] FPS/MS stats moniter
+* Basic math functions
+* Dot product tests
+
+###Entities
+* [+] Player target cam
+* [+] Player 'wasd' movement
+* [+] Player jumping
+* Entity health/stats
+
+###Resource Loader
+* [+] Mesh texture
+* [+] Json model
+* Audio effects
+* Music loop
+
+###Game
 * Documentation
 * Scene graph
-* Entity (game object)
-* Artificial intelligence
+* AI support
 * Level editor
 
 
 ##Learning Resources
 
 ####Books
-* [Kouichi Matsuda - WebGL Programming Guide (Jul 2013)](https://sites.google.com/site/webglbook/)
 * [Jason Gregory - Game Engine Architecture (Jun 2009)](http://www.gameenginebook.com/index.html)
 * [Christer Ericson - Real-time Collision Detection (Dec 2004)](http://realtimecollisiondetection.net/)
 * [Ian Millington - Game Physics Engine Development (Jul 2010)](http://procyclone.com/)
