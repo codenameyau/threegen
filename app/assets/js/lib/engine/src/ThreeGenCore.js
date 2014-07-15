@@ -64,6 +64,9 @@ ThreeGen.prototype.start = function() {
   this.entities = {};
   this.entityCount = 0;
 
+  // Setup models
+  this.models = {};
+
   // Setup physics
   this.enablePhysics();
 

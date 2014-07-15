@@ -78,19 +78,11 @@ ThreeGen.prototype.addEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.addModel = function(modelFile, settings) {
-  // Set posY default to 0, get reference to engine for callback
-  settings.posY = this.checkProperty(settings, 'posY', 0);
-  settings.base = this.checkProperty(settings, 'base', 0);
-  var filePath  = this.settings.PATHS.models + modelFile;
-  var engineRef = this;
-  this.jsonLoader.load(filePath, function(geometry, materials) {
-    var material = new THREE.MeshFaceMaterial(materials);
-    for (var i = 0; i < materials.length; i++) {
-      materials[i].morphTargets = true;
-    }
-    var model = new THREE.Mesh(geometry, material);
-    engineRef.addEntity(model, settings);
-  });
-  return this.entityCount;
+ThreeGen.prototype.getModel = function(modelName) {
+  return this.models[modelName];
+};
+
+
+ThreeGen.prototype.deleteModel = function(modelName) {
+  delete this.models[modelName];
 };

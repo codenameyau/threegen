@@ -12,3 +12,15 @@ ThreeGen.prototype.loadTexture = function(filename) {
   var texture  = new THREE.ImageUtils.loadTexture(filePath);
   return new THREE.MeshLambertMaterial({ map: texture });
 };
+
+ThreeGen.prototype.loadModel = function(modelName, modelFile) {
+  var filePath  = this.settings.PATHS.models + modelFile;
+  var engineRef = this;
+  this.jsonLoader.load(filePath, function(geometry, materials) {
+    var material = new THREE.MeshFaceMaterial(materials);
+    for (var i = 0; i < materials.length; i++) {
+      materials[i].morphTargets = true;
+    }
+    engineRef.models[modelName] = new THREE.Mesh(geometry, material);
+  });
+};

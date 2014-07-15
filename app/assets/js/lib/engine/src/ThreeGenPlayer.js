@@ -27,6 +27,9 @@ ThreeGen.prototype.setPlayer = function(entityID) {
 
 ThreeGen.prototype.updatePlayer = function() {
 
+  // Player has not been set
+  if (!this.player) {return;}
+
   // Key: 'w' - move front
   if (this.keyboard.pressed('w')) {
     if (!this.player.falling) {
