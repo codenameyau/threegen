@@ -77,7 +77,8 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'space' - jump
   if (this.keyboard.pressed('space') && !this.player.falling) {
-    this.player.velocity.y += this.player.dimensions.height * this.settings.PLAYER.jumpMultiplier;
+    this.player.velocity.y += this.player.dimensions.height *
+      this.settings.PLAYER.jumpMultiplier;
     this.player.falling = true;
   }
   // Update children of player

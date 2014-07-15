@@ -24,7 +24,7 @@ ThreeGen.prototype.applyPhysics = function() {
         entity.position.y += entity.velocity.y * this.clock.delta;
         entity.velocity.y += entity.acceleration.y * this.clock.delta;
 
-        if (entity.position.y <= 0) {
+        if (entity.position.y <= entity.dimensions.base) {
           entity.falling = false;
           entity.velocity.y = 0;
         }

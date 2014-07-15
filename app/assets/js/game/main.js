@@ -16,14 +16,20 @@ engine.scene.add(lightAmbient);
 
 // Enable floor grid
 engine.enableFloorGrid(120, 5, 0x22AA22);
-var settings = {animated: true};
 
 // Android model
-engine.addModel('android-animation.js', {posZ: -20});
+engine.addModel('android-animation.js', {posZ: -20, posY: 30});
 
-// Create crate
-var geometry = new THREE.BoxGeometry(5, 5, 5);
+// Create crates
+var smallBoxGeometry = new THREE.BoxGeometry(5, 5, 5);
+var mediumBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
 var crateTexture = engine.loadTexture('crate-small.jpg');
-var crate = new THREE.Mesh( geometry, crateTexture );
-var entityID = engine.addEntity(crate, settings);
+var crate = new THREE.Mesh( smallBoxGeometry, crateTexture );
+var entityID = engine.addEntity(crate, {posX: 20});
 engine.setPlayer(entityID);
+
+var crate2 = new THREE.Mesh( smallBoxGeometry, crateTexture );
+engine.addEntity(crate2, {posX: 20, posY: 40});
+
+var crate3 = new THREE.Mesh( mediumBoxGeometry, crateTexture );
+engine.addEntity(crate3, {posX: -20, posY: 40});
