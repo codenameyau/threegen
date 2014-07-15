@@ -3,7 +3,8 @@ threegen
 
 Three.js game engine
 
-[Documentation Link](https://github.com/codenameyau/threegen/wiki)
+* [Wiki Documentation](https://github.com/codenameyau/threegen/wiki)
+* [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
 
 
 ##ThreeGen Architecture
@@ -54,6 +55,7 @@ Three.js game engine
 * Scene graph
 * AI support
 * Level editor
+* Three.js encapsulation
 
 
 ##Learning Resources

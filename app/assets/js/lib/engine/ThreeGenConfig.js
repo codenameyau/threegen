@@ -1,9 +1,12 @@
-/*************************************
- * ThreeGen - Settings Configuration *
- *************************************/
+/*-------JSHint Directive---------*/
+/* exported ThreeGen              */
+/*--------------------------------*/
 'use strict';
 
-/* exported ThreeGen */
+
+/****************************
+ * ThreeGen - Game Settings *
+ ****************************/
 function ThreeGen() {
 
   this.settings = {
@@ -22,6 +25,7 @@ function ThreeGen() {
     PATHS : {
       textures : 'assets/js/game/res/texture/',
       models : 'assets/js/game/res/models/',
+      sound : 'assets/js/game/res/sound/',
     },
 
 

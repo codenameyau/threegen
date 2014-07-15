@@ -5,9 +5,9 @@
 'use strict';
 
 
-/******************
- * Public Methods *
- ******************/
+/******************************
+ * Core Engine Public Methods *
+ ******************************/
 ThreeGen.prototype.start = function() {
 
   // Initialize: Load settings
@@ -26,6 +26,11 @@ ThreeGen.prototype.start = function() {
   window.addEventListener('focus', this.resumeClock.bind(this));
   window.addEventListener('blur', this.pauseClock.bind(this));
 
+  // Initialize: Threejs Renderer
+  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
+  this.renderer.setSize(canvasWidth, canvasHeight);
+  this.addToDOM(this.renderer.domElement);
+
   // Initialize: Threejs Camera
   this.camera = new THREE.TargetCamera(
     settings.CAMERA.fov,
@@ -40,11 +45,6 @@ ThreeGen.prototype.start = function() {
   );
   this.camera.lookAt(this.scene.position);
   this.scene.add(this.camera);
-
-  // Initialize: Threejs Renderer
-  this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
-  this.renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(this.renderer.domElement);
 
   // Initialize: Keyboard controls
   this.keyboard = new THREEx.KeyboardState();
@@ -72,6 +72,10 @@ ThreeGen.prototype.start = function() {
 };
 
 
+
+/********************************
+ * Core Engine Internal Methods *
+ ********************************/
 ThreeGen.prototype.resumeClock = function() {
   this.clock.start();
 };
