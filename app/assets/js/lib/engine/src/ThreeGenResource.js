@@ -13,14 +13,25 @@ ThreeGen.prototype.loadTexture = function(filename) {
   return new THREE.MeshLambertMaterial({ map: texture });
 };
 
-ThreeGen.prototype.loadModel = function(modelName, modelFile) {
+
+ThreeGen.prototype.loadModel = function(modelName, modelFile, callback, settings) {
   var filePath  = this.settings.PATHS.models + modelFile;
   var engineRef = this;
-  this.jsonLoader.load(filePath, function(geometry, materials) {
-    var material = new THREE.MeshFaceMaterial(materials);
-    for (var i = 0; i < materials.length; i++) {
-      materials[i].morphTargets = true;
-    }
-    engineRef.models[modelName] = new THREE.Mesh(geometry, material);
-  });
+
+  // Reuse model if it has already been loaded
+  if (this.models[modelName]) {
+    callback.bind(engineRef)(modelName, settings);
+  }
+
+  // [AJAX] load JSON model then invoke callback
+  else {
+    this.jsonLoader.load(filePath, function(geometry, materials) {
+      var material = new THREE.MeshFaceMaterial(materials);
+      for (var i = 0; i < materials.length; i++) {
+        materials[i].morphTargets = true;
+      }
+      engineRef.models[modelName] = new THREE.Mesh(geometry, material);
+      callback.bind(engineRef)(modelName, settings);
+    });
+  }
 };

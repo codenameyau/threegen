@@ -78,6 +78,12 @@ ThreeGen.prototype.addEntity = function(object, options) {
 };
 
 
+ThreeGen.prototype.addModelEntity = function(modelName, settings) {
+  var model = this.getModel(modelName);
+  this.addEntity(model, settings);
+};
+
+
 ThreeGen.prototype.getModel = function(modelName) {
   return this.models[modelName];
 };

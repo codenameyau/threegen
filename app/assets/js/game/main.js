@@ -33,6 +33,5 @@ var crate3 = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 engine.addEntity(crate3, {posX: -20, posY: 40});
 
 // Android model (file, model name)
-engine.loadModel('android', 'android-animation.js');
-var androidEntity = engine.addModel('android');
-console.log(androidEntity);
+var settings = {posZ : -40};
+engine.loadModel('android', 'android-animation.js', engine.addModelEntity, settings);
