@@ -30,6 +30,14 @@ ThreeGen.prototype.updatePlayer = function() {
   // Player has not been set
   if (!this.player) {return;}
 
+  // Update animation for walking
+  if (this.keyboard.pressed('w') || this.keyboard.pressed('s')) {
+    this.player.animation.walking = true;
+  }
+  else {
+    this.player.animation.walking = false;
+  }
+
   // Key: 'w' - move front
   if (this.keyboard.pressed('w')) {
     if (!this.player.falling) {

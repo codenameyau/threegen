@@ -36,13 +36,13 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var aZ = this.checkProperty(options, 'aZ', 0);
 
   // Set animations
+  var animated =  this.checkProperty(options, 'animated', false);
   var animDuration = this.checkProperty(options, 'duration', 1000);
   var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
 
   // Extend Threejs mesh object
   object.collision = this.checkProperty(options, 'collision', 1);
   object.falling = this.checkProperty(options, 'falling', true);
-  object.animated = this.checkProperty(options, 'animated', false);
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
@@ -52,6 +52,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   // Configure animations
   object.animation = {
     offset : 0,
+    active : animated,
     walking : false,
     duration : animDuration,
     keyframes : animKeyFrames,

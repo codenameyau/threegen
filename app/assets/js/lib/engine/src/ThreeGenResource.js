@@ -26,10 +26,10 @@ ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
   // [AJAX] load JSON model then invoke callback
   else {
     this.jsonLoader.load(filePath, function(geometry, materials) {
-      var material = new THREE.MeshFaceMaterial(materials);
       for (var i = 0; i < materials.length; i++) {
         materials[i].morphTargets = true;
       }
+      var material = new THREE.MeshFaceMaterial(materials);
       engineRef.models[modelName] = new THREE.Mesh(geometry, material);
       callback.bind(engineRef)(modelName);
     });
