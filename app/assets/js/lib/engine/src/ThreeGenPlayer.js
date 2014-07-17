@@ -7,9 +7,9 @@
 /***************************
  * Player Entity Functions *
  ***************************/
-ThreeGen.prototype.setPlayer = function(entityID) {
+ThreeGen.prototype.setPlayer = function(entity) {
   // Bind player to object
-  this.player = this.getEntity(entityID);
+  this.player = entity;
 
   // Set target cam on player
   var cam = this.settings.CAMERA;

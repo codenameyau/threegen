@@ -27,12 +27,11 @@ var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 // Add crates entities
 engine.addEntity(smallCrate, {posX: 0, posZ: 20});
 engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
-var crate = engine.addEntity(mediumCrate, {posX: -20, posY: 40});
-engine.showBoundingBox(crate);
+engine.addEntity(mediumCrate, {posX: -20, posY: 40});
 
 // Load android model and set it to player
 engine.loadModel('android', 'android-animation.js', function() {
   var settings = {posY: 0, base: 0, scaleY: 0.5, scaleX: 0.5, scaleZ: 0.5};
-  var android  = engine.addEntity(engine.getModel('android'), settings);
+  var android = engine.addEntity(engine.getModel('android'), settings);
   engine.setPlayer(android);
 });
