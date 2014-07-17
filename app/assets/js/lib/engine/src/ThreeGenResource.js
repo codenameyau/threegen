@@ -18,7 +18,7 @@ ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
   var filePath  = this.settings.PATHS.models + modelFile;
   var engineRef = this;
 
-  // Reuse model if it has already been loaded
+  // [TODO] Reuse model if it has already been loaded
   if (this.models[modelName]) {
     callback.bind(engineRef)(modelName);
   }

@@ -17,6 +17,12 @@ ThreeGen.prototype.deleteEntity = function(id) {
 
 ThreeGen.prototype.addEntity = function(object, options) {
 
+  // Scale object dimensions
+  var scaleX = this.checkProperty(options, 'scaleX', 1);
+  var scaleY = this.checkProperty(options, 'scaleY', 1);
+  var scaleZ = this.checkProperty(options, 'scaleZ', 1);
+  object.scale.set(scaleX, scaleY, scaleZ);
+
   // Compute geometry bounds and dimensions
   object.geometry.computeBoundingSphere();
   object.geometry.computeBoundingBox();
@@ -27,9 +33,9 @@ ThreeGen.prototype.addEntity = function(object, options) {
     height : boundMax.y - boundMin.y,
     width  : boundMax.x - boundMin.x,
     length : boundMax.z - boundMin.z,
-    base   : baseHeight + 0.2,
+    base   : baseHeight,
   };
-
+  console.log(object.dimensions);
   // Set position (x,y,z)
   var posX = this.checkProperty(options, 'posX', 0);
   var posY = this.checkProperty(options, 'posY', object.dimensions.base);
@@ -78,12 +84,11 @@ ThreeGen.prototype.addEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.addModelEntity = function(modelName, settings) {
-  var model = this.getModel(modelName);
-  settings.posY = this.checkProperty(settings, 'posY', 0);
-  this.addEntity(model, settings);
+ThreeGen.prototype.showBoundingBox = function(entityID, color) {
+  color = color || 0x22FF22;
+  var bbox = new THREE.BoundingBoxHelper(this.getEntity(entityID), color);
+  this.scene.add(bbox);
 };
-
 
 ThreeGen.prototype.getModel = function(modelName) {
   return this.models[modelName];
