@@ -80,6 +80,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
 ThreeGen.prototype.addModelEntity = function(modelName, settings) {
   var model = this.getModel(modelName);
+  settings.posY = this.checkProperty(settings, 'posY', 0);
   this.addEntity(model, settings);
 };
 

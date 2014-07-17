@@ -14,13 +14,13 @@ ThreeGen.prototype.loadTexture = function(filename) {
 };
 
 
-ThreeGen.prototype.loadModel = function(modelName, modelFile, callback, settings) {
+ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
   var filePath  = this.settings.PATHS.models + modelFile;
   var engineRef = this;
 
   // Reuse model if it has already been loaded
   if (this.models[modelName]) {
-    callback.bind(engineRef)(modelName, settings);
+    callback.bind(engineRef)(modelName);
   }
 
   // [AJAX] load JSON model then invoke callback
@@ -31,7 +31,7 @@ ThreeGen.prototype.loadModel = function(modelName, modelFile, callback, settings
         materials[i].morphTargets = true;
       }
       engineRef.models[modelName] = new THREE.Mesh(geometry, material);
-      callback.bind(engineRef)(modelName, settings);
+      callback.bind(engineRef)(modelName);
     });
   }
 };

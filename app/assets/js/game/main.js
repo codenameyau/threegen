@@ -21,17 +21,17 @@ engine.enableFloorGrid(120, 5, 0x22AA22);
 var smallBoxGeometry = new THREE.BoxGeometry(5, 5, 5);
 var mediumBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
 var crateTexture = engine.loadTexture('crate-small.jpg');
+var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
+var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crate = new THREE.Mesh( smallBoxGeometry, crateTexture );
-engine.addEntity(crate, {posX: 0, posZ: 20});
+engine.addEntity(smallCrate, {posX: 0, posZ: 20});
+engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
+engine.addEntity(mediumCrate, {posX: -20, posY: 40});
 
-var crate2 = new THREE.Mesh( smallBoxGeometry, crateTexture );
-engine.addEntity(crate2, {posX: 20, posY: 40});
-
-var crate3 = new THREE.Mesh( mediumBoxGeometry, crateTexture );
-engine.addEntity(crate3, {posX: -20, posY: 40});
-
-// Android model (file, model name)
-var settings = {posZ : -40};
-engine.loadModel('android', 'android-animation.js', engine.addModelEntity, settings);
+// Load android model and set it to player
+engine.loadModel('android', 'android-animation.js', function() {
+  var settings = {posY: 0};
+  var android  = engine.addEntity(engine.getModel('android'), settings);
+  engine.setPlayer(android);
+});
