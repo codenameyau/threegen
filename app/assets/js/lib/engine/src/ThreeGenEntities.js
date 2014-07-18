@@ -40,8 +40,20 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var animDuration = this.checkProperty(options, 'duration', 1000);
   var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
 
+  // Set collision rays
+  object.caster = new THREE.Raycaster();
+  object.rays = [
+    new THREE.Vector3( 0,  0,  1),
+    new THREE.Vector3( 1,  0,  1),
+    new THREE.Vector3( 1,  0,  0),
+    new THREE.Vector3( 1,  0, -1),
+    new THREE.Vector3( 0,  0, -1),
+    new THREE.Vector3(-1,  0, -1),
+    new THREE.Vector3(-1,  0,  0),
+    new THREE.Vector3(-1,  0,  1)
+  ];
+
   // Extend Threejs mesh object
-  object.collision = this.checkProperty(options, 'collision', 1);
   object.falling = this.checkProperty(options, 'falling', true);
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);

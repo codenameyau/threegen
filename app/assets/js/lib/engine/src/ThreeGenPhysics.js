@@ -16,20 +16,17 @@ ThreeGen.prototype.applyPhysics = function() {
 
   for (var item in this.entities) {
     var entity = this.entities[item];
-    // Check for collision
-    if (entity.collision > 0) {
 
-      // Apply gravity
-      if (entity.falling) {
-        entity.position.y += entity.velocity.y * this.clock.delta;
-        entity.velocity.y += entity.acceleration.y * this.clock.delta;
+    // Apply gravity
+    if (entity.falling) {
+      entity.position.y += entity.velocity.y * this.clock.delta;
+      entity.velocity.y += entity.acceleration.y * this.clock.delta;
 
-        if (entity.position.y <= entity.dimensions.base) {
-          entity.falling = false;
-          entity.velocity.y = 0;
-        }
+      if (entity.position.y <= entity.dimensions.base) {
+        entity.falling = false;
+        entity.velocity.y = 0;
       }
-
     }
+
   }
 };
