@@ -10,6 +10,7 @@
 ThreeGen.prototype.setPlayer = function(entity) {
   // Bind player to object
   this.player = entity;
+  this.player.caster = new THREE.Raycaster();
 
   // Set target cam on player
   var cam = this.settings.CAMERA;
@@ -26,9 +27,6 @@ ThreeGen.prototype.setPlayer = function(entity) {
 
 
 ThreeGen.prototype.updatePlayer = function() {
-
-  // Player has not been set
-  if (!this.player) {return;}
 
   // Update animation for walking
   if (this.keyboard.pressed('w') || this.keyboard.pressed('s')) {
@@ -92,5 +90,24 @@ ThreeGen.prototype.updatePlayer = function() {
       this.settings.PLAYER.jumpMultiplier;
     this.player.falling = true;
   }
+
   // Update children of player
+};
+
+
+ThreeGen.prototype.checkPlayerCollision = function() {
+  var localVertex, globalVertex, directionVector, collisions;
+  var originPoint = this.player.position.clone();
+
+  for (var i=0; i < this.player.geometry.vertices.length; i++) {
+    localVertex = this.player.geometry.vertices[i].clone();
+    globalVertex = localVertex.applyMatrix4( this.player.matrix );
+    directionVector = globalVertex.sub( this.player.position );
+    this.player.caster = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
+    collisions = this.player.caster.intersectObjects(this.entities);
+    if (collisions.length > 0 && collisions[0].distance < directionVector.length()) {
+      console.log('hit');
+    }
+  }
+
 };

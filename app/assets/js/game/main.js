@@ -33,6 +33,7 @@ var crate = engine.addEntity(smallCrate, {posX: 0, posZ: 20});
 engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
 engine.addEntity(mediumCrate, {posX: -20, posY: 40});
 engine.setPlayer(crate);
+engine.deleteEntity(crate);
 
 // Load android model and set it to player
 // var modelName = 'android';

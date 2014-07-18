@@ -61,7 +61,8 @@ ThreeGen.prototype.start = function() {
   this.jsonLoader = new THREE.JSONLoader();
 
   // Setup entities
-  this.entities = {};
+  this.entities = [];
+
   this.entityCount = 0;
 
   // Setup models

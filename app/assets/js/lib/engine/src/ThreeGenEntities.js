@@ -10,6 +10,7 @@ ThreeGen.prototype.getEntity = function(id) {
 
 
 ThreeGen.prototype.deleteEntity = function(entity) {
+  if (entity === this.player) { delete this.player; }
   this.scene.remove(entity);
   delete this.entities[entity.entityID];
 };
@@ -45,11 +46,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
-  object.entityID = this.entityCount;
   object.stats = this.settings.ENTITIES.stats;
-
-  // Set collision detection
-  this.enableCollisionDetection(object);
 
   // Configure animations
   object.animation = {
@@ -65,8 +62,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   };
 
   // Add entity to scene
-  this.entities[this.entityCount] = object;
-  this.entityCount += 1;
+  this.entities.push(object);
   this.scene.add(object);
   return object;
 };
@@ -104,17 +100,3 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   };
 };
 
-
-ThreeGen.prototype.enableCollisionDetection = function(object) {
-  object.caster = new THREE.Raycaster();
-  object.rays = [
-    new THREE.Vector3( 0,  0,  1), // [0]:
-    new THREE.Vector3( 1,  0,  1), // [1]:
-    new THREE.Vector3( 1,  0,  0), // [2]:
-    new THREE.Vector3( 1,  0, -1), // [3]:
-    new THREE.Vector3( 0,  0, -1), // [4]:
-    new THREE.Vector3(-1,  0, -1), // [5]:
-    new THREE.Vector3(-1,  0,  0), // [6]:
-    new THREE.Vector3(-1,  0,  1)  // [7]:
-  ];
-};
