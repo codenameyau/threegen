@@ -35,8 +35,8 @@ function ThreeGen() {
       near : 1,
       far : 3000,
       startX : 0,
-      startY : 50,
-      startZ : 50,
+      startY : 100,
+      startZ : 100,
       distX : 0,
       distY : 10,
       distZ : 50,
@@ -78,6 +78,15 @@ function ThreeGen() {
     },
 
 
-  }; // End settings
+    // Settings: Key bindings
+    KEYS : {
+      up    : 'w',
+      left  : 'a',
+      down  : 's',
+      right : 'd',
+      jump  : 'space',
+      pov   : 'f',
+    }
 
+  }; // End settings
 }
