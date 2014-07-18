@@ -52,6 +52,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   // Configure animations
   object.animation = {
     offset : 0,
+    keyframe : 0,
     active : animated,
     walking : false,
     duration : animDuration,

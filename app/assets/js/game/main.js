@@ -11,8 +11,12 @@ var engine = new ThreeGen();
 engine.start();
 
 // Add Lighting
-var lightAmbient = new THREE.AmbientLight(0x9a9a9a);
+var lightAmbient = new THREE.HemisphereLight(0x9a9aca, 0x7c7c7c, 0.5);
 engine.scene.add(lightAmbient);
+
+var lightSource = new THREE.DirectionalLight( 0x888888 );
+lightSource.position.set(0, 0.2, 0.5);
+engine.scene.add(lightSource);
 
 // Enable floor grid
 engine.enableFloorGrid(120, 5, 0x22AA22);
@@ -32,7 +36,7 @@ engine.addEntity(mediumCrate, {posX: -20, posY: 40});
 // Load android model and set it to player
 var modelName = 'android';
 engine.loadModel(modelName, 'android-animation.js', function() {
-  var settings = {animated: true, posY: 0, base: 0, scaleY: 0.5, scaleX: 0.5, scaleZ: 0.5};
+  var settings = {animated: true, posY: 0, base: 0};
   var android = engine.addEntity(engine.getModel(modelName), settings);
   engine.setPlayer(android);
 });
