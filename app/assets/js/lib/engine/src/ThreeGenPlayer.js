@@ -10,18 +10,7 @@
 ThreeGen.prototype.setPlayer = function(entity) {
   // Bind player to object
   this.player = entity;
-
-  // Set target cam on player
-  var cam = this.settings.CAMERA;
-  this.camera.addTarget({
-    name: 'player',
-    targetObject: this.player,
-    cameraPosition: new THREE.Vector3(cam.distX, cam.distY, cam.distZ),
-    fixed: false,
-    stiffness: 0.1,
-    matchRotation: true
-  });
-  this.camera.setTarget('player');
+  this.setPlayerCamera(this.settings.CAMERA);
 };
 
 
@@ -37,7 +26,6 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Check for camera pov
   if (this.keyboard.pressed(this.settings.KEYS.pov)) {
-    console.log(this.camera);
     this.camera.addTarget({
       name: 'player',
       targetObject: this.player,
@@ -126,3 +114,5 @@ ThreeGen.prototype.checkPlayerCollision = function() {
 
   }
 };
+
+

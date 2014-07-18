@@ -17,7 +17,6 @@ ThreeGen.prototype.deleteEntity = function(entity) {
 
 
 ThreeGen.prototype.addEntity = function(object, options) {
-
   // Scale object dimensions
   this.scaleEntity(object, options);
 

@@ -31,15 +31,16 @@ function ThreeGen() {
 
     // Settings: Camera
     CAMERA : {
+      mode : 0, // 0 -> target, 1 -> pov
       fov : 45,
-      near : 1,
+      near : 0.5,
       far : 3000,
       startX : 0,
       startY : 100,
-      startZ : 100,
-      distX : 0,
-      distY : 10,
-      distZ : 50,
+      startZ : 150,
+      posX : 0,
+      posY : 10,
+      posZ : 50,
     },
 
 

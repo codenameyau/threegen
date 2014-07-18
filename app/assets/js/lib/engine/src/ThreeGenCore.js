@@ -32,6 +32,7 @@ ThreeGen.prototype.start = function() {
   this.addToDOM(this.renderer.domElement);
 
   // Initialize: Threejs Camera
+  this.cameraMode = 0;
   this.camera = new THREE.TargetCamera(
     settings.CAMERA.fov,
     aspectRatio,

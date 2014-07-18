@@ -3,8 +3,8 @@ threegen
 
 Three.js game engine
 
-* [Wiki Documentation](https://github.com/codenameyau/threegen/wiki)
 * [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
+* [Wiki Documentation (Coming Soon)](https://github.com/codenameyau/threegen/wiki)
 
 
 ##ThreeGen Architecture
@@ -13,7 +13,7 @@ Three.js game engine
 * [+] Clock system
 * [+] Keyboard input
 * [+] Clock pause and resume
-* [+] Utilities
+* [+] Custom keybindings
 * World model
 * Mouse input
 * Audio system
@@ -24,24 +24,30 @@ Three.js game engine
 * [+] Three.js renderer
 * [+] TargetCamera perspective
 * [+] Lighting
-* Animation system
+* Keyframe animation system
 
 ###Physics Engine
-* [+] Updater (incomplete)
 * [+] Gravity
-* Entity movement
 * Collision detection
+* Entity movement
 
 ###Utilities
-* [+] Debug grid
+* [+] Debug floor grid
 * [+] FPS/MS stats moniter
 * Basic math functions
 * Dot product tests
 
-###Entities
+###Player Entity
 * [+] Player target cam
 * [+] Player 'wasd' movement
 * [+] Player jumping
+* [+] Custom keybindings
+* [+] Player collision detection
+* Player POV camera
+
+###Entities
+* [+] Entity creation
+* [+] Entity destruction
 * Entity health/stats
 
 ###Resource Loader

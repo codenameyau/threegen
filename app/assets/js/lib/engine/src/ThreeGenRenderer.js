@@ -1,5 +1,5 @@
 /*-------JSHint Directive---------*/
-/* global ThreeGen                */
+/* global THREE, ThreeGen         */
 /*--------------------------------*/
 'use strict';
 
@@ -30,10 +30,29 @@ ThreeGen.prototype.animateScene = function() {
 };
 
 
+/***********************
+ * Rendering Utilities *
+ ***********************/
 ThreeGen.prototype.resizeWindow = function() {
   this.camera.aspect = window.innerWidth / window.innerHeight;
   this.camera.updateProjectionMatrix();
   this.renderer.setSize(window.innerWidth, window.innerHeight);
+};
+
+
+ThreeGen.prototype.setPlayerCamera = function(position) {
+  var posX = this.checkProperty(position, 'posX', 0);
+  var posY = this.checkProperty(position, 'posY', 0);
+  var posZ = this.checkProperty(position, 'posZ', 0);
+  this.camera.addTarget({
+    name: 'player',
+    targetObject: this.player,
+    cameraPosition: new THREE.Vector3(posX, posY, posZ),
+    fixed: false,
+    stiffness: 0.1,
+    matchRotation: true
+  });
+  this.camera.setTarget('player');
 };
 
 
