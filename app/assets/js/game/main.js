@@ -11,7 +11,7 @@ var engine = new ThreeGen();
 engine.start();
 
 // Add Lighting
-var lightAmbient = new THREE.HemisphereLight(0x9a9aca, 0x7c7c7c, 0.5);
+var lightAmbient = new THREE.HemisphereLight(0x8c8cac, 0x7c7c7c, 0.5);
 engine.scene.add(lightAmbient);
 
 var lightSource = new THREE.DirectionalLight( 0x888888 );
@@ -29,14 +29,14 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-engine.addEntity(smallCrate, {posX: 0, posZ: 20});
+var crate = engine.addEntity(smallCrate, {posX: 0, posZ: 20});
 engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
 engine.addEntity(mediumCrate, {posX: -20, posY: 40});
+engine.setPlayer(crate);
 
 // Load android model and set it to player
 var modelName = 'android';
 engine.loadModel(modelName, 'android-animation.js', function() {
-  var settings = {animated: true, posY: 0, base: 0};
-  var android = engine.addEntity(engine.getModel(modelName), settings);
-  engine.setPlayer(android);
+  var settings = {posY: 0, posZ: -20, base: 0};
+  engine.addEntity(engine.getModel(modelName), settings);
 });

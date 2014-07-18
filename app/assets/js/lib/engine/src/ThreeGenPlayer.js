@@ -31,7 +31,7 @@ ThreeGen.prototype.updatePlayer = function() {
   if (!this.player) {return;}
 
   // Update animation for walking
-  if (this.keyboard.pressed('w') || this.keyboard.pressed('s') || this.keyboard.pressed('a')) {
+  if (this.keyboard.pressed('w') || this.keyboard.pressed('s')) {
     this.player.animation.walking = true;
   }
   else {
