@@ -24,23 +24,22 @@ function ThreeGen() {
     // Settings: Files paths
     PATHS : {
       textures : 'assets/js/game/res/texture/',
-      models : 'assets/js/game/res/models/',
-      sound : 'assets/js/game/res/sound/',
+      models   : 'assets/js/game/res/models/',
+      sound    : 'assets/js/game/res/sound/',
     },
 
 
     // Settings: Camera
     CAMERA : {
-      mode : 0, // 0 -> target, 1 -> pov
-      fov : 45,
-      near : 0.5,
-      far : 3000,
-      startX : 0,
-      startY : 100,
-      startZ : 150,
-      posX : 0,
-      posY : 10,
-      posZ : 50,
+      fov     : 35,
+      near    : 0.5,
+      far     : 3000,
+      startX  : 0,
+      startY  : 100,
+      startZ  : 150,
+      posX    : 0,
+      posY    : 10,
+      posZ    : 50,
     },
 
 
@@ -52,12 +51,12 @@ function ThreeGen() {
 
     // Settings: Player
     PLAYER : {
-      frontSpeed : 35,
-      backSpeed : 25,
-      jumpMultiplier : 5.0,
-      airMultiplier : 1.0,
-      rotationMultiplier : 2.0,
+      airMultiplier         : 1.0,
       airRotationMultiplier : 0.2,
+      rotationMultiplier    : 1.5,
+      jumpMultiplier        : 5.0,
+      frontSpeed            : 35,
+      backSpeed             : 25,
     },
 
 
@@ -66,7 +65,7 @@ function ThreeGen() {
 
       // Add any type of stats
       stats : {
-        health : 10,
+        health  : 10,
         stamina : 10,
       },
 

@@ -24,19 +24,6 @@ ThreeGen.prototype.updatePlayer = function() {
     this.player.animation.walking = false;
   }
 
-  // Check for camera pov
-  if (this.keyboard.pressed(this.settings.KEYS.pov)) {
-    this.camera.addTarget({
-      name: 'player',
-      targetObject: this.player,
-      cameraPosition: new THREE.Vector3(0, 20, 0),
-      fixed: false,
-      stiffness: 0.1,
-      matchRotation: true
-    });
-    this.camera.setTarget('player');
-  }
-
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (!this.player.falling) {

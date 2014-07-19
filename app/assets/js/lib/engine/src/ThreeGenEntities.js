@@ -78,7 +78,6 @@ ThreeGen.prototype.deleteModel = function(modelName) {
 
 
 ThreeGen.prototype.scaleEntity = function(object, options) {
-
   // Scale object dimensions
   var scaleX = this.checkProperty(options, 'scaleX', 1);
   var scaleY = this.checkProperty(options, 'scaleY', 1);

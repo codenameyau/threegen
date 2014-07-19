@@ -24,18 +24,12 @@ Three.js game engine
 * [+] Three.js renderer
 * [+] TargetCamera perspective
 * [+] Lighting
-* Keyframe animation system
+* Keyframe animations
 
 ###Physics Engine
 * [+] Gravity
 * Collision detection
 * Entity movement
-
-###Utilities
-* [+] Debug floor grid
-* [+] FPS/MS stats moniter
-* Basic math functions
-* Dot product tests
 
 ###Player Entity
 * [+] Player target cam
@@ -55,6 +49,12 @@ Three.js game engine
 * [+] Json model
 * Audio effects
 * Music loop
+
+###Utilities
+* [+] Debug floor grid
+* [+] FPS/MS stats moniter
+* Basic math functions
+* Dot product tests
 
 ###Game
 * Documentation
