@@ -47,6 +47,9 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
   object.stats = this.settings.ENTITIES.stats;
 
+  // Configure collision raycaster
+  this.setCollisionDetection(object);
+
   // Configure animations
   object.animation = {
     offset : 0,
@@ -98,3 +101,13 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   };
 };
 
+
+ThreeGen.prototype.setCollisionDetection = function(object, rayLength) {
+  rayLength = rayLength || 3;
+  object.path = {
+    front : new THREE.Raycaster(object.position, new THREE.Vector3(0,  0, -1), 0, rayLength),
+    back  : new THREE.Raycaster(object.position, new THREE.Vector3(0,  0,  1), 0, rayLength),
+    left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1, 0,  0), 0, rayLength),
+    right : new THREE.Raycaster(object.position, new THREE.Vector3(1,  0,  0), 0, rayLength),
+  };
+};

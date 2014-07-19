@@ -19,7 +19,7 @@ lightSource.position.set(0, 0.2, 0.5);
 engine.scene.add(lightSource);
 
 // Enable floor grid
-engine.enableFloorGrid(120, 5, 0x22AA22);
+engine.enableFloorGrid(140, 10, 0x22AA22);
 
 // Define crate properties
 var smallBoxGeometry = new THREE.BoxGeometry(5, 5, 5);

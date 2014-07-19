@@ -26,6 +26,7 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
+    this.checkPlayerCollision();
     if (!this.player.falling) {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed *
         this.settings.PLAYER.airMultiplier * this.clock.delta);
@@ -83,23 +84,32 @@ ThreeGen.prototype.updatePlayer = function() {
 };
 
 
+// ThreeGen.prototype.checkPlayerCollision = function() {
+//   var localVertex, globalVertex, directionVector, collisions;
+
+//   for (var i=0; i < this.player.geometry.vertices.length; i++) {
+//     // Perform ray casting collision detection
+//     localVertex = this.player.geometry.vertices[i].clone();
+//     globalVertex = localVertex.applyMatrix4( this.player.matrix );
+//     directionVector = globalVertex.sub( this.player.position );
+//     this.player.caster = new THREE.Raycaster(this.player.position, directionVector.normalize());
+//     collisions = this.player.caster.intersectObjects(this.entities);
+
+//     // Case: collision detected
+//     if (collisions.length > 0 && collisions[0].distance < directionVector.length()) {
+//       console.log('hit');
+//     }
+
+//   }
+// };
+
+
 ThreeGen.prototype.checkPlayerCollision = function() {
-  var localVertex, globalVertex, directionVector, collisions;
-
-  for (var i=0; i < this.player.geometry.vertices.length; i++) {
-    // Perform ray casting collision detection
-    localVertex = this.player.geometry.vertices[i].clone();
-    globalVertex = localVertex.applyMatrix4( this.player.matrix );
-    directionVector = globalVertex.sub( this.player.position );
-    this.player.caster = new THREE.Raycaster(this.player.position, directionVector.normalize());
-    collisions = this.player.caster.intersectObjects(this.entities);
-
-    // Case: collision detected
-    if (collisions.length > 0 && collisions[0].distance < directionVector.length()) {
-      console.log('hit');
+  for (var direction in this.player.path) {
+    var ray = this.player.path[direction];
+    var obstacles = ray.intersectObjects(this.entities);
+    if (obstacles.length > 0) {
+      console.log(direction);
     }
-
   }
 };
-
-
