@@ -43,15 +43,15 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var animDuration = this.checkProperty(options, 'duration', 1000);
   var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
 
-  // Extend Threejs mesh object
+  // Extend entity properties
   object.falling = this.checkProperty(options, 'falling', true);
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
   object.stats = this.settings.ENTITIES.stats;
 
-  // Configure collision raycaster
-  this._setCollisionDetection(object);
+  // Extend entity methods
+  this._extendEntityMethods(object);
 
   // Configure animations
   object.animation = {
@@ -100,7 +100,7 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // this.player.animation.walking = true;
 
   // Check for collision with other entities
-  if (!this.checkCollision(entity)) {
+  if (!this.checkCollision(entity, direction)) {
     var posX = entity.position.x + distance * direction.x;
     var posY = entity.position.y + distance * direction.y;
     var posZ = entity.position.z + distance * direction.z;
@@ -113,14 +113,7 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 /***************************
  * Entity Internal Methods *
  ***************************/
-ThreeGen.prototype._setCollisionDetection = function(object, rayLength) {
-  rayLength = rayLength || 3.5;
-  object.path = {
-    front : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0, -1), 0, rayLength),
-    back  : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0,  1), 0, rayLength),
-    left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1,  0,  0), 0, rayLength),
-    right : new THREE.Raycaster(object.position, new THREE.Vector3( 1,  0,  0), 0, rayLength),
-  };
+ThreeGen.prototype._extendEntityMethods = function(object) {
 
   object.direction = function(vector) {
     var matrix = new THREE.Matrix4();

@@ -4,7 +4,8 @@ threegen
 Three.js game engine
 
 * [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
-* [Wiki Documentation (Coming Soon)](https://github.com/codenameyau/threegen/wiki)
+* [Game Demo source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
+* [Documentation (Coming Soon)](https://github.com/codenameyau/threegen/wiki)
 
 
 ##ThreeGen Architecture
@@ -29,7 +30,7 @@ Three.js game engine
 ####Physics Engine
 * [+] Gravity
 * [+] Entity movement
-* Collision detection
+* [+] Raycasting collision detection
 
 ####Player Entity
 * [+] Player target cam
