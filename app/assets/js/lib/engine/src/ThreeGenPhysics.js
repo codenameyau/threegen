@@ -14,8 +14,8 @@ ThreeGen.prototype.enablePhysics = function() {
 
 ThreeGen.prototype.checkCollision = function(entity) {
   var ray, obstacles;
-  for (var direction in entity.path) {
-    ray = entity.path[direction];
+  for (var direction in entity.rays) {
+    ray = entity.rays[direction];
     obstacles = ray.intersectObjects(this.entities);
     if (obstacles.length > 0) {
       return true;

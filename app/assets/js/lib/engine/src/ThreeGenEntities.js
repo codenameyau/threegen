@@ -93,18 +93,34 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
 
 ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
-  if this.checkCollision(entity) {
+  // [TODO] Animate entity
 
+  // Check for collision with other entities
+  if (!this.checkCollision(entity)) {
+    var posX = entity.position.x;
+    var posY = entity.position.y;
+    var posZ = entity.position.z;
+    console.log(entity.position);
+    entity.translateZ(-this.settings.PLAYER.frontSpeed * this.clock.delta);
   }
+
 };
 
 
 ThreeGen.prototype.setCollisionDetection = function(object, rayLength) {
   rayLength = rayLength || 3;
-  object.path = {
-    front : new THREE.Raycaster(object.position, new THREE.Vector3(0,  0, -1), 0, rayLength),
-    back  : new THREE.Raycaster(object.position, new THREE.Vector3(0,  0,  1), 0, rayLength),
-    left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1, 0,  0), 0, rayLength),
-    right : new THREE.Raycaster(object.position, new THREE.Vector3(1,  0,  0), 0, rayLength),
+  // [TODO] Switch to RH rule
+  object.directions = {
+    front : new THREE.Vector3( 0,  0, -1),
+    back  : new THREE.Vector3( 0,  0,  1),
+    left  : new THREE.Vector3(-1,  0,  0),
+    right : new THREE.Vector3( 1,  0,  0),
   };
+  object.rays = {
+    front : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0, -1), 0, rayLength),
+    back  : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0,  1), 0, rayLength),
+    left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1,  0,  0), 0, rayLength),
+    right : new THREE.Raycaster(object.position, new THREE.Vector3( 1,  0,  0), 0, rayLength),
+  };
+  console.log(object);
 };

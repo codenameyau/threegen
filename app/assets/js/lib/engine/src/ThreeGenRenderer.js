@@ -20,7 +20,6 @@ ThreeGen.prototype.animateScene = function() {
   // Update player
   if (this.player) {
     this.updatePlayer();
-    this.checkPlayerCollision();
   }
 
   // this.animateEntities();

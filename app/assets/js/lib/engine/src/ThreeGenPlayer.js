@@ -16,23 +16,21 @@ ThreeGen.prototype.setPlayer = function(entity) {
 
 ThreeGen.prototype.updatePlayer = function() {
 
-  // Update animation for walking
-  if (this.keyboard.pressed(this.settings.KEYS.up) || this.keyboard.pressed(this.settings.KEYS.down)) {
-    this.player.animation.walking = true;
-  }
-  else {
-    this.player.animation.walking = false;
-  }
+  // // Update animation for walking
+  // if (this.keyboard.pressed(this.settings.KEYS.up) || this.keyboard.pressed(this.settings.KEYS.down)) {
+  //   this.player.animation.walking = true;
+  // }
+  // else {
+  //   this.player.animation.walking = false;
+  // }
 
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (!this.player.falling) {
-      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
-        this.settings.PLAYER.airMultiplier * this.clock.delta);
+      this.moveEntity(this.player);
     }
     else {
-      this.player.translateZ(-this.settings.PLAYER.frontSpeed *
-        this.clock.delta);
+      this.player.translateZ(-this.settings.PLAYER.frontSpeed * this.clock.delta);
     }
   }
 
