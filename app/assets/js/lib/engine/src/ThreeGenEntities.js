@@ -101,12 +101,17 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 
   // Check for collision with other entities
   if (!this.checkCollision(entity, direction)) {
-    var posX = entity.position.x + distance * direction.x;
-    var posY = entity.position.y + distance * direction.y;
-    var posZ = entity.position.z + distance * direction.z;
-    entity.position.set(posX, posY, posZ);
+    this.translateEntity(entity, distance, direction);
   }
 
+};
+
+
+ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
+  var posX = entity.position.x + distance * direction.x;
+  var posY = entity.position.y + distance * direction.y;
+  var posZ = entity.position.z + distance * direction.z;
+  entity.position.set(posX, posY, posZ);
 };
 
 

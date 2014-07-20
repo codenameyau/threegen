@@ -23,10 +23,11 @@ ThreeGen.prototype.applyGravity = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
 
+    if (!this.checkCollision(entity, this.directions.down)) {
+      entity.falling = true;
+    }
+
     if (entity.falling) {
-
-
-      // Check for collision while falling
       if (this.checkCollision(entity, this.directions.down)) {
         entity.falling = false;
         entity.velocity.y = 0;
@@ -34,9 +35,8 @@ ThreeGen.prototype.applyGravity = function() {
 
       else {
         entity.velocity.y += entity.acceleration.y * this.clock.delta;
-        this.moveEntity(entity, entity.velocity.y * this.clock.delta, entity.direction(this.directions.up));
+        this.translateEntity(entity, entity.velocity.y * this.clock.delta, entity.direction(this.directions.up));
       }
-
 
       if (entity.belowPosition(entity.dimensions.base)) {
         entity.moveToBaseHeight();
