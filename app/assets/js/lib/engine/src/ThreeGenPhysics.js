@@ -23,34 +23,30 @@ ThreeGen.prototype.applyGravity = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
 
-    if (!this.checkCollision(entity, this.directions.down)) {
-      entity.falling = true;
-    }
-
     if (entity.falling) {
+      // Check if obstacle under entity
       if (this.checkCollision(entity, this.directions.down)) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
 
-      else {
-        entity.velocity.y += entity.acceleration.y * this.clock.delta;
-        this.translateEntity(entity, entity.velocity.y * this.clock.delta, entity.direction(this.directions.up));
-      }
-
-      if (entity.belowPosition(entity.dimensions.base)) {
+      // Set minimum position at object base height
+      else if (entity.belowPosition(entity.dimensions.base)) {
         entity.moveToBaseHeight();
       }
 
+      // Falling object
+      else {
+        entity.velocity.y += entity.acceleration.y * this.clock.delta;
+        this.translateEntity(entity, entity.velocity.y * this.clock.delta,
+          entity.direction(this.directions.up));
+      }
     }
 
+    // Obstacle no longer under entity
+    else if (!this.checkCollision(entity, this.directions.down)) {
+      entity.falling = true;
+    }
   }
 };
 
-
-ThreeGen.prototype.getDirectionVector = function(entity, direction) {
-  var matrix = new THREE.Matrix4();
-  matrix.extractRotation( entity.matrix );
-  direction.applyMatrix4(matrix);
-  return direction;
-};

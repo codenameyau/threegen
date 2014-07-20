@@ -122,9 +122,10 @@ ThreeGen.prototype._extendEntityMethods = function(object) {
 
   object.direction = function(vector) {
     var matrix = new THREE.Matrix4();
+    var direction = vector.clone();
     matrix.extractRotation(this.matrix);
-    vector.applyMatrix4(matrix);
-    return vector;
+    direction.applyMatrix4(matrix);
+    return direction;
   };
 
   object.moveToBaseHeight = function() {

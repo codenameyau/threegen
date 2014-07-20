@@ -30,12 +30,12 @@ ThreeGen.prototype.updatePlayer = function() {
     if (this.player.falling) {
       this.moveEntity(this.player,
         this.player.stats.frontSpeed * this.player.stats.airSpeed * this.clock.delta,
-        this.player.direction( new THREE.Vector3(0, 0, -1) ));
+        this.player.direction( this.directions.front ));
     }
     else {
       this.moveEntity(this.player,
         this.player.stats.frontSpeed * this.clock.delta,
-        this.player.direction( new THREE.Vector3(0, 0, -1) ));
+        this.player.direction( this.directions.front ));
     }
   }
 
@@ -44,12 +44,12 @@ ThreeGen.prototype.updatePlayer = function() {
     if (this.player.falling) {
       this.moveEntity(this.player,
         this.player.stats.backSpeed * this.player.stats.airSpeed * this.clock.delta,
-        this.player.direction( new THREE.Vector3(0, 0, 1) ));
+        this.player.direction( this.directions.back ));
     }
     else {
       this.moveEntity(this.player,
         this.player.stats.backSpeed * this.clock.delta,
-        this.player.direction( new THREE.Vector3(0, 0, 1) ));
+        this.player.direction( this.directions.back ));
     }
   }
 
@@ -76,6 +76,7 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'space' - jump
   if (this.keyboard.pressed(this.settings.KEYS.jump) && !this.player.falling) {
     this.player.velocity.y += this.player.dimensions.height * this.player.stats.jumpBoost;
+    this.moveEntity(this.player, this.player.velocity.y*this.clock.delta, this.directions.up);
     this.player.falling = true;
   }
 
