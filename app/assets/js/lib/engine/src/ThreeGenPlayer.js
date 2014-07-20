@@ -27,7 +27,14 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (!this.player.falling) {
-      this.moveEntity(this.player);
+      var matrix = new THREE.Matrix4();
+      matrix.extractRotation( this.player.matrix );
+      var direction = new THREE.Vector3( 0, 0, -1 );
+      matrix.multiplyVector3( direction );
+
+      this.moveEntity(this.player,
+        this.settings.PLAYER.frontSpeed * this.clock.delta,
+        direction);
     }
     else {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed * this.clock.delta);

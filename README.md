@@ -55,6 +55,7 @@ Three.js game engine
 * [+] FPS/MS stats moniter
 * Basic math functions
 * Dot product tests
+* Numerical solver
 
 ###Game
 * Documentation
@@ -70,6 +71,7 @@ Three.js game engine
 * [Jason Gregory - Game Engine Architecture (Jun 2009)](http://www.gameenginebook.com/index.html)
 * [Christer Ericson - Real-time Collision Detection (Dec 2004)](http://realtimecollisiondetection.net/)
 * [Ian Millington - Game Physics Engine Development (Jul 2010)](http://procyclone.com/)
+* [Jim Hefferon - Linear Algebra (Free Text)](http://joshua.smcvt.edu/linearalgebra/)
 
 ####Topics
 * [Udacity - Interactive 3D Graphics](https://www.udacity.com/course/cs291)
