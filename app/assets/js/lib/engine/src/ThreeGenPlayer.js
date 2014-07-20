@@ -27,9 +27,13 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (!this.player.falling) {
-      this.player.move(
-        this.settings.PLAYER.fontSpeed * this.clock.delta,
-        this.getDirectionVector(this.player, this.directions.front));
+
+      var matrix = new THREE.Matrix4();
+      var direction = new THREE.Vector3( 0, 0, -1 );
+      matrix.extractRotation(this.player.matrix);
+      direction.applyMatrix4(matrix);
+      this.moveEntity(this.player, this.settings.PLAYER.frontSpeed * this.clock.delta, direction);
+
     }
     else {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed * this.clock.delta);
@@ -81,24 +85,4 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Update children of player
 };
-
-
-// ThreeGen.prototype.checkPlayerCollision = function() {
-//   var localVertex, globalVertex, directionVector, collisions;
-
-//   for (var i=0; i < this.player.geometry.vertices.length; i++) {
-//     // Perform ray casting collision detection
-//     localVertex = this.player.geometry.vertices[i].clone();
-//     globalVertex = localVertex.applyMatrix4( this.player.matrix );
-//     directionVector = globalVertex.sub( this.player.position );
-//     this.player.caster = new THREE.Raycaster(this.player.position, directionVector.normalize());
-//     collisions = this.player.caster.intersectObjects(this.entities);
-
-//     // Case: collision detected
-//     if (collisions.length > 0 && collisions[0].distance < directionVector.length()) {
-//       console.log('hit');
-//     }
-
-//   }
-// };
 

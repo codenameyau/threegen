@@ -4,6 +4,9 @@
 'use strict';
 
 
+/*************************
+ * Entity Public Methods *
+ *************************/
 ThreeGen.prototype.getEntity = function(id) {
   return this.entities[id];
 };
@@ -48,7 +51,7 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.stats = this.settings.ENTITIES.stats;
 
   // Configure collision raycaster
-  this.setCollisionDetection(object);
+  this._setCollisionDetection(object);
 
   // Configure animations
   object.animation = {
@@ -61,28 +64,6 @@ ThreeGen.prototype.addEntity = function(object, options) {
     interpolation : animDuration / animKeyFrames,
     lastKeyFrame : 0,
     currentKeyFrame : 0,
-  };
-
-  // Method: move entity
-  object.move = function(distance, direction) {
-    // Check for collision with other entities
-    if (!this.checkCollision()) {
-      var posX = this.position.x + distance * direction.x;
-      var posY = this.position.y + distance * direction.y;
-      var posZ = this.position.z + distance * direction.z;
-      this.position.set(posX, posY, posZ);
-    }
-  };
-
-  // Method: check for collisions
-  object.checkCollision = function() {
-    var obstacles;
-    for (var direction in this.rays) {
-      obstacles = this.rays[direction].intersectObjects(this.entities);
-      if (obstacles.length > 0) {
-        return true;
-      }
-    }
   };
 
   // Add entity to scene
@@ -114,21 +95,24 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
-// ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
-//   // [TODO] Animate entity
+ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
+  // [TODO] Animate entity
 
-//   // Check for collision with other entities
-//   if (!this.checkCollision(entity)) {
-//     var posX = entity.position.x + distance * direction.x;
-//     var posY = entity.position.y + distance * direction.y;
-//     var posZ = entity.position.z + distance * direction.z;
-//     entity.position.set(posX, posY, posZ);
-//   }
+  // Check for collision with other entities
+  if (!this.checkCollision(entity)) {
+    var posX = entity.position.x + distance * direction.x;
+    var posY = entity.position.y + distance * direction.y;
+    var posZ = entity.position.z + distance * direction.z;
+    entity.position.set(posX, posY, posZ);
+  }
 
-// };
+};
 
 
-ThreeGen.prototype.setCollisionDetection = function(object, rayLength) {
+/***************************
+ * Entity Internal Methods *
+ ***************************/
+ThreeGen.prototype._setCollisionDetection = function(object, rayLength) {
   rayLength = rayLength || 3;
   object.rays = {
     front : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0, -1), 0, rayLength),
