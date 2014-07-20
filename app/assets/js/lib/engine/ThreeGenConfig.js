@@ -53,9 +53,9 @@ function ThreeGen() {
     PLAYER : {
       airMultiplier       : 1.0,
       rotationMultiplier  : 2.0,
-      jumpMultiplier      : 7.5,
-      frontSpeed          : 35,
-      backSpeed           : 25,
+      jumpMultiplier      : 8.5,
+      frontSpeed          : 10.0,
+      backSpeed           : 5.5,
     },
 
 
@@ -73,7 +73,7 @@ function ThreeGen() {
 
     // Setting: Physics
     PHYSICS : {
-      gravity : -60,
+      gravity : -80,
     },
 
 
@@ -85,7 +85,15 @@ function ThreeGen() {
       right : 'd',
       jump  : 'space',
       pov   : 'f',
-    }
+    },
 
-  }; // End settings
+
+    // Settings: Help instructions
+    HELP : {
+      enabled : true,
+      description : 'Welcome to the game.',
+    },
+
+
+  };
 }

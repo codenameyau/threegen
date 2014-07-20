@@ -61,6 +61,9 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
 
+  // Initialize: game instructions HUD
+  if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
+
   // Initialize: JSON loader
   this.jsonLoader = new THREE.JSONLoader();
 

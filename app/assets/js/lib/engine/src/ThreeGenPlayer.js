@@ -12,11 +12,11 @@ ThreeGen.prototype.setPlayer = function(entity) {
   var sp = this.settings.PLAYER;
   this.player = entity;
   this.player.stats.airRotation = 0.5 * sp.rotationMultiplier;
-  this.player.stats.airSpeed = sp.airMultiplier;
   this.player.stats.rotationSpeed = sp.rotationMultiplier;
-  this.player.stats.jumpBoost = sp.jumpMultiplier;
-  this.player.stats.frontSpeed = sp.frontSpeed;
-  this.player.stats.backSpeed = sp.backSpeed;
+  this.player.stats.jumpDistance = this.player.dimensions.height * sp.jumpMultiplier;
+  this.player.stats.frontSpeed = this.player.dimensions.length * sp.frontSpeed;
+  this.player.stats.backSpeed = this.player.dimensions.length * sp.backSpeed;
+  this.player.stats.airSpeed = this.player.stats.frontSpeed * sp.airMultiplier;
 
   // Bind camera to player
   this.setPlayerCamera(this.settings.CAMERA);
@@ -29,7 +29,7 @@ ThreeGen.prototype.updatePlayer = function() {
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (this.player.falling) {
       this.moveEntity(this.player,
-        this.player.stats.frontSpeed * this.player.stats.airSpeed * this.clock.delta,
+        this.player.stats.airSpeed * this.clock.delta,
         this.player.direction( this.directions.front ));
     }
     else {
@@ -43,7 +43,7 @@ ThreeGen.prototype.updatePlayer = function() {
   if (this.keyboard.pressed(this.settings.KEYS.down)) {
     if (this.player.falling) {
       this.moveEntity(this.player,
-        this.player.stats.backSpeed * this.player.stats.airSpeed * this.clock.delta,
+        this.player.stats.airSpeed * this.clock.delta,
         this.player.direction( this.directions.back ));
     }
     else {
@@ -75,7 +75,7 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'space' - jump
   if (this.keyboard.pressed(this.settings.KEYS.jump) && !this.player.falling) {
-    this.player.velocity.y += this.player.dimensions.height * this.player.stats.jumpBoost;
+    this.player.velocity.y += this.player.stats.jumpDistance;
     this.moveEntity(this.player, this.player.velocity.y*this.clock.delta, this.directions.up);
     this.player.falling = true;
   }

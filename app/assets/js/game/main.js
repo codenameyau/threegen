@@ -29,12 +29,13 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crate = engine.addEntity(smallCrate, {posX: 0, posY: 60});
-// engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
-engine.addEntity(mediumCrate, {posX: 0, posY: 40});
+var crate = engine.addEntity(smallCrate, {posX: 0, posZ: 40});
+engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
+engine.addEntity(smallCrate.clone(), {posX: 20, posY: 60});
+engine.addEntity(mediumCrate, {posX: -20, posY: 40});
 engine.setPlayer(crate);
 
-// // Load android model and set it to player
+// Load android model and set it to player
 // var modelName = 'android';
 // engine.loadModel(modelName, 'android-animation.js', function() {
 //   var settings = {posY: 0, posZ: -20, base: 0};
