@@ -19,20 +19,29 @@ ThreeGen.prototype.checkCollision = function(entity, directionVector) {
 };
 
 
-ThreeGen.prototype.applyPhysics = function() {
-
+ThreeGen.prototype.applyGravity = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
 
-    // Apply gravity
     if (entity.falling) {
-      entity.position.y += entity.velocity.y * this.clock.delta;
-      entity.velocity.y += entity.acceleration.y * this.clock.delta;
 
-      if (entity.position.y <= entity.dimensions.base) {
+
+      // Check for collision while falling
+      if (this.checkCollision(entity, this.directions.down)) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
+
+      else {
+        entity.velocity.y += entity.acceleration.y * this.clock.delta;
+        this.moveEntity(entity, entity.velocity.y * this.clock.delta, entity.direction(this.directions.up));
+      }
+
+
+      if (entity.belowPosition(entity.dimensions.base)) {
+        entity.moveToBaseHeight();
+      }
+
     }
 
   }

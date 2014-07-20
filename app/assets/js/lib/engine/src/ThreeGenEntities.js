@@ -122,4 +122,14 @@ ThreeGen.prototype._extendEntityMethods = function(object) {
     return vector;
   };
 
+  object.moveToBaseHeight = function() {
+    this.falling = false;
+    this.velocity.y = false;
+    this.position.y = this.dimensions.base;
+  };
+
+  object.belowPosition = function(value) {
+    return this.position.y <= value;
+  };
+
 };

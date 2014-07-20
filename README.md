@@ -11,6 +11,7 @@ Three.js game engine
 ##ThreeGen Architecture
 
 ####Core Engine
+* [+] Engine startup
 * [+] Clock system
 * [+] Keyboard input
 * [+] Clock pause and resume
@@ -20,6 +21,8 @@ Three.js game engine
 * Audio system
 * Loading screens
 * Memory optimization
+* Level loader
+* Engine shutdown
 
 ####Rendering Engine
 * [+] Three.js renderer
@@ -59,6 +62,8 @@ Three.js game engine
 * Numerical solver
 
 ####Game
+* In-game instructions
+* Stats HUD
 * Documentation
 * Scene graph
 * AI support

@@ -71,6 +71,10 @@ ThreeGen.prototype.start = function() {
   this.models = {};
 
   // Setup physics
+  this.directions = {
+    up   : new THREE.Vector3( 0,  1, 0 ),
+    down : new THREE.Vector3( 0, -1, 0 ),
+  };
   this.enablePhysics();
 
   // Run scene
