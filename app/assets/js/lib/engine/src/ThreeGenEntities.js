@@ -97,6 +97,7 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
 ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
+  // this.player.animation.walking = true;
 
   // Check for collision with other entities
   if (!this.checkCollision(entity)) {
@@ -113,11 +114,19 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
  * Entity Internal Methods *
  ***************************/
 ThreeGen.prototype._setCollisionDetection = function(object, rayLength) {
-  rayLength = rayLength || 3;
+  rayLength = rayLength || 3.5;
   object.rays = {
     front : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0, -1), 0, rayLength),
     back  : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0,  1), 0, rayLength),
     left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1,  0,  0), 0, rayLength),
     right : new THREE.Raycaster(object.position, new THREE.Vector3( 1,  0,  0), 0, rayLength),
   };
+
+  object.direction = function(vector) {
+    var matrix = new THREE.Matrix4();
+    matrix.extractRotation(this.matrix);
+    vector.applyMatrix4(matrix);
+    return vector;
+  };
+
 };
