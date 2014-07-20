@@ -1,5 +1,5 @@
 /*-------JSHint Directive---------*/
-/* global ThreeGen                */
+/* global THREE, ThreeGen         */
 /*--------------------------------*/
 'use strict';
 
@@ -12,16 +12,15 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 
-ThreeGen.prototype.checkCollision = function(entity) {
-  var ray, obstacles;
-  for (var direction in entity.rays) {
-    ray = entity.rays[direction];
-    obstacles = ray.intersectObjects(this.entities);
-    if (obstacles.length > 0) {
-      return true;
-    }
-  }
-};
+// ThreeGen.prototype.checkCollision = function(entity) {
+//   var obstacles;
+//   for (var direction in entity.rays) {
+//     obstacles = entity.rays[direction].intersectObjects(this.entities);
+//     if (obstacles.length > 0) {
+//       return true;
+//     }
+//   }
+// };
 
 
 ThreeGen.prototype.applyPhysics = function() {
@@ -43,3 +42,10 @@ ThreeGen.prototype.applyPhysics = function() {
   }
 };
 
+
+ThreeGen.prototype.getDirectionVector = function(entity, direction) {
+  var matrix = new THREE.Matrix4();
+  matrix.extractRotation( entity.matrix );
+  direction.applyMatrix4(matrix);
+  return direction;
+};

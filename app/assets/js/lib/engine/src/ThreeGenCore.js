@@ -61,6 +61,14 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.zIndex = 100;
   this.addToDOM(this.stats.domElement);
 
+  // Initialize: Direction vectors
+  this.directions = {
+    front : new THREE.Vector3( 0,  0, -1),
+    back  : new THREE.Vector3( 0,  0,  1),
+    left  : new THREE.Vector3(-1,  0,  0),
+    right : new THREE.Vector3( 1,  0,  0),
+  };
+
   // Initialize: JSON loader
   this.jsonLoader = new THREE.JSONLoader();
 

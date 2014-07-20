@@ -63,6 +63,28 @@ ThreeGen.prototype.addEntity = function(object, options) {
     currentKeyFrame : 0,
   };
 
+  // Method: move entity
+  object.move = function(distance, direction) {
+    // Check for collision with other entities
+    if (!this.checkCollision()) {
+      var posX = this.position.x + distance * direction.x;
+      var posY = this.position.y + distance * direction.y;
+      var posZ = this.position.z + distance * direction.z;
+      this.position.set(posX, posY, posZ);
+    }
+  };
+
+  // Method: check for collisions
+  object.checkCollision = function() {
+    var obstacles;
+    for (var direction in this.rays) {
+      obstacles = this.rays[direction].intersectObjects(this.entities);
+      if (obstacles.length > 0) {
+        return true;
+      }
+    }
+  };
+
   // Add entity to scene
   this.entities.push(object);
   this.scene.add(object);
@@ -92,23 +114,18 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
-  // [TODO] Animate entity
+// ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
+//   // [TODO] Animate entity
 
-  // Check for collision with other entities
-  if (!this.checkCollision(entity)) {
-    // Translate object
-    // var v = direction.multiplyScalar(distance);
-    // var p = entity.position.add(v);
-    // entity.position = p;
-    var posX = entity.position.x + distance * direction.x;
-    var posY = entity.position.y + distance * direction.y;
-    var posZ = entity.position.z + distance * direction.z;
-    entity.position.set(posX, posY, posZ);
-    // entity.translateZ(-this.settings.PLAYER.frontSpeed * this.clock.delta);
-  }
+//   // Check for collision with other entities
+//   if (!this.checkCollision(entity)) {
+//     var posX = entity.position.x + distance * direction.x;
+//     var posY = entity.position.y + distance * direction.y;
+//     var posZ = entity.position.z + distance * direction.z;
+//     entity.position.set(posX, posY, posZ);
+//   }
 
-};
+// };
 
 
 ThreeGen.prototype.setCollisionDetection = function(object, rayLength) {
