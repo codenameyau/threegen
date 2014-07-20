@@ -12,14 +12,9 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 
-ThreeGen.prototype.checkCollision = function(entity) {
-  var obstacles;
-  for (var direction in entity.rays) {
-    obstacles = entity.rays[direction].intersectObjects(this.entities);
-    if (obstacles.length > 0) {
-      return true;
-    }
-  }
+ThreeGen.prototype.checkCollision = function(entity, direction) {
+  var obstacles = entity.path[direction].intersectObjects(this.entities);
+  return (obstacles.length > 0) ? true : false;
 };
 
 

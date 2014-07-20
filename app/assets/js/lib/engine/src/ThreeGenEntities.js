@@ -115,7 +115,7 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
  ***************************/
 ThreeGen.prototype._setCollisionDetection = function(object, rayLength) {
   rayLength = rayLength || 3.5;
-  object.rays = {
+  object.path = {
     front : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0, -1), 0, rayLength),
     back  : new THREE.Raycaster(object.position, new THREE.Vector3( 0,  0,  1), 0, rayLength),
     left  : new THREE.Raycaster(object.position, new THREE.Vector3(-1,  0,  0), 0, rayLength),

@@ -9,7 +9,7 @@ Three.js game engine
 
 ##ThreeGen Architecture
 
-###Core Engine
+####Core Engine
 * [+] Clock system
 * [+] Keyboard input
 * [+] Clock pause and resume
@@ -20,44 +20,44 @@ Three.js game engine
 * Loading screens
 * Memory optimization
 
-###Rendering Engine
+####Rendering Engine
 * [+] Three.js renderer
 * [+] TargetCamera perspective
 * [+] Lighting
 * Keyframe animations
 
-###Physics Engine
+####Physics Engine
 * [+] Gravity
+* [+] Entity movement
 * Collision detection
-* Entity movement
 
-###Player Entity
+####Player Entity
 * [+] Player target cam
 * [+] Player 'wasd' movement
 * [+] Player jumping
 * [+] Custom keybindings
 * [+] Player collision detection
-* Player POV camera
+* [+] Player POV camera
 
-###Entities
+####Entities
 * [+] Entity creation
 * [+] Entity destruction
 * Entity health/stats
 
-###Resource Loader
+####Resource Loader
 * [+] Mesh texture
 * [+] Json model
 * Audio effects
 * Music loop
 
-###Utilities
+####Utilities
 * [+] Debug floor grid
 * [+] FPS/MS stats moniter
 * Basic math functions
 * Dot product tests
 * Numerical solver
 
-###Game
+####Game
 * Documentation
 * Scene graph
 * AI support

@@ -27,28 +27,28 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
-    if (!this.player.falling) {
+    if (this.player.falling) {
       this.moveEntity(this.player,
-        this.player.stats.frontSpeed * this.clock.delta,
+        this.player.stats.frontSpeed * this.player.stats.airSpeed * this.clock.delta,
         this.player.direction( new THREE.Vector3(0, 0, -1) ));
     }
     else {
       this.moveEntity(this.player,
-        this.player.stats.frontSpeed * this.player.stats.airSpeed * this.clock.delta,
+        this.player.stats.frontSpeed * this.clock.delta,
         this.player.direction( new THREE.Vector3(0, 0, -1) ));
     }
   }
 
   // Key: 'down' - move back
   if (this.keyboard.pressed(this.settings.KEYS.down)) {
-    if (!this.player.falling) {
+    if (this.player.falling) {
       this.moveEntity(this.player,
-        this.player.stats.backSpeed * this.clock.delta,
+        this.player.stats.backSpeed * this.player.stats.airSpeed * this.clock.delta,
         this.player.direction( new THREE.Vector3(0, 0, 1) ));
     }
     else {
       this.moveEntity(this.player,
-        this.player.stats.backSpeed * this.player.stats.airSpeed * this.clock.delta,
+        this.player.stats.backSpeed * this.clock.delta,
         this.player.direction( new THREE.Vector3(0, 0, 1) ));
     }
   }
@@ -79,6 +79,5 @@ ThreeGen.prototype.updatePlayer = function() {
     this.player.falling = true;
   }
 
-  // Update children of player
+  // [TODO] Update children of player
 };
-

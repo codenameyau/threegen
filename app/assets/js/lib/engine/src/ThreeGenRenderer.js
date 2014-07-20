@@ -22,7 +22,6 @@ ThreeGen.prototype.animateScene = function() {
     this.updatePlayer();
   }
 
-  // this.animateEntities();
   this.applyPhysics();
   this.camera.update();
   this.renderScene();
