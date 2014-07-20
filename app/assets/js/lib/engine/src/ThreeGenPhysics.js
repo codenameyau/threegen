@@ -12,6 +12,18 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 
+ThreeGen.prototype.checkCollision = function(entity) {
+  var ray, obstacles;
+  for (var direction in entity.path) {
+    ray = entity.path[direction];
+    obstacles = ray.intersectObjects(this.entities);
+    if (obstacles.length > 0) {
+      return true;
+    }
+  }
+};
+
+
 ThreeGen.prototype.applyPhysics = function() {
 
   for (var i in this.entities) {
@@ -30,3 +42,4 @@ ThreeGen.prototype.applyPhysics = function() {
 
   }
 };
+

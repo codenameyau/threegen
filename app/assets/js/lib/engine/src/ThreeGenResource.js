@@ -35,3 +35,13 @@ ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
     });
   }
 };
+
+
+ThreeGen.prototype.getModel = function(modelName) {
+  return this.models[modelName];
+};
+
+
+ThreeGen.prototype.deleteModel = function(modelName) {
+  delete this.models[modelName];
+};

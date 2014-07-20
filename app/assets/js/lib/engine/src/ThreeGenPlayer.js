@@ -26,7 +26,6 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
-    this.checkPlayerCollision();
     if (!this.player.falling) {
       this.player.translateZ(-this.settings.PLAYER.frontSpeed *
         this.settings.PLAYER.airMultiplier * this.clock.delta);
@@ -103,13 +102,3 @@ ThreeGen.prototype.updatePlayer = function() {
 //   }
 // };
 
-
-ThreeGen.prototype.checkPlayerCollision = function() {
-  for (var direction in this.player.path) {
-    var ray = this.player.path[direction];
-    var obstacles = ray.intersectObjects(this.entities);
-    if (obstacles.length > 0) {
-      console.log(direction);
-    }
-  }
-};

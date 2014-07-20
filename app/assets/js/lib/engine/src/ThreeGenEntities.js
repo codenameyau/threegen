@@ -70,16 +70,6 @@ ThreeGen.prototype.addEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.getModel = function(modelName) {
-  return this.models[modelName];
-};
-
-
-ThreeGen.prototype.deleteModel = function(modelName) {
-  delete this.models[modelName];
-};
-
-
 ThreeGen.prototype.scaleEntity = function(object, options) {
   // Scale object dimensions
   var scaleX = this.checkProperty(options, 'scaleX', 1);
@@ -99,6 +89,13 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
     length : scaleZ * (boundMax.z - boundMin.z),
     base   : scaleY * baseHeight,
   };
+};
+
+
+ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
+  if this.checkCollision(entity) {
+
+  }
 };
 
 
