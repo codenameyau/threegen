@@ -39,7 +39,7 @@ function ThreeGen() {
       startZ  : 150,
       posX    : 0,
       posY    : 10,
-      posZ    : 50,
+      posZ    : 70,
     },
 
 

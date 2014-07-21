@@ -29,7 +29,7 @@ ThreeGen.prototype.start = function() {
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
   this.renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(this.renderer.domElement);
+  this.addToDOM(this.settings.META.domElement, this.renderer.domElement);
 
   // Initialize: Threejs Camera
   this.camera = new THREE.TargetCamera(
@@ -59,7 +59,7 @@ ThreeGen.prototype.start = function() {
   this.stats.domElement.style.position = 'absolute';
   this.stats.domElement.style.top = '0px';
   this.stats.domElement.style.zIndex = 100;
-  this.addToDOM(this.stats.domElement);
+  this.addToDOM(this.settings.META.domElement, this.stats.domElement);
 
   // Initialize: game instructions HUD
   if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
