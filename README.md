@@ -1,7 +1,7 @@
 threegen
 ========
 
-Three.js game engine
+Three.js game engine. Lots more to come! [Boilerplate Demo](https://codenameyau.github.io/threegen)
 
 * [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
 * [Game Demo source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
@@ -62,8 +62,9 @@ Three.js game engine
 * Numerical solver
 
 ####Game
-* In-game instructions
-* Stats HUD
+* [+] Game instructions HUD
+* Health HUD
+* Status HUD
 * Documentation
 * Scene graph
 * AI support

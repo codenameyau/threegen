@@ -14,14 +14,15 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   // HUD Container style
   var container = document.createElement('div');
   container.className = 'threegen-help-container';
-  container.style.width = '150px';
+  container.style.width = '180px';
   container.style.zIndex = '120';
-  container.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  container.style.backgroundColor = 'rgba(0, 0, 0, 0)';
   container.style.position = 'fixed';
   container.style.right = '0';
   container.style.top = '0';
   container.style.padding = '0 15px 10px 15px';
   container.style.letterSpacing = '1px';
+  container.style.fontFamily = 'Helvetica';
 
   // HUD Label style
   var label = document.createElement('h5');
@@ -30,7 +31,7 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   label.style.letterSpacing = '2px';
   label.style.textTransform = 'uppercase';
   label.style.textAlign = 'center';
-  label.style.color = 'rgba(150, 150, 150, 0.5)';
+  label.style.color = 'rgba(180, 180, 180, 0.2)';
   label.style.cursor = 'pointer';
   container.appendChild(label);
 
@@ -38,8 +39,9 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   var body = document.createElement('div');
   body.className = 'threegen-help-body';
   body.innerText = instructions.description;
-  body.style.lineHeight = '20px';
-  body.style.fontSize = '12px';
+  body.style.color = 'rgba(160, 160, 160, 0.8)';
+  body.style.lineHeight = '30px';
+  body.style.fontSize = '13px';
   body.style.display = 'none';
   container.appendChild(body);
 
@@ -49,16 +51,18 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   };
 
   // HUD Label events
-  label.onmouseover = function() {
-    this.style.color = 'rgba(150, 150, 150, 0.8)';
+  label.onmouseenter = function() {
+    this.style.color = 'rgba(200, 200, 200, 0.9)';
+    container.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     body.style.display = 'block';
   };
 
   label.onmouseleave = function() {
     this.style.color = 'rgba(150, 150, 150, 0.5)';
+    container.style.backgroundColor = 'rgba(0, 0, 0, 0)';
     body.style.display = 'none';
   };
 
-
+  // Add container to dom
   this.addToDOM(this.settings.META.domElement, container);
 };

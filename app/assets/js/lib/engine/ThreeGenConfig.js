@@ -13,11 +13,8 @@ function ThreeGen() {
 
     // Settings: Game
     META : {
-      // DOM element name
       domElement : 'canvas-body',
-
-      // Stats: 0 -> fps, 1 -> ms
-      statsMode : 1,
+      statsMode : 1, // 0 -> fps, 1 -> ms
     },
 
 
@@ -38,7 +35,7 @@ function ThreeGen() {
       startY  : 100,
       startZ  : 150,
       posX    : 0,
-      posY    : -20,
+      posY    : 10,
       posZ    : 70,
     },
 
