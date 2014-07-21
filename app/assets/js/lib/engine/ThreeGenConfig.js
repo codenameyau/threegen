@@ -38,7 +38,7 @@ function ThreeGen() {
       startY  : 100,
       startZ  : 150,
       posX    : 0,
-      posY    : 10,
+      posY    : -20,
       posZ    : 70,
     },
 
@@ -91,7 +91,7 @@ function ThreeGen() {
     // Settings: Help instructions
     HELP : {
       enabled : true,
-      description : 'Welcome to the game.',
+      description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F`',
     },
 
 

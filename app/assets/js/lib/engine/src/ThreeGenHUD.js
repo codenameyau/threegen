@@ -8,28 +8,57 @@
  * HUD Game Instructions *
  *************************/
 ThreeGen.prototype.enableInstructionsHUD = function() {
+  // [TODO] Make Help HUD into an customizable API
   var instructions = this.settings.HELP;
 
-  // HUD Container
+  // HUD Container style
   var container = document.createElement('div');
-  container.style.width = '100px';
-  container.style.height = '100px';
+  container.className = 'threegen-help-container';
+  container.style.width = '150px';
   container.style.zIndex = '120';
-  container.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  container.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
   container.style.position = 'fixed';
-  container.style.right = '50px';
+  container.style.right = '0';
   container.style.top = '0';
+  container.style.padding = '0 15px 10px 15px';
+  container.style.letterSpacing = '1px';
+
+  // HUD Label style
+  var label = document.createElement('h5');
+  label.className = 'threegen-help-label';
+  label.innerHTML = 'Instructions';
+  label.style.letterSpacing = '2px';
+  label.style.textTransform = 'uppercase';
+  label.style.textAlign = 'center';
+  label.style.color = 'rgba(150, 150, 150, 0.5)';
+  label.style.cursor = 'pointer';
+  container.appendChild(label);
+
+  // HUD body style
+  var body = document.createElement('div');
+  body.className = 'threegen-help-body';
+  body.innerText = instructions.description;
+  body.style.lineHeight = '20px';
+  body.style.fontSize = '12px';
+  body.style.display = 'none';
+  container.appendChild(body);
+
+  // HUD Container events
   container.onclick = function() {
     console.log('clicked');
   };
 
-  // HUD Label
-  var label = document.createElement('h5');
-  label.innerHTML = 'Instructions';
-  label.style.letterSpacing = '2px';
-  label.style.textTransform = 'uppercase';
-  label.style.color = '#fafafa';
-  container.appendChild(label);
+  // HUD Label events
+  label.onmouseover = function() {
+    this.style.color = 'rgba(150, 150, 150, 0.8)';
+    body.style.display = 'block';
+  };
+
+  label.onmouseleave = function() {
+    this.style.color = 'rgba(150, 150, 150, 0.5)';
+    body.style.display = 'none';
+  };
+
 
   this.addToDOM(this.settings.META.domElement, container);
 };
