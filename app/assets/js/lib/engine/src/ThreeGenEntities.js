@@ -95,6 +95,14 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
+ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
+  var posX = entity.position.x + distance * direction.x;
+  var posY = entity.position.y + distance * direction.y;
+  var posZ = entity.position.z + distance * direction.z;
+  entity.position.set(posX, posY, posZ);
+};
+
+
 ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
   // this.player.animation.walking = true;
@@ -104,14 +112,6 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   if (!this.checkCollision(entity, direction)) {
     this.translateEntity(entity, distance, direction);
   }
-};
-
-
-ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
-  var posX = entity.position.x + distance * direction.x;
-  var posY = entity.position.y + distance * direction.y;
-  var posZ = entity.position.z + distance * direction.z;
-  entity.position.set(posX, posY, posZ);
 };
 
 

@@ -3,7 +3,7 @@
  * MIT License (c) 2014
  *
  * Description:
- * Reusuable gulpfile for simple javascript projects
+ * Contains scripts for an automated workflow
  *
  * Installation:
  * (1) Install node.js and gulp globally

@@ -22,9 +22,6 @@ ThreeGen.prototype.start = function() {
 
   // Initialize: Threejs Scene
   this.scene = new THREE.Scene();
-  window.addEventListener('resize', this.resizeWindow.bind(this), false);
-  window.addEventListener('focus', this.resumeClock.bind(this), false);
-  window.addEventListener('blur', this.pauseClock.bind(this), false);
 
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
@@ -51,8 +48,8 @@ ThreeGen.prototype.start = function() {
   // Initialize: Keyboard controls
   this.keyboard = new THREEx.KeyboardState();
 
-  // Initialize: Keyboard input listener
-  window.addEventListener('keydown', this.keyboardInput.bind(this), false);
+  // Initialize: Event listeners
+  this._enableEventListeners();
 
   // Initialize: FPS/ms moniter
   this.stats = new Stats();
@@ -121,23 +118,48 @@ ThreeGen.prototype.keyboardInput = function() {
 
   // Listener: Toggle pov
   if (this.keyboard.pressed(this.settings.KEYS.pov)) {
-    // Set mode to 'pov'
-    if (this.camera.mode === 0) {
-      this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height+2, posZ: 0});
-      this.camera.mode = 1;
-    }
-
-    // Set mode to 'target'
-    else if (this.camera.mode === 1) {
-      this.setPlayerCamera(this.settings.CAMERA);
-      this.camera.mode = 0;
-    }
+    this.togglePOV();
   }
 
   // Listener: Pause game and open menu
   else if (this.keyboard.pressed(this.settings.KEYS.menu)) {
-    if (this.renderer.running) { this.pauseGame(); }
-    else { this.resumeGame(); }
+    this.togglePause();
   }
 
+};
+
+
+ThreeGen.prototype.togglePOV = function() {
+  // Set mode to 'pov'
+  if (this.camera.mode === 0) {
+    this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height+2, posZ: 0});
+    this.camera.mode = 1;
+  }
+
+  // Set mode to 'target'
+  else if (this.camera.mode === 1) {
+    this.setPlayerCamera(this.settings.CAMERA);
+    this.camera.mode = 0;
+  }
+};
+
+
+ThreeGen.prototype.togglePause = function() {
+  if (this.renderer.running) {
+    this.pauseGame();
+  }
+  else {
+    this.resumeGame();
+  }
+};
+
+
+/********************************
+ * Core Engine Internal Methods *
+ ********************************/
+ThreeGen.prototype._enableEventListeners = function() {
+  window.addEventListener('resize', this.resizeWindow.bind(this), false);
+  window.addEventListener('focus', this.resumeClock.bind(this), false);
+  window.addEventListener('blur', this.pauseClock.bind(this), false);
+  window.addEventListener('keydown', this.keyboardInput.bind(this), false);
 };
