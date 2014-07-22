@@ -11,14 +11,13 @@ function ThreeGen() {
 
   this.settings = {
 
-    // Settings: Game
+    // Internal info
     META : {
       domElement : 'canvas-body',
-      statsMode : 1, // 0 -> fps, 1 -> ms
     },
 
 
-    // Settings: Files paths
+    // Files paths
     PATHS : {
       textures : 'assets/js/game/res/texture/',
       models   : 'assets/js/game/res/models/',
@@ -26,7 +25,7 @@ function ThreeGen() {
     },
 
 
-    // Settings: Camera
+    // Camera
     CAMERA : {
       fov     : 35,
       near    : 0.5,
@@ -40,13 +39,13 @@ function ThreeGen() {
     },
 
 
-    // Settings: Renderer
+    // Renderer
     RENDERER : {
       antialias : false,
     },
 
 
-    // Settings: Player
+    // Player
     PLAYER : {
       airMultiplier       : 1.0,
       rotationMultiplier  : 2.0,
@@ -56,7 +55,7 @@ function ThreeGen() {
     },
 
 
-    // Settings: Entities
+    // Entities
     ENTITIES : {
 
       // Add any type of stats
@@ -68,13 +67,13 @@ function ThreeGen() {
     },
 
 
-    // Setting: Physics
+    // Physics
     PHYSICS : {
       gravity : -80,
     },
 
 
-    // Settings: Key bindings
+    // Key bindings
     KEYS : {
       up    : 'w',
       left  : 'a',
@@ -86,7 +85,14 @@ function ThreeGen() {
     },
 
 
-    // Settings: Help instructions
+    // FPS Stats moniter
+    STATS : {
+      enabled : true,
+      mode : 1, // 0 -> fps, 1 -> ms
+    },
+
+
+    // Help instructions
     HELP : {
       enabled : true,
       description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F` \nPause with `Esc`',

@@ -1,7 +1,21 @@
 /*-------JSHint Directive---------*/
-/* global ThreeGen                */
+/* global ThreeGen, Stats         */
 /*--------------------------------*/
 'use strict';
+
+
+/*************************
+ * HUD FPS Stats Moniter *
+ *************************/
+ThreeGen.prototype.enableStatsMoniter = function() {
+  this.stats = new Stats();
+  this.stats.setMode(this.settings.STATS.mode);
+  this.stats.domElement.style.position = 'absolute';
+  this.stats.domElement.style.top  = '0';
+  this.stats.domElement.style.left = '0';
+  this.stats.domElement.style.zIndex = 100;
+  this.addToDOM(this.settings.META.domElement, this.stats.domElement);
+};
 
 
 /*************************

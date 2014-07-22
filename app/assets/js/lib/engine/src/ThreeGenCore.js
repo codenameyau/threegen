@@ -1,6 +1,5 @@
 /*-------JSHint Directive---------*/
-/* global THREE, THREEx           */
-/* global ThreeGen, Stats         */
+/* global THREE, THREEx, ThreeGen */
 /*--------------------------------*/
 'use strict';
 
@@ -51,15 +50,8 @@ ThreeGen.prototype.start = function() {
   // Initialize: Event listeners
   this._enableEventListeners();
 
-  // Initialize: FPS/ms moniter
-  this.stats = new Stats();
-  this.stats.setMode(this.settings.META.statsMode);
-  this.stats.domElement.style.position = 'absolute';
-  this.stats.domElement.style.top = '0px';
-  this.stats.domElement.style.zIndex = 100;
-  this.addToDOM(this.settings.META.domElement, this.stats.domElement);
-
-  // Initialize: game instructions HUD
+  // Initialize: HUD
+  if (this.settings.STATS.enabled) { this.enableStatsMoniter(); }
   if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
 
   // Initialize: JSON loader
