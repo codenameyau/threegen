@@ -25,7 +25,7 @@ ThreeGen.prototype.start = function() {
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
   this.renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(this.settings.META.domElement, this.renderer.domElement);
+  this.addToDOM(this.renderer.domElement);
   this.renderer.running = true;
 
   // Initialize: Threejs Camera
@@ -51,8 +51,7 @@ ThreeGen.prototype.start = function() {
   this._enableEventListeners();
 
   // Initialize: HUD
-  if (this.settings.STATS.enabled) { this.enableStatsMoniter(); }
-  if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
+  this._initializeHUD();
 
   // Initialize: JSON loader
   this.jsonLoader = new THREE.JSONLoader();
@@ -91,6 +90,7 @@ ThreeGen.prototype.pauseClock = function() {
 
 
 ThreeGen.prototype.resumeGame = function() {
+  this.HUD.paused.style.display = 'none';
   this.renderer.running = true;
   this.resumeClock();
   window.requestAnimationFrame(this.animateScene.bind(this));
@@ -98,6 +98,7 @@ ThreeGen.prototype.resumeGame = function() {
 
 
 ThreeGen.prototype.pauseGame = function() {
+  this.HUD.paused.style.display = 'block';
   this.renderer.running = false;
   this.pauseClock();
 };
@@ -154,4 +155,12 @@ ThreeGen.prototype._enableEventListeners = function() {
   window.addEventListener('focus', this.resumeClock.bind(this), false);
   window.addEventListener('blur', this.pauseClock.bind(this), false);
   window.addEventListener('keydown', this.keyboardInput.bind(this), false);
+};
+
+
+ThreeGen.prototype._initializeHUD = function() {
+  this.HUD = {};
+  if (this.settings.STATS.enabled) { this.enableStatsMoniter(); }
+  if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
+  this.enablePausedHUD();
 };

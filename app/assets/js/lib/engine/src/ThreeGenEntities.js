@@ -80,17 +80,15 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   var scaleZ = this.checkProperty(options, 'scaleZ', 1);
   object.scale.set(scaleX, scaleY, scaleZ);
 
-  // Compute geometry bounds and dimensions
+  // Re-compute geometry bounds and dimensions
   object.geometry.computeBoundingSphere();
   object.geometry.computeBoundingBox();
-  var boundMin = object.geometry.boundingBox.min;
-  var boundMax = object.geometry.boundingBox.max;
-  var baseHeight = this.checkProperty(options, 'base', (boundMax.y - boundMin.y)/2);
+  object.geometry.computeVertexNormals();
   object.dimensions = {
-    width  : scaleX * (boundMax.x - boundMin.x),
-    height : scaleY * (boundMax.y - boundMin.y),
-    length : scaleZ * (boundMax.z - boundMin.z),
-    base   : scaleY * baseHeight,
+    width  : scaleX * object.geometry.parameters.width,
+    height : scaleY * object.geometry.parameters.height,
+    length : scaleZ * object.geometry.parameters.depth,
+    base   : scaleY * object.geometry.parameters.height/2,
   };
 };
 

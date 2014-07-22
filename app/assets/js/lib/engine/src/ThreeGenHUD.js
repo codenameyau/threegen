@@ -14,7 +14,7 @@ ThreeGen.prototype.enableStatsMoniter = function() {
   this.stats.domElement.style.top  = '0';
   this.stats.domElement.style.left = '0';
   this.stats.domElement.style.zIndex = 100;
-  this.addToDOM(this.settings.META.domElement, this.stats.domElement);
+  this.addToDOM(this.stats.domElement);
 };
 
 
@@ -78,5 +78,29 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   };
 
   // Add container to dom
-  this.addToDOM(this.settings.META.domElement, container);
+  this.addToDOM(container);
+  this.HUD.instructions = container;
+};
+
+
+/************************
+ * HUD Game Paused Menu *
+ ************************/
+ThreeGen.prototype.enablePausedHUD = function() {
+  var message = 'Paused';
+  var container = document.createElement('div');
+  container.className = 'threegen-paused';
+  container.style.display = 'none';
+  container.style.zIndex = '125';
+  container.style.width = '100%';
+  container.style.position = 'absolute';
+  container.style.top = '40%';
+  container.style.textAlign = 'center';
+  container.style.color = 'rgba(200, 200, 200, 0.5)';
+  container.style.textTransform = 'uppercase';
+  container.style.fontSize = '30px';
+  container.style.letterSpacing = '8px';
+  container.innerText = message;
+  this.addToDOM(container);
+  this.HUD.paused = container;
 };

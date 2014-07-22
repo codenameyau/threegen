@@ -7,8 +7,8 @@
 /*********************
  * Utility Functions *
  *********************/
-ThreeGen.prototype.addToDOM = function(element, object) {
-  var container = document.getElementById(element);
+ThreeGen.prototype.addToDOM = function(object) {
+  var container = document.getElementById(this.settings.META.domElement);
   container.appendChild(object);
 };
 

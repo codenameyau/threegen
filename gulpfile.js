@@ -1,6 +1,7 @@
 /*!
  * gulpfile.js
  * MIT License (c) 2014
+ * codenameyau.github.io
  *
  * Description:
  * Contains scripts for an automated workflow
