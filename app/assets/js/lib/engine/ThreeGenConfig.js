@@ -89,7 +89,7 @@ function ThreeGen() {
     // Settings: Help instructions
     HELP : {
       enabled : true,
-      description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F`',
+      description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F` \nPause with `Esc`',
     },
 
 

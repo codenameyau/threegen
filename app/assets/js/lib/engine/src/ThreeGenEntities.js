@@ -96,10 +96,15 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
 
 ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
-  var posX = entity.position.x + distance * direction.x;
-  var posY = entity.position.y + distance * direction.y;
-  var posZ = entity.position.z + distance * direction.z;
+  var posX = entity.position.x + distance * direction.x * this.clock.delta;
+  var posY = entity.position.y + distance * direction.y * this.clock.delta;
+  var posZ = entity.position.z + distance * direction.z * this.clock.delta;
   entity.position.set(posX, posY, posZ);
+};
+
+
+ThreeGen.prototype.rotateEntity = function(entity, value) {
+  entity.rotation.y += value * this.clock.delta;
 };
 
 
@@ -115,6 +120,8 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 };
 
 
+
+
 /***************************
  * Entity Internal Methods *
  ***************************/
@@ -128,7 +135,7 @@ ThreeGen.prototype._extendEntityMethods = function(object) {
     return direction;
   };
 
-  object.moveToBaseHeight = function() {
+  object.translateBaseHeight = function() {
     this.falling = false;
     this.velocity.y = false;
     this.position.y = this.dimensions.base;

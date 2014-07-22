@@ -32,14 +32,13 @@ ThreeGen.prototype.applyGravity = function() {
 
       // Set minimum position at object base height
       else if (entity.belowPosition(entity.dimensions.base)) {
-        entity.moveToBaseHeight();
+        entity.translateBaseHeight();
       }
 
       // Falling object
       else {
-        entity.velocity.y += entity.acceleration.y * this.clock.delta;
-        this.translateEntity(entity, entity.velocity.y * this.clock.delta,
-          entity.direction(this.directions.up));
+        this.accelerateY(entity);
+        this.translateEntity(entity, entity.velocity.y, entity.direction(this.directions.up));
       }
     }
 
@@ -50,3 +49,17 @@ ThreeGen.prototype.applyGravity = function() {
   }
 };
 
+
+ThreeGen.prototype.accelerateX = function(entity) {
+  entity.velocity.x += entity.acceleration.x * this.clock.delta;
+};
+
+
+ThreeGen.prototype.accelerateY = function(entity) {
+  entity.velocity.y += entity.acceleration.y * this.clock.delta;
+};
+
+
+ThreeGen.prototype.accelerateZ = function(entity) {
+  entity.velocity.z += entity.acceleration.z * this.clock.delta;
+};
