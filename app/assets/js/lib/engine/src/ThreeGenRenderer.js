@@ -13,18 +13,20 @@ ThreeGen.prototype.renderScene = function() {
 
 
 ThreeGen.prototype.animateScene = function() {
-  window.requestAnimationFrame(this.animateScene.bind(this));
-  this.clock.delta = this.clock.getDelta();
-  this.stats.update();
+  if (this.renderer.running) {
+    window.requestAnimationFrame(this.animateScene.bind(this));
+    this.clock.delta = this.clock.getDelta();
+    this.stats.update();
 
-  // Update player
-  if (this.player) {
-    this.updatePlayer();
+    // Update player
+    if (this.player) {
+      this.updatePlayer();
+    }
+
+    this.applyGravity();
+    this.camera.update();
+    this.renderScene();
   }
-
-  this.applyGravity();
-  this.camera.update();
-  this.renderScene();
 };
 
 

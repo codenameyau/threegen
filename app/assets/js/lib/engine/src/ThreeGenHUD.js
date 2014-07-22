@@ -31,7 +31,7 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   label.style.letterSpacing = '2px';
   label.style.textTransform = 'uppercase';
   label.style.textAlign = 'center';
-  label.style.color = 'rgba(180, 180, 180, 0.2)';
+  label.style.color = 'rgba(180, 180, 180, 0.5)';
   label.style.cursor = 'pointer';
   container.appendChild(label);
 

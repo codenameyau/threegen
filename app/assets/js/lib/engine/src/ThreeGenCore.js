@@ -30,6 +30,7 @@ ThreeGen.prototype.start = function() {
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
   this.renderer.setSize(canvasWidth, canvasHeight);
   this.addToDOM(this.settings.META.domElement, this.renderer.domElement);
+  this.renderer.running = true;
 
   // Initialize: Threejs Camera
   this.camera = new THREE.TargetCamera(
@@ -100,6 +101,19 @@ ThreeGen.prototype.pauseClock = function() {
 };
 
 
+ThreeGen.prototype.resumeGame = function() {
+  this.renderer.running = true;
+  this.resumeClock();
+  window.requestAnimationFrame(this.animateScene.bind(this));
+};
+
+
+ThreeGen.prototype.pauseGame = function() {
+  this.renderer.running = false;
+  this.pauseClock();
+};
+
+
 /*******************************
  * Core Engine Input Listeners *
  *******************************/
@@ -118,6 +132,12 @@ ThreeGen.prototype.keyboardInput = function() {
       this.setPlayerCamera(this.settings.CAMERA);
       this.camera.mode = 0;
     }
+  }
+
+  // Listener: Pause game and open menu
+  else if (this.keyboard.pressed(this.settings.KEYS.menu)) {
+    if (this.renderer.running) { this.pauseGame(); }
+    else { this.resumeGame(); }
   }
 
 };

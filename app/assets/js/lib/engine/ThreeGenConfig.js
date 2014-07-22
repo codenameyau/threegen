@@ -81,6 +81,7 @@ function ThreeGen() {
       down  : 's',
       right : 'd',
       jump  : 'space',
+      menu  : 'escape',
       pov   : 'f',
     },
 

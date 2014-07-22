@@ -99,11 +99,11 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
   // this.player.animation.walking = true;
 
+  console.log(entity);
   // Check for collision with other entities
   if (!this.checkCollision(entity, direction)) {
     this.translateEntity(entity, distance, direction);
   }
-
 };
 
 
