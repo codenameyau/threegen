@@ -160,7 +160,7 @@ ThreeGen.prototype._enableEventListeners = function() {
 
 ThreeGen.prototype._initializeHUD = function() {
   this.HUD = {};
-  if (this.settings.STATS.enabled) { this.enableStatsMoniter(); }
-  if (this.settings.HELP.enabled) { this.enableInstructionsHUD(); }
-  this.enablePausedHUD();
+  if (this.settings.HUD.FPS.enabled) { this.enableStatsMoniter(); }
+  if (this.settings.HUD.HELP.enabled) { this.enableInstructionsHUD(); }
+  if (this.settings.HUD.PAUSE.enabled) { this.enablePausedHUD(); }
 };

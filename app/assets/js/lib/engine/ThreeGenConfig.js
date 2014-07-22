@@ -85,19 +85,25 @@ function ThreeGen() {
     },
 
 
-    // FPS Stats moniter
-    STATS : {
-      enabled : true,
-      mode : 1, // 0 -> fps, 1 -> ms
+    // HTML HUD
+    HUD : {
+
+      FPS : {
+        enabled : true,
+        mode : 1, // 0 -> fps, 1 -> ms
+      },
+
+      HELP : {
+        enabled : true,
+        description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F` \nPause with `Esc`',
+      },
+
+      PAUSE : {
+        enabled : true,
+        message : 'Paused',
+      },
+
     },
-
-
-    // Help instructions
-    HELP : {
-      enabled : true,
-      description : 'Welcome to ThreeGen! \nMove with WASD keys \nJump with spacebar \nToggle POV with `F` \nPause with `Esc`',
-    },
-
 
   };
 }

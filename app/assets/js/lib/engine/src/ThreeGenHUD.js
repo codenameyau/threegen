@@ -9,7 +9,7 @@
  *************************/
 ThreeGen.prototype.enableStatsMoniter = function() {
   this.stats = new Stats();
-  this.stats.setMode(this.settings.STATS.mode);
+  this.stats.setMode(this.settings.HUD.FPS.mode);
   this.stats.domElement.style.position = 'absolute';
   this.stats.domElement.style.top  = '0';
   this.stats.domElement.style.left = '0';
@@ -23,7 +23,7 @@ ThreeGen.prototype.enableStatsMoniter = function() {
  *************************/
 ThreeGen.prototype.enableInstructionsHUD = function() {
   // [TODO] Make Help HUD into an customizable API
-  var instructions = this.settings.HELP;
+  var instructions = this.settings.HUD.HELP;
 
   // HUD Container style
   var container = document.createElement('div');
@@ -87,7 +87,7 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
  * HUD Game Paused Menu *
  ************************/
 ThreeGen.prototype.enablePausedHUD = function() {
-  var message = 'Paused';
+  var settings = this.settings.HUD.PAUSE;
   var container = document.createElement('div');
   container.className = 'threegen-paused';
   container.style.display = 'none';
@@ -100,7 +100,7 @@ ThreeGen.prototype.enablePausedHUD = function() {
   container.style.textTransform = 'uppercase';
   container.style.fontSize = '30px';
   container.style.letterSpacing = '8px';
-  container.innerText = message;
+  container.innerText = settings.message;
   this.addToDOM(container);
   this.HUD.paused = container;
 };
