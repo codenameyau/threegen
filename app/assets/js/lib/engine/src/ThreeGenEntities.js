@@ -81,9 +81,7 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   object.scale.set(scaleX, scaleY, scaleZ);
 
   // Re-compute geometry bounds and dimensions
-  object.geometry.computeBoundingSphere();
-  object.geometry.computeBoundingBox();
-  object.geometry.computeVertexNormals();
+  console.log(object);
   object.dimensions = {
     width  : scaleX * object.geometry.parameters.width,
     height : scaleY * object.geometry.parameters.height,

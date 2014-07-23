@@ -20,7 +20,7 @@ ThreeGen.prototype.applyGravity = function() {
     if (entity.falling) {
 
       // Check if obstacle under entity
-      if (this.checkCollision(entity, this.directions.down[0])) {
+      if (this.checkCollision(entity, this.directions.down.slice(-1)[0])) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
@@ -33,7 +33,7 @@ ThreeGen.prototype.applyGravity = function() {
       // Falling object
       else {
         this.accelerateY(entity);
-        this.moveEntity(entity, -entity.velocity.y, this.directions.down);
+        this.translateEntity(entity, -entity.velocity.y, this.directions.down.slice(-1)[0]);
       }
     }
 

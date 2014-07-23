@@ -39,3 +39,4 @@ ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   this.scene.add(new THREE.Line(floorGrid, gridLine, THREE.LinePieces),
     {posY: 0});
 };
+

@@ -169,20 +169,32 @@ ThreeGen.prototype._initializeDirections = function() {
     front : [
       new THREE.Vector3( 1,  0, -1 ),
       new THREE.Vector3(-1,  0, -1 ),
+      new THREE.Vector3( 0,  1, -1 ),
+      new THREE.Vector3( 0, -1, -1 ),
+      new THREE.Vector3( 0, -0.5, -1 ),
       new THREE.Vector3( 0,  0, -1 ),
     ],
 
     back : [
       new THREE.Vector3( 1,  0,  1 ),
       new THREE.Vector3(-1,  0,  1 ),
+      new THREE.Vector3( 0,  1,  1 ),
+      new THREE.Vector3( 0, -1,  1 ),
+      new THREE.Vector3( 0, -0.5,  1 ),
       new THREE.Vector3( 0,  0,  1 ),
     ],
 
     up : [
+      new THREE.Vector3( 1,  1,  0 ),
+      new THREE.Vector3(-1,  1,  0 ),
       new THREE.Vector3( 0,  1,  0 ),
     ],
 
     down : [
+      new THREE.Vector3( 1, -1,  0 ),
+      new THREE.Vector3(-1, -1,  0 ),
+      new THREE.Vector3( 0, -1,  1 ),
+      new THREE.Vector3( 0, -1, -1 ),
       new THREE.Vector3( 0, -1,  0 ),
     ],
 
