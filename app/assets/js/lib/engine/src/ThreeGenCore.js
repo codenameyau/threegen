@@ -162,22 +162,29 @@ ThreeGen.prototype._initializeHUD = function() {
 
 
 ThreeGen.prototype._initializeDirections = function() {
-  this.directionVectors = [
-    // XZ plane counter clockwise
-    new THREE.Vector3( 0,  0,  1 ),
-    new THREE.Vector3( 1,  0,  1 ),
-    new THREE.Vector3( 1,  0,  0 ),  // unused
-    new THREE.Vector3( 1,  0, -1 ),
-    new THREE.Vector3( 0,  0, -1 ),
-    new THREE.Vector3(-1,  0, -1 ),
-    new THREE.Vector3(-1,  0,  0 ),  // unused
-    new THREE.Vector3(-1,  0,  1 ),
-  ];
 
+  // Draw vectors to understand
   this.directions = {
-    up    : [],
-    down  : [],
-    front : [],
-    back  : [],
+
+    front : [
+      new THREE.Vector3( 1,  0, -1 ),
+      new THREE.Vector3(-1,  0, -1 ),
+      new THREE.Vector3( 0,  0, -1 ),
+    ],
+
+    back : [
+      new THREE.Vector3( 1,  0,  1 ),
+      new THREE.Vector3(-1,  0,  1 ),
+      new THREE.Vector3( 0,  0,  1 ),
+    ],
+
+    up : [
+      new THREE.Vector3( 0,  1,  0 ),
+    ],
+
+    down : [
+      new THREE.Vector3( 0, -1,  0 ),
+    ],
+
   };
 };

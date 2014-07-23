@@ -33,24 +33,20 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (this.player.falling) {
-      this.moveEntity(this.player, this.player.movement.airSpeed,
-        this.player.direction( this.directions.front ));
+      this.moveEntity(this.player, this.player.movement.airSpeed, this.directions.front);
     }
     else {
-      this.moveEntity(this.player, this.player.movement.frontSpeed,
-        this.player.direction( this.directions.front ));
+      this.moveEntity(this.player, this.player.movement.frontSpeed, this.directions.front);
     }
   }
 
   // Key: 'down' - move back
   if (this.keyboard.pressed(this.settings.KEYS.down)) {
     if (this.player.falling) {
-      this.moveEntity(this.player, this.player.movement.airSpeed,
-        this.player.direction( this.directions.back ));
+      this.moveEntity(this.player, this.player.movement.airSpeed, this.directions.back);
     }
     else {
-      this.moveEntity(this.player, this.player.movement.backSpeed,
-        this.player.direction( this.directions.back ));
+      this.moveEntity(this.player, this.player.movement.backSpeed, this.directions.back);
     }
   }
 

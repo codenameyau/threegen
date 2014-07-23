@@ -12,13 +12,6 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 
-ThreeGen.prototype.checkCollision = function(entity, directionVector) {
-  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 2.5);
-  var obstacles = ray.intersectObjects(this.entities);
-  return (obstacles.length > 0) ? true : false;
-};
-
-
 ThreeGen.prototype.applyGravity = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
@@ -38,7 +31,7 @@ ThreeGen.prototype.applyGravity = function() {
       // Falling object
       else {
         this.accelerateY(entity);
-        this.translateEntity(entity, entity.velocity.y, entity.direction(this.directions.up));
+        this.translateEntity(entity, entity.velocity.y, this.directions.up);
       }
     }
 

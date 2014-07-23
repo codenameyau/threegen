@@ -32,7 +32,7 @@ var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 var crate = engine.addEntity(smallCrate, {posX: 0, posZ: 40});
 engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40});
 engine.addEntity(smallCrate.clone(), {posX: 20, posY: 60});
-engine.addEntity(mediumCrate, {posX: -20, posY: 40});
+engine.addEntity(mediumCrate, {posX: -20, posY: 0});
 engine.setPlayer(crate);
 
 // Load android model and set it to player
