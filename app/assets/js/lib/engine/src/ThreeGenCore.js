@@ -48,7 +48,7 @@ ThreeGen.prototype.start = function() {
   this.keyboard = new THREEx.KeyboardState();
 
   // Initialize: Event listeners
-  this._enableEventListeners();
+  this._initializeEventListeners();
 
   // Initialize: HUD
   this._initializeHUD();
@@ -63,12 +63,7 @@ ThreeGen.prototype.start = function() {
   this.models = {};
 
   // Setup physics
-  this.directions = {
-    up    : new THREE.Vector3( 0,  1,  0 ),
-    down  : new THREE.Vector3( 0, -1,  0 ),
-    front : new THREE.Vector3( 0,  0, -1 ),
-    back  : new THREE.Vector3( 0,  0,  1 ),
-  };
+  this._initializeDirections();
   this.enablePhysics();
 
   // Run scene
@@ -150,7 +145,7 @@ ThreeGen.prototype.togglePause = function() {
 /********************************
  * Core Engine Internal Methods *
  ********************************/
-ThreeGen.prototype._enableEventListeners = function() {
+ThreeGen.prototype._initializeEventListeners = function() {
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
   window.addEventListener('focus', this.resumeClock.bind(this), false);
   window.addEventListener('blur', this.pauseClock.bind(this), false);
@@ -163,4 +158,26 @@ ThreeGen.prototype._initializeHUD = function() {
   if (this.settings.HUD.FPS.enabled) { this.enableStatsMoniter(); }
   if (this.settings.HUD.HELP.enabled) { this.enableInstructionsHUD(); }
   if (this.settings.HUD.PAUSE.enabled) { this.enablePausedHUD(); }
+};
+
+
+ThreeGen.prototype._initializeDirections = function() {
+  this.directionVectors = [
+    // XZ plane counter clockwise
+    new THREE.Vector3( 0,  0,  1 ),
+    new THREE.Vector3( 1,  0,  1 ),
+    new THREE.Vector3( 1,  0,  0 ),  // unused
+    new THREE.Vector3( 1,  0, -1 ),
+    new THREE.Vector3( 0,  0, -1 ),
+    new THREE.Vector3(-1,  0, -1 ),
+    new THREE.Vector3(-1,  0,  0 ),  // unused
+    new THREE.Vector3(-1,  0,  1 ),
+  ];
+
+  this.directions = {
+    up    : [],
+    down  : [],
+    front : [],
+    back  : [],
+  };
 };

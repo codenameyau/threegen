@@ -38,11 +38,6 @@ ThreeGen.prototype.addEntity = function(object, options) {
   var aY = this.checkProperty(options, 'aY', this.gravity);
   var aZ = this.checkProperty(options, 'aZ', 0);
 
-  // Set animations
-  var animated =  this.checkProperty(options, 'animated', false);
-  var animDuration = this.checkProperty(options, 'duration', 1000);
-  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
-
   // Extend entity properties
   object.falling = this.checkProperty(options, 'falling', true);
   object.position.set(posX, posY, posZ);
@@ -51,7 +46,12 @@ ThreeGen.prototype.addEntity = function(object, options) {
   object.stats = this.settings.ENTITIES.stats;
 
   // Extend entity methods
-  this._extendEntityMethods(object);
+  this._initializeEntityMethods(object);
+
+  // Set animations
+  var animated =  this.checkProperty(options, 'animated', false);
+  var animDuration = this.checkProperty(options, 'duration', 1000);
+  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
 
   // Configure animations
   object.animation = {
@@ -93,6 +93,13 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
+ThreeGen.prototype.checkCollision = function(entity, directionVector) {
+  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 2.5);
+  var obstacles = ray.intersectObjects(this.entities);
+  return (obstacles.length > 0) ? true : false;
+};
+
+
 ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
   var posX = entity.position.x + distance * direction.x * this.clock.delta;
   var posY = entity.position.y + distance * direction.y * this.clock.delta;
@@ -110,7 +117,6 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
   // this.player.animation.walking = true;
 
-  // console.log(entity);
   // Check for collision with other entities
   if (!this.checkCollision(entity, direction)) {
     this.translateEntity(entity, distance, direction);
@@ -123,7 +129,7 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 /***************************
  * Entity Internal Methods *
  ***************************/
-ThreeGen.prototype._extendEntityMethods = function(object) {
+ThreeGen.prototype._initializeEntityMethods = function(object) {
 
   object.direction = function(vector) {
     var matrix = new THREE.Matrix4();
