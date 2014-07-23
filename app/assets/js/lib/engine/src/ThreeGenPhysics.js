@@ -16,14 +16,16 @@ ThreeGen.prototype.applyGravity = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
 
+    // [TODO] Avoid extra collision checks
     if (entity.falling) {
+
       // Check if obstacle under entity
-      if (this.checkCollision(entity, this.directions.down)) {
+      if (this.checkCollision(entity, this.directions.down[0])) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
 
-      // Set minimum position at object base height
+      // Set minimum Y position
       else if (entity.belowPosition(entity.dimensions.base)) {
         entity.translateBaseHeight();
       }
@@ -31,7 +33,7 @@ ThreeGen.prototype.applyGravity = function() {
       // Falling object
       else {
         this.accelerateY(entity);
-        this.translateEntity(entity, entity.velocity.y, this.directions.up);
+        this.moveEntity(entity, -entity.velocity.y, this.directions.down);
       }
     }
 

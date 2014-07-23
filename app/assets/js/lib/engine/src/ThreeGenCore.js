@@ -163,7 +163,7 @@ ThreeGen.prototype._initializeHUD = function() {
 
 ThreeGen.prototype._initializeDirections = function() {
 
-  // Draw vectors to understand
+  // Draw to visualize
   this.directions = {
 
     front : [
