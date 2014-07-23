@@ -75,24 +75,30 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
 ThreeGen.prototype.scaleEntity = function(object, options) {
   // Scale object dimensions
-  var entityWidth, entityHeight, entityLength;
   var scaleX = this.checkProperty(options, 'scaleX', 1);
   var scaleY = this.checkProperty(options, 'scaleY', 1);
   var scaleZ = this.checkProperty(options, 'scaleZ', 1);
   object.scale.set(scaleX, scaleY, scaleZ);
-  console.log(object);
-  // Handle Object3D
-  if (object instanceof THREE.Object3D) {
-    entityWidth  = 10;
-    entityHeight = 10;
-    entityLength = 10;
-  }
 
-  else {
-    object.computeBoundingBox();
-    entityWidth  = object.geometry.parameters.width;
-    entityHeight = object.geometry.parameters.height;
-    entityLength = object.geometry.parameters.depth;
+  // Compute Mesh dimensions
+  var entityWidth  = this.checkProperty(options, 'width', 5);
+  var entityHeight = this.checkProperty(options, 'height', 5);
+  var entityLength = this.checkProperty(options, 'length', 5);
+  if (object.geometry) {
+
+    // Regular Mesh
+    if (object.geometry.parameters) {
+      entityWidth  = object.geometry.parameters.width;
+      entityHeight = object.geometry.parameters.height;
+      entityLength = object.geometry.parameters.depth;
+    }
+
+    // Object3D
+    else {
+      entityWidth  = this.checkProperty(options, 'width', 5);
+      entityHeight = this.checkProperty(options, 'height', 5);
+      entityLength = this.checkProperty(options, 'length', 5);
+    }
   }
 
   // Re-compute geometry bounds and dimensions

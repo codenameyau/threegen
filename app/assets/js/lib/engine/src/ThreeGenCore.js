@@ -120,7 +120,7 @@ ThreeGen.prototype.keyboardInput = function() {
 ThreeGen.prototype.togglePOV = function() {
   // Set mode to 'pov'
   if (this.camera.mode === 0) {
-    this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height+2, posZ: 0});
+    this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height, posZ: -10});
     this.camera.mode = 1;
   }
 

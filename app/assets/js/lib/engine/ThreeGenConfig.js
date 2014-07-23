@@ -49,7 +49,7 @@ function ThreeGen() {
     PLAYER : {
       airMultiplier       : 1.0,
       rotationMultiplier  : 2.0,
-      jumpMultiplier      : 8.5,
+      jumpMultiplier      : 8.0,
       frontSpeed          : 10.0,
       backSpeed           : 5.5,
     },
