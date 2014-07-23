@@ -47,11 +47,11 @@ function ThreeGen() {
 
     // Player
     PLAYER : {
-      airMultiplier       : 1.0,
-      rotationMultiplier  : 2.0,
-      jumpMultiplier      : 8.0,
-      frontSpeed          : 10.0,
-      backSpeed           : 5.5,
+      rotationMultiplier : 2.0,
+      airMultiplier      : 2.0,
+      jumpHeight         : 32.0,
+      frontSpeed         : 30.0,
+      backSpeed          : 20.0,
     },
 
 

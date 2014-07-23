@@ -112,7 +112,7 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
 
 ThreeGen.prototype.checkCollision = function(entity, directionVector) {
-  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 3);
+  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 2);
   var obstacles = ray.intersectObjects(this.entities);
   return (obstacles.length > 0) ? true : false;
 };

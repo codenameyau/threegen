@@ -24,6 +24,10 @@ ThreeGen.prototype.checkProperty = function(object, property, value) {
 };
 
 
+ThreeGen.prototype.randNumber = function(min, max) {
+  return Math.random() * (max - min) + min;
+};
+
 ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;

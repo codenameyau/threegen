@@ -11,16 +11,16 @@ ThreeGen.prototype.setPlayer = function(entity) {
   // Load player settings
   this.player    = entity;
   var settings   = this.settings.PLAYER;
-  var dimensions = this.player.dimensions;
 
   // Setup player movement stats
   this.player.movement = {
     airRotation : 0.5 * settings.rotationMultiplier,
     rotationSpeed : settings.rotationMultiplier,
-    jumpDistance : dimensions.height * settings.jumpMultiplier,
-    frontSpeed : dimensions.length * settings.frontSpeed,
-    backSpeed : dimensions.length * settings.backSpeed,
-    airSpeed : dimensions.length * settings.frontSpeed * settings.airMultiplier,
+    jumpDistance : settings.jumpHeight,
+    frontSpeed : settings.frontSpeed,
+    backSpeed : settings.backSpeed,
+    airFrontSpeed : settings.frontSpeed * settings.airMultiplier,
+    airBackSpeed : settings.backSpeed * settings.airMultiplier,
   };
 
   // Bind target camera to player
@@ -33,7 +33,7 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'up' - move front
   if (this.keyboard.pressed(this.settings.KEYS.up)) {
     if (this.player.falling) {
-      this.moveEntity(this.player, this.player.movement.airSpeed, this.directions.front);
+      this.moveEntity(this.player, this.player.movement.airFrontSpeed, this.directions.front);
     }
     else {
       this.moveEntity(this.player, this.player.movement.frontSpeed, this.directions.front);
@@ -43,7 +43,7 @@ ThreeGen.prototype.updatePlayer = function() {
   // Key: 'down' - move back
   if (this.keyboard.pressed(this.settings.KEYS.down)) {
     if (this.player.falling) {
-      this.moveEntity(this.player, this.player.movement.airSpeed, this.directions.back);
+      this.moveEntity(this.player, this.player.movement.airBackSpeed, this.directions.back);
     }
     else {
       this.moveEntity(this.player, this.player.movement.backSpeed, this.directions.back);
