@@ -75,18 +75,32 @@ ThreeGen.prototype.addEntity = function(object, options) {
 
 ThreeGen.prototype.scaleEntity = function(object, options) {
   // Scale object dimensions
+  var entityWidth, entityHeight, entityLength;
   var scaleX = this.checkProperty(options, 'scaleX', 1);
   var scaleY = this.checkProperty(options, 'scaleY', 1);
   var scaleZ = this.checkProperty(options, 'scaleZ', 1);
   object.scale.set(scaleX, scaleY, scaleZ);
+  console.log(object);
+  // Handle Object3D
+  if (object instanceof THREE.Object3D) {
+    entityWidth  = 10;
+    entityHeight = 10;
+    entityLength = 10;
+  }
+
+  else {
+    object.computeBoundingBox();
+    entityWidth  = object.geometry.parameters.width;
+    entityHeight = object.geometry.parameters.height;
+    entityLength = object.geometry.parameters.depth;
+  }
 
   // Re-compute geometry bounds and dimensions
-  console.log(object);
   object.dimensions = {
-    width  : scaleX * object.geometry.parameters.width,
-    height : scaleY * object.geometry.parameters.height,
-    length : scaleZ * object.geometry.parameters.depth,
-    base   : scaleY * object.geometry.parameters.height/2,
+    width  : scaleX * entityWidth,
+    height : scaleY * entityHeight,
+    length : scaleZ * entityLength,
+    base   : scaleY * entityHeight/2,
   };
 };
 

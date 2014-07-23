@@ -44,6 +44,7 @@ Three.js game engine. Stay tuned! [Boilerplate Demo](https://codenameyau.github.
 * [+] Custom keybindings
 * [+] Player collision detection
 * [+] Player POV toggle
+* Universal entity for Object3D, Mesh, Model
 
 ####Entities
 * [+] Entity creation

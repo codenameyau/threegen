@@ -7,8 +7,6 @@
 /***********************
  * Game Initialization *
  ***********************/
-
-// [TODO] Full Three.js encapsulation
 var engine = new ThreeGen();
 engine.start();
 
@@ -66,9 +64,9 @@ engine.scene.add(bunny);
 // engine.addEntity(bunny);
 
 // Load android model and set it to player
-// var modelName = 'android';
-// engine.loadModel(modelName, 'android-animation.js', function() {
-//   var settings = {posY: 0, posZ: -20, base: 0};
-//   var android = engine.addEntity(engine.getModel(modelName), settings);
-//   engine.setPlayer(android);
-// });
+var modelName = 'android';
+engine.loadModel(modelName, 'android-animation.js', function() {
+  var settings = {posY: 0, posZ: -20, base: 0};
+  var android = engine.addEntity(engine.getModel(modelName), settings);
+  engine.setPlayer(android);
+});
