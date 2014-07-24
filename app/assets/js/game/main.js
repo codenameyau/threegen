@@ -29,26 +29,31 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-engine.addEntity(smallCrate.clone(), {posX: 20, posY: 40, posZ: 30});
-engine.addEntity(smallCrate.clone(), {posX:  0, posY: 60, posZ: 20});
-engine.addEntity(mediumCrate.clone(), {posX: 0, posY: 60, posZ: 20});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 20, posY: 40, posZ: 30});
+var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 60, posZ: 20});
+var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 60, posZ: 20});
+engine.addEntity(crateA);
+engine.addEntity(crateB);
+engine.addEntity(crateC);
 
 // Add random small crates
-for (var i=0; i<10; i++) {
-  engine.addEntity(smallCrate.clone(), {
+for (var i=0; i<30; i++) {
+  var newCrate = engine.Entity(smallCrate.clone(), {
     posX: engine.randNumber(-25, 25),
-    posY: engine.randNumber(0, 250),
-    posZ: engine.randNumber(-25, 25)
+    posY: engine.randNumber(0, 120),
+    posZ: engine.randNumber(-150, 150)
   });
+  engine.addEntity(newCrate);
 }
 
 // Add random medium crates
-for (var i=0; i<4; i++) {
-  engine.addEntity(mediumCrate.clone(), {
+for (var i=0; i<5; i++) {
+  var newCrate = engine.Entity(mediumCrate.clone(), {
     posX: engine.randNumber(-20, 20),
     posY: engine.randNumber(0, 100),
-    posZ: engine.randNumber(-20, 20)
+    posZ: engine.randNumber(-120, 120)
   });
+  engine.addEntity(newCrate);
 }
 
 
@@ -77,7 +82,8 @@ bunny.add(bunnyBody);
 bunny.add(bunnyTail);
 bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
-var bunnyEntity = engine.addEntity(bunny, {posZ: 120, width: 5, height: 3, length: 10});
+var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 3, length: 10});
+engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 
 // Load android model and set it to player

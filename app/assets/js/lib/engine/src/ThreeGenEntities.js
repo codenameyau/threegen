@@ -7,6 +7,12 @@
 /*************************
  * Entity Public Methods *
  *************************/
+ThreeGen.prototype.addEntity = function(entity) {
+  this.entities.push(entity);
+  this.scene.add(entity);
+};
+
+
 ThreeGen.prototype.getEntity = function(id) {
   return this.entities[id];
 };
@@ -19,7 +25,7 @@ ThreeGen.prototype.deleteEntity = function(entity) {
 };
 
 
-ThreeGen.prototype.addEntity = function(object, options) {
+ThreeGen.prototype.Entity = function(object, options) {
   // Scale object dimensions
   this.scaleEntity(object, options);
 
@@ -66,9 +72,6 @@ ThreeGen.prototype.addEntity = function(object, options) {
     currentKeyFrame : 0,
   };
 
-  // Add entity to scene
-  this.entities.push(object);
-  this.scene.add(object);
   return object;
 };
 
