@@ -18,10 +18,12 @@ ThreeGen.prototype.getEntity = function(id) {
 };
 
 
-ThreeGen.prototype.deleteEntity = function(entity) {
+ThreeGen.prototype.deleteEntity = function(object) {
+  // [TODO]: Refactor
+  var entity = this.getEntity(object.id);
   if (entity === this.player) { delete this.player; }
   this.scene.remove(entity);
-  delete this.entities[entity.entityID];
+  delete this.entities[object.id];
 };
 
 
@@ -115,7 +117,7 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
 
 ThreeGen.prototype.checkCollision = function(entity, directionVector) {
-  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 2);
+  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 3);
   var obstacles = ray.intersectObjects(this.entities);
   return (obstacles.length > 0) ? true : false;
 };

@@ -22,7 +22,7 @@ engine.scene.add(lightSource);
 engine.enableFloorGrid(200, 10, 0x22AA22);
 
 // Define crate properties
-var smallBoxGeometry = new THREE.BoxGeometry(5, 5, 5);
+var smallBoxGeometry = new THREE.BoxGeometry(6, 6, 6);
 var mediumBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
 var crateTexture = engine.loadTexture('crate-small.jpg');
 var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
@@ -37,24 +37,24 @@ engine.addEntity(crateB);
 engine.addEntity(crateC);
 
 // Add random small crates
-for (var i=0; i<30; i++) {
-  var newCrate = engine.Entity(smallCrate.clone(), {
-    posX: engine.randNumber(-25, 25),
-    posY: engine.randNumber(0, 120),
-    posZ: engine.randNumber(-150, 150)
-  });
-  engine.addEntity(newCrate);
-}
+// for (var i=0; i<30; i++) {
+//   var newCrate = engine.Entity(smallCrate.clone(), {
+//     posX: engine.randNumber(-25, 25),
+//     posY: engine.randNumber(0, 120),
+//     posZ: engine.randNumber(-150, 150)
+//   });
+//   engine.addEntity(newCrate);
+// }
 
-// Add random medium crates
-for (var i=0; i<5; i++) {
-  var newCrate = engine.Entity(mediumCrate.clone(), {
-    posX: engine.randNumber(-20, 20),
-    posY: engine.randNumber(0, 100),
-    posZ: engine.randNumber(-120, 120)
-  });
-  engine.addEntity(newCrate);
-}
+// // Add random medium crates
+// for (var i=0; i<5; i++) {
+//   var newCrate = engine.Entity(mediumCrate.clone(), {
+//     posX: engine.randNumber(-20, 20),
+//     posY: engine.randNumber(0, 100),
+//     posZ: engine.randNumber(-120, 120)
+//   });
+//   engine.addEntity(newCrate);
+// }
 
 
 // Create bunny
@@ -82,9 +82,33 @@ bunny.add(bunnyBody);
 bunny.add(bunnyTail);
 bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
-var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 3, length: 10});
+bunny.position.set(0, 1.5, 0);
+var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 2, length: 5});
 engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
+
+// Mouse input: snowball
+engine.mouseClickListener(function(event) {
+  var projector = new THREE.Projector();
+  var mouseVector = new THREE.Vector3();
+  mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
+  mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
+  var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
+  var direction = raycaster.ray.direction;
+  var pos = this.player.position;
+  var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  var snowball = engine.Entity(snowballMesh,
+    {posX: pos.x, posY: 10, posZ: pos.z,
+    velX: direction.x*100, velY: direction.y*100, velZ: direction.z*100});
+  engine.addEntity(snowball);
+
+  // snowballProjectile.position.set(10, 10, 10);
+  // engine.scene.add(snowballMesh);
+  // var obstacles = raycaster.intersectObjects( engine.entities );
+  // var entity = obstacles[0].object;
+  // entity.position.y += 25;
+});
+
 
 // Load android model and set it to player
 // var modelName = 'android';

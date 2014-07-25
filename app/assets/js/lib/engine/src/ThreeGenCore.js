@@ -117,6 +117,11 @@ ThreeGen.prototype.keyboardInput = function() {
 };
 
 
+ThreeGen.prototype.mouseClickListener = function(callback) {
+  window.addEventListener('click', callback.bind(this), false);
+};
+
+
 ThreeGen.prototype.togglePOV = function() {
   // Set mode to 'pov'
   if (this.camera.mode === 0) {
