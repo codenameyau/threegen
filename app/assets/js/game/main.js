@@ -88,6 +88,7 @@ engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 
 // Mouse input: snowball
+var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
 engine.mouseClickListener(function(event) {
   var projector = new THREE.Projector();
   var mouseVector = new THREE.Vector3();
@@ -95,13 +96,12 @@ engine.mouseClickListener(function(event) {
   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
   var direction = raycaster.ray.direction;
-  var pos = this.player.position;
-  var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
-  var snowball = engine.Entity(snowballMesh,
-    {posX: pos.x, posY: 10, posZ: pos.z,
-    velX: direction.x*100, velY: direction.y*100, velZ: direction.z*100});
+  var pos = engine.player.position;
+  var snowball = engine.Entity(snowballMesh.clone(),
+    {posX: pos.x, posY: pos.y+5, posZ: pos.z,
+    vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
   engine.addEntity(snowball);
-
+  console.log(snowball);
   // snowballProjectile.position.set(10, 10, 10);
   // engine.scene.add(snowballMesh);
   // var obstacles = raycaster.intersectObjects( engine.entities );

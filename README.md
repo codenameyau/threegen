@@ -36,6 +36,7 @@ Three.js game engine. Stay tuned! [Boilerplate Demo](https://codenameyau.github.
 * [+] Gravity
 * [+] Entity movement
 * [+] Raycasting collision detection
+* Air Friction
 
 ####Player Entity
 * [+] Player target cam
@@ -72,9 +73,11 @@ Three.js game engine. Stay tuned! [Boilerplate Demo](https://codenameyau.github.
 * Documentation
 * Scene graph
 * AI support
-* Level editor
 * Three.js encapsulation
 
+####Level
+* World boundary
+* Level editor
 
 ##Learning Resources
 

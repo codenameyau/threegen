@@ -9,6 +9,7 @@
  ****************************/
 ThreeGen.prototype.enablePhysics = function() {
   this.gravity = this.settings.PHYSICS.gravity;
+  this.airFriction = 5;
 };
 
 
@@ -41,6 +42,12 @@ ThreeGen.prototype.applyGravity = function() {
     else if (!this.checkCollision(entity, this.directions.down)) {
       entity.falling = true;
     }
+
+    // Apply movement mechanics
+    entity.position.x += entity.velocity.x;
+    entity.position.z += entity.velocity.z;
+    entity.velocity.x += entity.acceleration.x;
+    entity.velocity.z += entity.acceleration.z;
   }
 };
 
