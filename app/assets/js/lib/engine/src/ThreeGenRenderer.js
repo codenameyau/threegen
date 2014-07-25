@@ -16,14 +16,18 @@ ThreeGen.prototype.animateScene = function() {
   if (this.renderer.running) {
     window.requestAnimationFrame(this.animateScene.bind(this));
     this.clock.delta = this.clock.getDelta();
-    this.stats.update();
+
+    // Update stats
+    if (this.stats) {
+      this.stats.update();
+    }
 
     // Update player
     if (this.player) {
       this.updatePlayer();
     }
 
-    this.applyGravity();
+    this.applyPhysics();
     this.camera.update();
     this.renderScene();
   }

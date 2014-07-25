@@ -9,11 +9,11 @@
  ****************************/
 ThreeGen.prototype.enablePhysics = function() {
   this.gravity = this.settings.PHYSICS.gravity;
-  this.airFriction = 5;
+  this.airFriction = 0.5;
 };
 
 
-ThreeGen.prototype.applyGravity = function() {
+ThreeGen.prototype.applyPhysics = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
 
@@ -44,10 +44,10 @@ ThreeGen.prototype.applyGravity = function() {
     }
 
     // Apply movement mechanics
-    entity.position.x += entity.velocity.x;
-    entity.position.z += entity.velocity.z;
-    entity.velocity.x += entity.acceleration.x;
-    entity.velocity.z += entity.acceleration.z;
+    // this.moveEntity(entity, entity.velocity.x, this.directions.right);
+    // this.moveEntity(entity, entity.velocity.z, this.directions.front);
+    this.accelerateX(entity);
+    this.accelerateZ(entity);
   }
 };
 

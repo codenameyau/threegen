@@ -168,10 +168,9 @@ ThreeGen.prototype._initializeHUD = function() {
 
 ThreeGen.prototype._initializeDirections = function() {
 
-  // Draw to visualize
-  this.directions = {
-
+  var directionVectors = {
     front : [
+      new THREE.Vector3( 0,  0, -1 ),
       new THREE.Vector3( 1,  1, -1 ),
       new THREE.Vector3( 1,  0, -1 ),
       new THREE.Vector3( 1, -1, -1 ),
@@ -180,10 +179,10 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  0, -1 ),
       new THREE.Vector3(-1,  1, -1 ),
       new THREE.Vector3( 0,  1, -1 ),
-      new THREE.Vector3( 0,  0, -1 ),
     ],
 
     back : [
+      new THREE.Vector3( 0,  0,  1 ),
       new THREE.Vector3( 1,  1,  1 ),
       new THREE.Vector3( 1,  0,  1 ),
       new THREE.Vector3( 1, -1,  1 ),
@@ -192,10 +191,10 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  0,  1 ),
       new THREE.Vector3(-1,  1,  1 ),
       new THREE.Vector3( 0,  1,  1 ),
-      new THREE.Vector3( 0,  0,  1 ),
     ],
 
     up : [
+      new THREE.Vector3( 0,  1,  0 ),
       new THREE.Vector3( 1,  1, -1 ),
       new THREE.Vector3( 1,  1,  0 ),
       new THREE.Vector3( 1,  1,  1 ),
@@ -204,10 +203,10 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  1,  1 ),
       new THREE.Vector3(-1,  1, -1 ),
       new THREE.Vector3( 0,  1, -1 ),
-      new THREE.Vector3( 0,  1,  0 ),
     ],
 
     down : [
+      new THREE.Vector3( 0, -1,  0 ),
       new THREE.Vector3( 1, -1, -1 ),
       new THREE.Vector3( 1, -1,  0 ),
       new THREE.Vector3( 1, -1,  1 ),
@@ -216,8 +215,17 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1, -1,  1 ),
       new THREE.Vector3(-1, -1, -1 ),
       new THREE.Vector3( 0, -1, -1 ),
-      new THREE.Vector3( 0, -1,  0 ),
     ],
+  };
+
+  // Bind directions
+  this.directions = {
+
+    vectors : directionVectors,
+    front   : directionVectors.front[0],
+    back    : directionVectors.back[0],
+    up      : directionVectors.up[0],
+    down    : directionVectors.down[0],
 
   };
 };

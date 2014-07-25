@@ -98,10 +98,9 @@ engine.mouseClickListener(function(event) {
   var direction = raycaster.ray.direction;
   var pos = engine.player.position;
   var snowball = engine.Entity(snowballMesh.clone(),
-    {posX: pos.x, posY: pos.y+5, posZ: pos.z,
+    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
   engine.addEntity(snowball);
-  console.log(snowball);
   // snowballProjectile.position.set(10, 10, 10);
   // engine.scene.add(snowballMesh);
   // var obstacles = raycaster.intersectObjects( engine.entities );
