@@ -168,6 +168,7 @@ ThreeGen.prototype._initializeHUD = function() {
 
 ThreeGen.prototype._initializeDirections = function() {
 
+  // For collision detection
   var directionVectors = {
     front : [
       new THREE.Vector3( 0,  0, -1 ),
@@ -218,14 +219,12 @@ ThreeGen.prototype._initializeDirections = function() {
     ],
   };
 
-  // Bind directions
+  // Bind directions to engine
   this.directions = {
-
     vectors : directionVectors,
     front   : directionVectors.front[0],
     back    : directionVectors.back[0],
     up      : directionVectors.up[0],
     down    : directionVectors.down[0],
-
   };
 };

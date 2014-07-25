@@ -21,7 +21,7 @@ ThreeGen.prototype.applyPhysics = function() {
     if (entity.falling) {
 
       // Check if obstacle under entity
-      if (this.checkCollision(entity, this.directions.down.slice(-1)[0])) {
+      if (this.checkCollision(entity, this.getCollisionVectors('down'))) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
@@ -34,12 +34,12 @@ ThreeGen.prototype.applyPhysics = function() {
       // Falling object
       else {
         this.accelerateY(entity);
-        this.translateEntity(entity, -entity.velocity.y, this.directions.down.slice(-1)[0]);
+        this.translateEntity(entity, -entity.velocity.y, this.getDirectionVector('down'));
       }
     }
 
     // Obstacle no longer under entity
-    else if (!this.checkCollision(entity, this.directions.down)) {
+    else if (!this.checkCollision(entity, this.getCollisionVectors('down'))) {
       entity.falling = true;
     }
 
@@ -49,6 +49,16 @@ ThreeGen.prototype.applyPhysics = function() {
     this.accelerateX(entity);
     this.accelerateZ(entity);
   }
+};
+
+
+ThreeGen.prototype.getDirectionVector = function(direction) {
+  return this.directions[direction];
+};
+
+
+ThreeGen.prototype.getCollisionVectors = function(direction) {
+  return this.directions.vectors[direction];
 };
 
 

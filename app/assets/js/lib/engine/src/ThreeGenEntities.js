@@ -140,11 +140,15 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
   // this.player.animation.walking = true;
 
-  // Check for collision with other entities
-  var vertex, vector;
+  // Initialize vectors
+  var collisionVectors = this.getCollisionVectors(direction);
+  var directionVector  = this.getDirectionVector(direction);
   var pathClear = true;
-  for (vertex in direction) {
-    vector = entity.applyDirection(direction[vertex]);
+  var vector;
+
+  // Check for collision with other entities
+  for (var i in collisionVectors) {
+    vector = entity.applyDirection(collisionVectors[i]);
     if (this.checkCollision(entity, vector)) {
       pathClear = false;
       break;
@@ -152,7 +156,7 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   }
 
   if (pathClear) {
-    this.translateEntity(entity, distance, vector);
+    this.translateEntity(entity, distance, directionVector);
   }
 };
 
