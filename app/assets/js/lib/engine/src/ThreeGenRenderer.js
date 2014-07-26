@@ -60,6 +60,21 @@ ThreeGen.prototype.setPlayerCamera = function(position) {
 };
 
 
+ThreeGen.prototype.togglePOV = function() {
+  // Set mode to 'pov'
+  if (this.camera.mode === 0) {
+    this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height, posZ: -5});
+    this.camera.mode = 1;
+  }
+
+  // Set mode to 'target'
+  else if (this.camera.mode === 1) {
+    this.setPlayerCamera(this.settings.CAMERA);
+    this.camera.mode = 0;
+  }
+};
+
+
 /***********************
  * Animation Functions *
  ***********************/

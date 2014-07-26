@@ -123,10 +123,10 @@ ThreeGen.prototype.checkCollision = function(entity, directionVector) {
 };
 
 
-ThreeGen.prototype.translateEntity = function(entity, distance, direction) {
-  var posX = entity.position.x + distance * direction.x * this.clock.delta;
-  var posY = entity.position.y + distance * direction.y * this.clock.delta;
-  var posZ = entity.position.z + distance * direction.z * this.clock.delta;
+ThreeGen.prototype.translateEntity = function(entity, distance, directionVector) {
+  var posX = entity.position.x + distance * directionVector.x * this.clock.delta;
+  var posY = entity.position.y + distance * directionVector.y * this.clock.delta;
+  var posZ = entity.position.z + distance * directionVector.z * this.clock.delta;
   entity.position.set(posX, posY, posZ);
 };
 
@@ -142,22 +142,16 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 
   // Initialize vectors
   var collisionVectors = this.getCollisionVectors(direction);
-  var directionVector  = this.getDirectionVector(direction);
-  var pathClear = true;
   var vector;
 
   // Check for collision with other entities
   for (var i in collisionVectors) {
     vector = entity.applyDirection(collisionVectors[i]);
-    if (this.checkCollision(entity, vector)) {
-      pathClear = false;
-      break;
-    }
+    if (this.checkCollision(entity, vector)) { return; }
   }
 
-  if (pathClear) {
-    this.translateEntity(entity, distance, directionVector);
-  }
+  // Translate if no collisions detected
+  this.translateEntity(entity, distance, vector);
 };
 
 
@@ -178,7 +172,7 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
 
   object.translateBaseHeight = function() {
     this.falling = false;
-    this.velocity.y = false;
+    this.velocity.y = 0;
     this.position.y = this.dimensions.base;
   };
 

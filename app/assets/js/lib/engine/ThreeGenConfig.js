@@ -28,7 +28,7 @@ function ThreeGen() {
     // Camera
     CAMERA : {
       fov     : 35,
-      near    : 0.5,
+      near    : 1,
       far     : 3000,
       startX  : 0,
       startY  : 100,
@@ -49,7 +49,7 @@ function ThreeGen() {
     PLAYER : {
       rotationMultiplier : 2.0,
       airMultiplier      : 2.0,
-      jumpHeight         : 32.0,
+      jumpHeight         : 35.0,
       frontSpeed         : 30.0,
       backSpeed          : 20.0,
     },

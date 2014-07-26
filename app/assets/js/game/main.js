@@ -30,9 +30,9 @@ var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
 var crateA = engine.Entity(smallCrate.clone(), {posX: 20, posY: 40, posZ: 30});
-var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 60, posZ: 20});
-var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 60, posZ: 20});
-engine.addEntity(crateA);
+var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
+var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
+// engine.addEntity(crateA);
 engine.addEntity(crateB);
 engine.addEntity(crateC);
 
@@ -58,55 +58,55 @@ engine.addEntity(crateC);
 
 
 // Create bunny
-var bunny = new THREE.Object3D();
-var bunnySphere = new THREE.SphereGeometry(1, 16, 16);
-var bunnyMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
-var bunnyHead = new THREE.Mesh(bunnySphere, bunnyMaterial);
-var bunnyBody = new THREE.Mesh(bunnySphere, bunnyMaterial);
-var bunnyTail = new THREE.Mesh(bunnySphere, bunnyMaterial);
-var bunnyEarL = new THREE.Mesh(bunnySphere, bunnyMaterial);
-var bunnyEarR = new THREE.Mesh(bunnySphere, bunnyMaterial);
-bunnyHead.scale.set(1.3, 1.3, 1.3);
-bunnyBody.scale.set(1.5, 1.5, 1.8);
-bunnyTail.scale.set(0.6, 0.6, 0.6);
-bunnyEarL.scale.set(0.4, 1.2, 0.3);
-bunnyEarR.scale.set(0.4, 1.2, 0.3);
-bunnyEarL.rotation.set(0.2, 0, 0.2);
-bunnyEarR.rotation.set(0.2, 0, -0.2);
-bunnyHead.position.set(0, 2, -1.8);
-bunnyTail.position.set(0, 1, 1.5);
-bunnyEarL.position.set(-1, 4.2, -1.5);
-bunnyEarR.position.set(1, 4.2, -1.5);
-bunny.add(bunnyHead);
-bunny.add(bunnyBody);
-bunny.add(bunnyTail);
-bunny.add(bunnyEarL);
-bunny.add(bunnyEarR);
-bunny.position.set(0, 1.5, 0);
-var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 2, length: 5});
-engine.addEntity(bunnyEntity);
-engine.setPlayer(bunnyEntity);
+// var bunny = new THREE.Object3D();
+// var bunnySphere = new THREE.SphereGeometry(1, 16, 16);
+// var bunnyMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
+// var bunnyHead = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// var bunnyBody = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// var bunnyTail = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// var bunnyEarL = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// var bunnyEarR = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// bunnyHead.scale.set(1.3, 1.3, 1.3);
+// bunnyBody.scale.set(1.5, 1.5, 1.8);
+// bunnyTail.scale.set(0.6, 0.6, 0.6);
+// bunnyEarL.scale.set(0.4, 1.2, 0.3);
+// bunnyEarR.scale.set(0.4, 1.2, 0.3);
+// bunnyEarL.rotation.set(0.2, 0, 0.2);
+// bunnyEarR.rotation.set(0.2, 0, -0.2);
+// bunnyHead.position.set(0, 2, -1.8);
+// bunnyTail.position.set(0, 1, 1.5);
+// bunnyEarL.position.set(-1, 4.2, -1.5);
+// bunnyEarR.position.set(1, 4.2, -1.5);
+// bunny.add(bunnyHead);
+// bunny.add(bunnyBody);
+// bunny.add(bunnyTail);
+// bunny.add(bunnyEarL);
+// bunny.add(bunnyEarR);
+// bunny.position.set(0, 1.5, 0);
+// var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 5, length: 5});
+// engine.addEntity(bunnyEntity);
+// engine.setPlayer(bunnyEntity);
 
 // Mouse input: snowball
-var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
-engine.mouseClickListener(function(event) {
-  var projector = new THREE.Projector();
-  var mouseVector = new THREE.Vector3();
-  mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
-  mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
-  var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
-  var direction = raycaster.ray.direction;
-  var pos = engine.player.position;
-  var snowball = engine.Entity(snowballMesh.clone(),
-    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
-    vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
-  engine.addEntity(snowball);
-  // snowballProjectile.position.set(10, 10, 10);
-  // engine.scene.add(snowballMesh);
-  // var obstacles = raycaster.intersectObjects( engine.entities );
-  // var entity = obstacles[0].object;
-  // entity.position.y += 25;
-});
+// var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
+// engine.mouseClickListener(function(event) {
+//   var projector = new THREE.Projector();
+//   var mouseVector = new THREE.Vector3();
+//   mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
+//   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
+//   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
+//   var direction = raycaster.ray.direction;
+//   var pos = engine.player.position;
+//   var snowball = engine.Entity(snowballMesh.clone(),
+//     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
+//     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
+//   engine.addEntity(snowball);
+//   // snowballProjectile.position.set(10, 10, 10);
+//   // engine.scene.add(snowballMesh);
+//   // var obstacles = raycaster.intersectObjects( engine.entities );
+//   // var entity = obstacles[0].object;
+//   // entity.position.y += 25;
+// });
 
 
 // Load android model and set it to player
