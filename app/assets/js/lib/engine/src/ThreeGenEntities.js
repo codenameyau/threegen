@@ -48,6 +48,7 @@ ThreeGen.prototype.Entity = function(object, options) {
 
   // Extend entity properties
   object.falling = this.checkProperty(options, 'falling', true);
+  object.projectile = this.checkProperty(options, 'projectile', false);
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
@@ -89,6 +90,13 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   var entityWidth  = this.checkProperty(options, 'width', 5);
   var entityHeight = this.checkProperty(options, 'height', 5);
   var entityLength = this.checkProperty(options, 'length', 5);
+  var entityBase = entityHeight/2;
+
+  // Check if entity is sphere
+  if (object.geometry && object.geometry.parameters.radius) {
+    entityBase = object.geometry.parameters.radius;
+  }
+
   if (object.geometry) {
 
     // Regular Mesh
@@ -111,7 +119,7 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
     width  : scaleX * entityWidth,
     height : scaleY * entityHeight,
     length : scaleZ * entityLength,
-    base   : scaleY * entityHeight/2,
+    base   : scaleY * entityBase,
   };
 };
 

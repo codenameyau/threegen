@@ -17,7 +17,6 @@ ThreeGen.prototype.applyPhysics = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
     if (entity.falling) {
-
       // Set minimum Y position
       if (entity.belowPosition(entity.dimensions.base)) {
         entity.translateBaseHeight();
@@ -35,8 +34,10 @@ ThreeGen.prototype.applyPhysics = function() {
         this.translateEntity(entity, -entity.velocity.y, this.getDirectionVector('down'));
       }
 
-      // Enity projectile movement
-      this.updateProjectile(entity);
+      // Update projectile in air
+      if (entity.projectile) {
+        this.updateProjectile(entity);
+      }
     }
 
     // Obstacle no longer under entity

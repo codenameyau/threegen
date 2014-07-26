@@ -108,14 +108,11 @@ engine.mouseClickListener(function(event) {
   var direction = raycaster.ray.direction;
   var pos = engine.player.position;
   var snowball = engine.Entity(snowballMesh.clone(),
-    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
+    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,
     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
   engine.addEntity(snowball);
-  // snowballProjectile.position.set(10, 10, 10);
-  // engine.scene.add(snowballMesh);
   // var obstacles = raycaster.intersectObjects( engine.entities );
   // var entity = obstacles[0].object;
-  // entity.position.y += 25;
 });
 
 
