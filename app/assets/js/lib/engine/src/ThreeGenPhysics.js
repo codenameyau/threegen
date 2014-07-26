@@ -16,18 +16,17 @@ ThreeGen.prototype.enablePhysics = function() {
 ThreeGen.prototype.applyPhysics = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
-    console.log(entity.falling);
     if (entity.falling) {
-
-      // Check if obstacle under entity
-      if (this.checkCollision(entity, this.getCollisionVectors('down'))) {
-        entity.falling = false;
-        entity.velocity.y = 0;
-      }
 
       // Set minimum Y position
       if (entity.belowPosition(entity.dimensions.base)) {
         entity.translateBaseHeight();
+      }
+
+      // Check if obstacle under entity
+      else if (this.checkCollision(entity, this.getDirectionVector('down'))) {
+        entity.falling = false;
+        entity.velocity.y = 0;
       }
 
       // Falling object
@@ -39,7 +38,7 @@ ThreeGen.prototype.applyPhysics = function() {
 
     // Obstacle no longer under entity
     else if (!entity.belowPosition(entity.dimensions.base) &&
-      !this.checkCollision(entity, this.getCollisionVectors('down'))) {
+      !this.checkCollision(entity, this.getDirectionVector('down'))) {
       entity.falling = true;
     }
 
