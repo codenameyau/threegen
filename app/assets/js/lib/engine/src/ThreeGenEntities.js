@@ -116,8 +116,11 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.iterateCollisionVectors = function(entity, collisionVectors) {
-
+ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
+  for (var i in collisionVectors) {
+    if (this.checkCollision(entity, collisionVectors[i])) {return true;}
+  }
+  return false;
 };
 
 
@@ -145,17 +148,12 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   // [TODO] Animate entity
   // this.player.animation.walking = true;
 
-  // Initialize vectors
-  var collisionVectors = this.getCollisionVectors(direction);
-  var vector;
-
   // Check for collision with other entities
-  for (var i in collisionVectors) {
-    vector = entity.applyDirection(collisionVectors[i]);
-    if (this.checkCollision(entity, vector)) { return; }
-  }
+  var collisionVectors = this.getCollisionVectors(direction);
+  if (this.checkCollisionVectors(entity, collisionVectors)) { return; }
 
   // Translate if no collisions detected
+  var vector = entity.applyDirection(this.getDirectionVector(direction));
   this.translateEntity(entity, distance, vector);
 };
 

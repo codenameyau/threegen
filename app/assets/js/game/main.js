@@ -29,29 +29,39 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crateA = engine.Entity(smallCrate.clone(), {posX: 20, posY: 40, posZ: 30});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
 var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
+var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
+var crateE = engine.Entity(smallCrate.clone(), {posX:  0, posY: 0, posZ: 25});
+var crateF = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
+var crateG = engine.Entity(mediumCrate.clone(), {posX: 2, posY: 100, posZ: 20});
+var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
 engine.addEntity(crateA);
 engine.addEntity(crateB);
 engine.addEntity(crateC);
+engine.addEntity(crateD);
+engine.addEntity(crateE);
+engine.addEntity(crateF);
+engine.addEntity(crateG);
+engine.addEntity(crateH);
 
 // Add random small crates
-// for (var i=0; i<30; i++) {
-//   var newCrate = engine.Entity(smallCrate.clone(), {
-//     posX: engine.randNumber(-25, 25),
-//     posY: engine.randNumber(0, 120),
-//     posZ: engine.randNumber(-150, 150)
-//   });
-//   engine.addEntity(newCrate);
-// }
+for (var i=0; i<20; i++) {
+  var newCrate = engine.Entity(smallCrate.clone(), {
+    posX: engine.randNumber(-35, 35),
+    posY: engine.randNumber(0, 120),
+    posZ: engine.randNumber(-20, 40)
+  });
+  engine.addEntity(newCrate);
+}
 
 // // Add random medium crates
 // for (var i=0; i<5; i++) {
 //   var newCrate = engine.Entity(mediumCrate.clone(), {
 //     posX: engine.randNumber(-20, 20),
 //     posY: engine.randNumber(0, 100),
-//     posZ: engine.randNumber(-120, 120)
+//     posZ: engine.randNumber(-20, 20)
 //   });
 //   engine.addEntity(newCrate);
 // }
@@ -88,31 +98,31 @@ engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 
 // Mouse input: snowball
-// var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
-// engine.mouseClickListener(function(event) {
-//   var projector = new THREE.Projector();
-//   var mouseVector = new THREE.Vector3();
-//   mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
-//   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
-//   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
-//   var direction = raycaster.ray.direction;
-//   var pos = engine.player.position;
-//   var snowball = engine.Entity(snowballMesh.clone(),
-//     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
-//     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
-//   engine.addEntity(snowball);
-//   // snowballProjectile.position.set(10, 10, 10);
-//   // engine.scene.add(snowballMesh);
-//   // var obstacles = raycaster.intersectObjects( engine.entities );
-//   // var entity = obstacles[0].object;
-//   // entity.position.y += 25;
-// });
+var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
+engine.mouseClickListener(function(event) {
+  var projector = new THREE.Projector();
+  var mouseVector = new THREE.Vector3();
+  mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
+  mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
+  var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
+  var direction = raycaster.ray.direction;
+  var pos = engine.player.position;
+  var snowball = engine.Entity(snowballMesh.clone(),
+    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1,
+    vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
+  engine.addEntity(snowball);
+  // snowballProjectile.position.set(10, 10, 10);
+  // engine.scene.add(snowballMesh);
+  // var obstacles = raycaster.intersectObjects( engine.entities );
+  // var entity = obstacles[0].object;
+  // entity.position.y += 25;
+});
 
 
 // Load android model and set it to player
 // var modelName = 'android';
 // engine.loadModel(modelName, 'android-animation.js', function() {
 //   var android = engine.addEntity(engine.getModel(modelName),
-//     {posY: 0, height: 10});
+//     {posY: 0, height: 10, base: 0});
 //   // engine.setPlayer(android);
 // });

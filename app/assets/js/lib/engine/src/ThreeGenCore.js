@@ -122,21 +122,6 @@ ThreeGen.prototype.mouseClickListener = function(callback) {
 };
 
 
-ThreeGen.prototype.togglePOV = function() {
-  // Set mode to 'pov'
-  if (this.camera.mode === 0) {
-    this.setPlayerCamera({posX: 0, posY: this.player.dimensions.height, posZ: -10});
-    this.camera.mode = 1;
-  }
-
-  // Set mode to 'target'
-  else if (this.camera.mode === 1) {
-    this.setPlayerCamera(this.settings.CAMERA);
-    this.camera.mode = 0;
-  }
-};
-
-
 ThreeGen.prototype.togglePause = function() {
   if (this.renderer.running) {
     this.pauseGame();

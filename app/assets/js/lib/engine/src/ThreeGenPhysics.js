@@ -24,7 +24,7 @@ ThreeGen.prototype.applyPhysics = function() {
       }
 
       // Check if obstacle under entity
-      else if (this.checkCollision(entity, this.getDirectionVector('down'))) {
+      else if (this.checkCollisionVectors(entity, this.getCollisionVectors('down'))) {
         entity.falling = false;
         entity.velocity.y = 0;
       }
@@ -38,13 +38,13 @@ ThreeGen.prototype.applyPhysics = function() {
 
     // Obstacle no longer under entity
     else if (!entity.belowPosition(entity.dimensions.base) &&
-      !this.checkCollision(entity, this.getDirectionVector('down'))) {
+      !this.checkCollisionVectors(entity, this.getCollisionVectors('down'))) {
       entity.falling = true;
     }
 
     // Apply movement mechanics
-    // this.moveEntity(entity, entity.velocity.x, this.directions.right);
-    // this.moveEntity(entity, entity.velocity.z, this.directions.front);
+    // this.moveEntity(entity, entity.velocity.x, 'right');
+    // this.moveEntity(entity, entity.velocity.z, 'front');
     this.accelerateX(entity);
     this.accelerateZ(entity);
   }
