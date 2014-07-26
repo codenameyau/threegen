@@ -179,6 +179,14 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3( 0,  0,  1 ),
     ],
 
+    left : [
+      new THREE.Vector3(-1,  0,  0 ),
+    ],
+
+    right : [
+      new THREE.Vector3( 1,  0,  0 ),
+    ],
+
     up : [
       new THREE.Vector3( 1,  1, -1 ),
       new THREE.Vector3( 1,  1,  0 ),
@@ -209,6 +217,8 @@ ThreeGen.prototype._initializeDirections = function() {
     vectors : directionVectors,
     front   : directionVectors.front.slice(-1)[0],
     back    : directionVectors.back.slice(-1)[0],
+    left   : directionVectors.left.slice(-1)[0],
+    right   : directionVectors.right.slice(-1)[0],
     up      : directionVectors.up.slice(-1)[0],
     down    : directionVectors.down.slice(-1)[0],
   };

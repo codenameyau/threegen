@@ -29,32 +29,32 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
-var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
-var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
-var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
-var crateE = engine.Entity(smallCrate.clone(), {posX:  0, posY: 0, posZ: 25});
-var crateF = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
-var crateG = engine.Entity(mediumCrate.clone(), {posX: 2, posY: 100, posZ: 20});
-var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
-engine.addEntity(crateA);
-engine.addEntity(crateB);
-engine.addEntity(crateC);
-engine.addEntity(crateD);
-engine.addEntity(crateE);
-engine.addEntity(crateF);
-engine.addEntity(crateG);
-engine.addEntity(crateH);
+// var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
+// var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
+// var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
+// var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
+// var crateE = engine.Entity(smallCrate.clone(), {posX:  0, posY: 0, posZ: 25});
+// var crateF = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
+// var crateG = engine.Entity(mediumCrate.clone(), {posX: 2, posY: 100, posZ: 20});
+// var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
+// engine.addEntity(crateA);
+// engine.addEntity(crateB);
+// engine.addEntity(crateC);
+// engine.addEntity(crateD);
+// engine.addEntity(crateE);
+// engine.addEntity(crateF);
+// engine.addEntity(crateG);
+// engine.addEntity(crateH);
 
-// Add random small crates
-for (var i=0; i<20; i++) {
-  var newCrate = engine.Entity(smallCrate.clone(), {
-    posX: engine.randNumber(-35, 35),
-    posY: engine.randNumber(0, 120),
-    posZ: engine.randNumber(-20, 40)
-  });
-  engine.addEntity(newCrate);
-}
+// // Add random small crates
+// for (var i=0; i<20; i++) {
+//   var newCrate = engine.Entity(smallCrate.clone(), {
+//     posX: engine.randNumber(-35, 35),
+//     posY: engine.randNumber(0, 120),
+//     posZ: engine.randNumber(-20, 40)
+//   });
+//   engine.addEntity(newCrate);
+// }
 
 // // Add random medium crates
 // for (var i=0; i<5; i++) {

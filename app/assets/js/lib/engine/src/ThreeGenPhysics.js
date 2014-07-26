@@ -34,6 +34,9 @@ ThreeGen.prototype.applyPhysics = function() {
         this.accelerateY(entity);
         this.translateEntity(entity, -entity.velocity.y, this.getDirectionVector('down'));
       }
+
+      // Enity projectile movement
+      this.updateProjectile(entity);
     }
 
     // Obstacle no longer under entity
@@ -41,12 +44,6 @@ ThreeGen.prototype.applyPhysics = function() {
       !this.checkCollisionVectors(entity, this.getCollisionVectors('down'))) {
       entity.falling = true;
     }
-
-    // Apply movement mechanics
-    // this.moveEntity(entity, entity.velocity.x, 'right');
-    // this.moveEntity(entity, entity.velocity.z, 'front');
-    this.accelerateX(entity);
-    this.accelerateZ(entity);
   }
 };
 
@@ -73,4 +70,14 @@ ThreeGen.prototype.accelerateY = function(entity) {
 
 ThreeGen.prototype.accelerateZ = function(entity) {
   entity.velocity.z += entity.acceleration.z * this.clock.delta;
+};
+
+
+ThreeGen.prototype.updateProjectile = function(entity) {
+  entity.position.x += entity.velocity.x;
+  entity.position.z += entity.velocity.z;
+  // this.moveEntity(entity, entity.velocity.x, 'right');
+  // this.moveEntity(entity, entity.velocity.z, 'front');
+  this.accelerateX(entity);
+  this.accelerateZ(entity);
 };
