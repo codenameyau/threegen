@@ -14,7 +14,7 @@ ThreeGen.prototype.enableStatsMoniter = function() {
   this.stats.domElement.style.top  = '0';
   this.stats.domElement.style.left = '0';
   this.stats.domElement.style.zIndex = 100;
-  this.addToDOM(this.stats.domElement);
+  this.utils.addToDOM(this.settings.META.domElement, this.stats.domElement);
 };
 
 
@@ -73,7 +73,7 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   };
 
   // Add container to dom
-  this.addToDOM(container);
+  this.utils.addToDOM(this.settings.META.domElement, container);
   this.HUD.instructions = container;
 };
 
@@ -96,6 +96,6 @@ ThreeGen.prototype.enablePausedHUD = function() {
   container.style.fontSize = '30px';
   container.style.letterSpacing = '8px';
   container.innerText = settings.message;
-  this.addToDOM(container);
+  this.utils.addToDOM(this.settings.META.domElement, container);
   this.HUD.paused = container;
 };

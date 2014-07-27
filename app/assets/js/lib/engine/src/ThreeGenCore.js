@@ -25,7 +25,7 @@ ThreeGen.prototype.start = function() {
   // Initialize: Threejs Renderer
   this.renderer = new THREE.WebGLRenderer(settings.RENDERER);
   this.renderer.setSize(canvasWidth, canvasHeight);
-  this.addToDOM(this.renderer.domElement);
+  this.utils.addToDOM(this.settings.META.domElement, this.renderer.domElement);
   this.renderer.running = true;
 
   // Initialize: Threejs Camera
