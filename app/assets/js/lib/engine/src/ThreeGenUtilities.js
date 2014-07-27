@@ -28,6 +28,20 @@ ThreeGen.prototype.randNumber = function(min, max) {
   return Math.random() * (max - min) + min;
 };
 
+
+ThreeGen.prototype.removeObjectInArray = function(array, property, match) {
+  for (var i in array) {
+    if (array[i][property] === match) {
+      array.splice(i, i);
+      return;
+    }
+  }
+};
+
+
+/***********************
+ * Debugging Functions *
+ ***********************/
 ThreeGen.prototype.enableFloorGrid = function(lines, steps, gridColor) {
   lines = lines || 20;
   steps = steps || 2;

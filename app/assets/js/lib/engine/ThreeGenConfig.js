@@ -50,8 +50,8 @@ function ThreeGen() {
       rotationMultiplier : 2.0,
       airMultiplier      : 2.0,
       jumpHeight         : 35.0,
-      frontSpeed         : 30.0,
-      backSpeed          : 20.0,
+      frontSpeed         : 40.0,
+      backSpeed          : 30.0,
     },
 
 

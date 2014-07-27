@@ -29,7 +29,7 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-// var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
 // var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 // var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
 // var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
@@ -37,7 +37,9 @@ var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 // var crateF = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 // var crateG = engine.Entity(mediumCrate.clone(), {posX: 2, posY: 100, posZ: 20});
 // var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
-// engine.addEntity(crateA);
+engine.addEntity(crateA);
+engine.deleteEntity(crateA);
+console.log(engine.entities);
 // engine.addEntity(crateB);
 // engine.addEntity(crateC);
 // engine.addEntity(crateD);
@@ -93,7 +95,7 @@ bunny.add(bunnyTail);
 bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
 bunny.position.set(0, 1.5, 0);
-var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 5, length: 5});
+var bunnyEntity = engine.Entity(bunny, {posZ: 80, width: 5, height: 5, length: 5});
 engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 

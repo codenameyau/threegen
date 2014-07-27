@@ -13,17 +13,15 @@ ThreeGen.prototype.addEntity = function(entity) {
 };
 
 
-ThreeGen.prototype.getEntity = function(id) {
-  return this.entities[id];
+ThreeGen.prototype.removeFromScene = function(object) {
+  if (object === this.player) { delete this.player; }
+  this.scene.remove(object);
 };
 
 
-ThreeGen.prototype.deleteEntity = function(object) {
-  // [TODO]: Refactor
-  var entity = this.getEntity(object.id);
-  if (entity === this.player) { delete this.player; }
-  this.scene.remove(entity);
-  delete this.entities[object.id];
+ThreeGen.prototype.deleteEntity = function(entity) {
+  this.removeFromScene(entity);
+  this.removeObjectInArray(this.entities, 'id', entity.id);
 };
 
 

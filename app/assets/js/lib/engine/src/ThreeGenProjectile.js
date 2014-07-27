@@ -4,6 +4,12 @@
 'use strict';
 
 
-ThreeGen.prototype.Projectile = function(object, settings, callback) {
+ThreeGen.prototype.addProjectile = function(entity) {
+  this.projectiles.push(entity);
+  this.scene.add(entity);
+};
 
+
+ThreeGen.prototype.deleteProjectile = function(entity) {
+  this.removeFromScene(entity);
 };
