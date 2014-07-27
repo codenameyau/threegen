@@ -29,7 +29,7 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 20, posZ: 60});
 // var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 // var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
 // var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
@@ -39,7 +39,6 @@ var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 0, posZ: 60});
 // var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
 engine.addEntity(crateA);
 engine.deleteEntity(crateA);
-console.log(engine.entities);
 // engine.addEntity(crateB);
 // engine.addEntity(crateC);
 // engine.addEntity(crateD);
@@ -51,9 +50,9 @@ console.log(engine.entities);
 // // Add random small crates
 // for (var i=0; i<20; i++) {
 //   var newCrate = engine.Entity(smallCrate.clone(), {
-//     posX: engine.randNumber(-35, 35),
-//     posY: engine.randNumber(0, 120),
-//     posZ: engine.randNumber(-20, 40)
+//     posX: engine.utils.randNumber(-35, 35),
+//     posY: engine.utils.randNumber(0, 120),
+//     posZ: engine.utils.randNumber(-20, 40)
 //   });
 //   engine.addEntity(newCrate);
 // }
@@ -61,9 +60,9 @@ console.log(engine.entities);
 // // Add random medium crates
 // for (var i=0; i<5; i++) {
 //   var newCrate = engine.Entity(mediumCrate.clone(), {
-//     posX: engine.randNumber(-20, 20),
-//     posY: engine.randNumber(0, 100),
-//     posZ: engine.randNumber(-20, 20)
+//     posX: engine.utils.randNumber(-20, 20),
+//     posY: engine.utils.randNumber(0, 100),
+//     posZ: engine.utils.randNumber(-20, 20)
 //   });
 //   engine.addEntity(newCrate);
 // }

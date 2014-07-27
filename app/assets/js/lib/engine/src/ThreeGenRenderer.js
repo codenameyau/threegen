@@ -45,9 +45,9 @@ ThreeGen.prototype.resizeWindow = function() {
 
 
 ThreeGen.prototype.setPlayerCamera = function(position) {
-  var posX = this.checkProperty(position, 'posX', 0);
-  var posY = this.checkProperty(position, 'posY', 0);
-  var posZ = this.checkProperty(position, 'posZ', 0);
+  var posX = this.utils.checkProperty(position, 'posX', 0);
+  var posY = this.utils.checkProperty(position, 'posY', 0);
+  var posZ = this.utils.checkProperty(position, 'posZ', 0);
   this.camera.addTarget({
     name: 'player',
     targetObject: this.player,

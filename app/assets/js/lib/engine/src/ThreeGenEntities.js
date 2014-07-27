@@ -21,7 +21,7 @@ ThreeGen.prototype.removeFromScene = function(object) {
 
 ThreeGen.prototype.deleteEntity = function(entity) {
   this.removeFromScene(entity);
-  this.removeObjectInArray(this.entities, 'id', entity.id);
+  this.utils.removeObjectInArray(this.entities, 'id', entity.id);
 };
 
 
@@ -39,15 +39,15 @@ ThreeGen.prototype.Entity = function(object, options) {
 
 ThreeGen.prototype.scaleEntity = function(object, options) {
   // Scale object dimensions
-  var scaleX = this.checkProperty(options, 'scaleX', 1);
-  var scaleY = this.checkProperty(options, 'scaleY', 1);
-  var scaleZ = this.checkProperty(options, 'scaleZ', 1);
+  var scaleX = this.utils.checkProperty(options, 'scaleX', 1);
+  var scaleY = this.utils.checkProperty(options, 'scaleY', 1);
+  var scaleZ = this.utils.checkProperty(options, 'scaleZ', 1);
   object.scale.set(scaleX, scaleY, scaleZ);
 
   // Compute Mesh dimensions
-  var entityWidth  = this.checkProperty(options, 'width', 5);
-  var entityHeight = this.checkProperty(options, 'height', 5);
-  var entityLength = this.checkProperty(options, 'length', 5);
+  var entityWidth  = this.utils.checkProperty(options, 'width', 5);
+  var entityHeight = this.utils.checkProperty(options, 'height', 5);
+  var entityLength = this.utils.checkProperty(options, 'length', 5);
   var entityBase = entityHeight/2;
 
   // Check if entity is sphere
@@ -65,9 +65,9 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 
     // Object3D
     else {
-      entityWidth  = this.checkProperty(options, 'width', 5);
-      entityHeight = this.checkProperty(options, 'height', 5);
-      entityLength = this.checkProperty(options, 'length', 5);
+      entityWidth  = this.utils.checkProperty(options, 'width', 5);
+      entityHeight = this.utils.checkProperty(options, 'height', 5);
+      entityLength = this.utils.checkProperty(options, 'length', 5);
     }
   }
 
@@ -127,22 +127,22 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
  * Entity Internal Methods *
  ***************************/
 ThreeGen.prototype._initializeEntityProperties = function(object, options) {
-  var posX = this.checkProperty(options, 'posX', 0);
-  var posY = this.checkProperty(options, 'posY', object.dimensions.base);
-  var posZ = this.checkProperty(options, 'posZ', 0);
+  var posX = this.utils.checkProperty(options, 'posX', 0);
+  var posY = this.utils.checkProperty(options, 'posY', object.dimensions.base);
+  var posZ = this.utils.checkProperty(options, 'posZ', 0);
 
   // Set velocity (x,y,z)
-  var vX = this.checkProperty(options, 'vX', 0);
-  var vY = this.checkProperty(options, 'vY', 0);
-  var vZ = this.checkProperty(options, 'vZ', 0);
+  var vX = this.utils.checkProperty(options, 'vX', 0);
+  var vY = this.utils.checkProperty(options, 'vY', 0);
+  var vZ = this.utils.checkProperty(options, 'vZ', 0);
 
   // Set acceleration (x,y,z)
-  var aX = this.checkProperty(options, 'aX', 0);
-  var aY = this.checkProperty(options, 'aY', this.gravity);
-  var aZ = this.checkProperty(options, 'aZ', 0);
+  var aX = this.utils.checkProperty(options, 'aX', 0);
+  var aY = this.utils.checkProperty(options, 'aY', this.gravity);
+  var aZ = this.utils.checkProperty(options, 'aZ', 0);
 
   // Extend entity properties
-  object.falling = this.checkProperty(options, 'falling', true);
+  object.falling = this.utils.checkProperty(options, 'falling', true);
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
@@ -175,9 +175,9 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
 
 ThreeGen.prototype._initializeAnimations = function(object, options) {
   // Load options
-  var animated =  this.checkProperty(options, 'animated', false);
-  var animDuration = this.checkProperty(options, 'duration', 1000);
-  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
+  var animated =  this.utils.checkProperty(options, 'animated', false);
+  var animDuration = this.utils.checkProperty(options, 'duration', 1000);
+  var animKeyFrames = this.utils.checkProperty(options, 'keyframes', 20);
 
   // Configure animations
   object.animation = {

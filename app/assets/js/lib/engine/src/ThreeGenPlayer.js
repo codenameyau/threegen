@@ -9,8 +9,8 @@
  ***************************/
 ThreeGen.prototype.setPlayer = function(entity) {
   // Load player settings
-  this.player    = entity;
-  var settings   = this.settings.PLAYER;
+  this.player  = entity;
+  var settings = this.settings.PLAYER;
 
   // Setup player movement stats
   this.player.movement = {
