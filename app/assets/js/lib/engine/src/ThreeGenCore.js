@@ -15,7 +15,7 @@ ThreeGen.prototype.start = function() {
   var canvasHeight = window.innerHeight;
   var aspectRatio  = canvasWidth/canvasHeight;
 
-  // Initialize: Clock
+  // Initialize: Internal Clock
   this.clock = new THREE.Clock();
   this.clock.delta = this.clock.getDelta();
 
@@ -47,20 +47,19 @@ ThreeGen.prototype.start = function() {
   // Initialize: Keyboard controls
   this.keyboard = new THREEx.KeyboardState();
 
+  // Initialize: JSON loader
+  this.jsonLoader = new THREE.JSONLoader();
+
   // Initialize: Event listeners
   this._initializeEventListeners();
 
   // Initialize: HUD
   this._initializeHUD();
 
-  // Initialize: JSON loader
-  this.jsonLoader = new THREE.JSONLoader();
-
-  // Setup entities
-  this.entities = [];
-
-  // Setup models
+  // Setup data structures
   this.models = {};
+  this.entities = [];
+  this.projectiles = [];
 
   // Setup physics
   this._initializeDirections();

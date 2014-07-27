@@ -4,6 +4,6 @@
 'use strict';
 
 
-ThreeGen.prototype.Projectile = function() {
+ThreeGen.prototype.Projectile = function(object, settings, callback) {
 
 };

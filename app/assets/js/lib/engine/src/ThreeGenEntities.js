@@ -31,30 +31,10 @@ ThreeGen.prototype.Entity = function(object, options) {
   // Scale object dimensions
   this.scaleEntity(object, options);
 
-  // Set position (x,y,z)
+  // Extend entity properties and methods
   this._initializeEntityProperties(object, options);
-
-  // Extend entity methods
   this._initializeEntityMethods(object);
-
-  // Set animations
-  var animated =  this.checkProperty(options, 'animated', false);
-  var animDuration = this.checkProperty(options, 'duration', 1000);
-  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
-
-  // Configure animations
-  object.animation = {
-    offset : 0,
-    keyframe : 0,
-    active : animated,
-    walking : false,
-    duration : animDuration,
-    keyframes : animKeyFrames,
-    interpolation : animDuration / animKeyFrames,
-    lastKeyFrame : 0,
-    currentKeyFrame : 0,
-  };
-
+  this._initializeAnimations(object, options);
   return object;
 };
 
@@ -78,7 +58,6 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
   }
 
   if (object.geometry) {
-
     // Regular Mesh
     if (object.geometry.parameters) {
       entityWidth  = object.geometry.parameters.width;
@@ -146,8 +125,6 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 };
 
 
-
-
 /***************************
  * Entity Internal Methods *
  ***************************/
@@ -195,4 +172,25 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
     return this.position.y <= value;
   };
 
+};
+
+
+ThreeGen.prototype._initializeAnimations = function(object, options) {
+  // Load options
+  var animated =  this.checkProperty(options, 'animated', false);
+  var animDuration = this.checkProperty(options, 'duration', 1000);
+  var animKeyFrames = this.checkProperty(options, 'keyframes', 20);
+
+  // Configure animations
+  object.animation = {
+    offset : 0,
+    keyframe : 0,
+    active : animated,
+    walking : false,
+    duration : animDuration,
+    keyframes : animKeyFrames,
+    interpolation : animDuration / animKeyFrames,
+    lastKeyFrame : 0,
+    currentKeyFrame : 0,
+  };
 };
