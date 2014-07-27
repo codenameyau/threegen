@@ -32,27 +32,7 @@ ThreeGen.prototype.Entity = function(object, options) {
   this.scaleEntity(object, options);
 
   // Set position (x,y,z)
-  var posX = this.checkProperty(options, 'posX', 0);
-  var posY = this.checkProperty(options, 'posY', object.dimensions.base);
-  var posZ = this.checkProperty(options, 'posZ', 0);
-
-  // Set velocity (x,y,z)
-  var vX = this.checkProperty(options, 'vX', 0);
-  var vY = this.checkProperty(options, 'vY', 0);
-  var vZ = this.checkProperty(options, 'vZ', 0);
-
-  // Set acceleration (x,y,z)
-  var aX = this.checkProperty(options, 'aX', 0);
-  var aY = this.checkProperty(options, 'aY', this.gravity);
-  var aZ = this.checkProperty(options, 'aZ', 0);
-
-  // Extend entity properties
-  object.falling = this.checkProperty(options, 'falling', true);
-  object.projectile = this.checkProperty(options, 'projectile', false);
-  object.position.set(posX, posY, posZ);
-  object.velocity = new THREE.Vector3(vX, vY, vZ);
-  object.acceleration = new THREE.Vector3(aX, aY, aZ);
-  object.stats = this.settings.ENTITIES.stats;
+  this._initializeEntityProperties(object, options);
 
   // Extend entity methods
   this._initializeEntityMethods(object);
@@ -171,6 +151,30 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 /***************************
  * Entity Internal Methods *
  ***************************/
+ThreeGen.prototype._initializeEntityProperties = function(object, options) {
+  var posX = this.checkProperty(options, 'posX', 0);
+  var posY = this.checkProperty(options, 'posY', object.dimensions.base);
+  var posZ = this.checkProperty(options, 'posZ', 0);
+
+  // Set velocity (x,y,z)
+  var vX = this.checkProperty(options, 'vX', 0);
+  var vY = this.checkProperty(options, 'vY', 0);
+  var vZ = this.checkProperty(options, 'vZ', 0);
+
+  // Set acceleration (x,y,z)
+  var aX = this.checkProperty(options, 'aX', 0);
+  var aY = this.checkProperty(options, 'aY', this.gravity);
+  var aZ = this.checkProperty(options, 'aZ', 0);
+
+  // Extend entity properties
+  object.falling = this.checkProperty(options, 'falling', true);
+  object.position.set(posX, posY, posZ);
+  object.velocity = new THREE.Vector3(vX, vY, vZ);
+  object.acceleration = new THREE.Vector3(aX, aY, aZ);
+  object.stats = this.settings.ENTITIES.stats;
+};
+
+
 ThreeGen.prototype._initializeEntityMethods = function(object) {
 
   object.applyDirection = function(vector) {
