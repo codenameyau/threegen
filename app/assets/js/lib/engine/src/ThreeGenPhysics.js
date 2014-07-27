@@ -13,9 +13,11 @@ ThreeGen.prototype.enablePhysics = function() {
 };
 
 
-ThreeGen.prototype.applyPhysics = function() {
+ThreeGen.prototype.updateEntityPhysics = function() {
   for (var i in this.entities) {
     var entity = this.entities[i];
+
+    // Apply gravity
     if (entity.falling) {
       // Set minimum Y position
       if (entity.belowPosition(entity.dimensions.base)) {
@@ -33,11 +35,6 @@ ThreeGen.prototype.applyPhysics = function() {
         this.accelerateY(entity);
         this.translateEntity(entity, -entity.velocity.y, this.getDirectionVector('down'));
       }
-
-      // Update projectile in air
-      if (entity.projectile) {
-        this.updateProjectile(entity);
-      }
     }
 
     // Obstacle no longer under entity
@@ -46,6 +43,11 @@ ThreeGen.prototype.applyPhysics = function() {
       entity.falling = true;
     }
   }
+};
+
+
+ThreeGen.prototype.updateProjectilePhysics = function() {
+
 };
 
 

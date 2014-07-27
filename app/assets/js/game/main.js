@@ -18,8 +18,8 @@ var lightSource = new THREE.DirectionalLight( 0x888888 );
 lightSource.position.set(0, 0.2, 0.5);
 engine.scene.add(lightSource);
 
-// Enable floor grid (size, gridsize, color)
-engine.enableFloorGrid(200, 10, 0x22AA22);
+// Enable floor grid (scene, size, gridsize, color)
+engine.debug.enableFloorGrid(engine.scene, 200, 10, 0x22AA22);
 
 // Define crate properties
 var smallBoxGeometry = new THREE.BoxGeometry(6, 6, 6);
@@ -29,7 +29,7 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 20, posZ: 60});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 40, posZ: 60});
 // var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 // var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
 // var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});
@@ -38,7 +38,6 @@ var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 20, posZ: 60});
 // var crateG = engine.Entity(mediumCrate.clone(), {posX: 2, posY: 100, posZ: 20});
 // var crateH = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 120, posZ: 20});
 engine.addEntity(crateA);
-engine.deleteEntity(crateA);
 // engine.addEntity(crateB);
 // engine.addEntity(crateC);
 // engine.addEntity(crateD);
