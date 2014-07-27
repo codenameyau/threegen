@@ -60,11 +60,6 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   container.appendChild(body);
 
   // HUD Container events
-  container.onclick = function() {
-    console.log('clicked');
-  };
-
-  // HUD Label events
   label.onmouseenter = function() {
     this.style.color = 'rgba(200, 200, 200, 0.9)';
     container.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
