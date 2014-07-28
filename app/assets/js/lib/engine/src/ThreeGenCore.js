@@ -56,14 +56,12 @@ ThreeGen.prototype.start = function() {
   // Initialize: HUD
   this._initializeHUD();
 
-  // Setup data structures
-  this.models = {};
-  this.entities = [];
-  this.projectiles = [];
+  // Initialize: data structures
+  this._initializeDataStructures();
 
   // Setup physics
   this._initializeDirections();
-  this.enablePhysics();
+  this._initializePhysics();
 
   // Run scene
   this.animateScene();
@@ -132,7 +130,7 @@ ThreeGen.prototype.togglePause = function() {
 
 
 /********************************
- * Core Engine Internal Methods *
+ * Core Engine Internal Startup *
  ********************************/
 ThreeGen.prototype._initializeEventListeners = function() {
   window.addEventListener('resize', this.resizeWindow.bind(this), false);
@@ -147,6 +145,19 @@ ThreeGen.prototype._initializeHUD = function() {
   if (this.settings.HUD.FPS.enabled) { this.enableStatsMoniter(); }
   if (this.settings.HUD.HELP.enabled) { this.enableInstructionsHUD(); }
   if (this.settings.HUD.PAUSE.enabled) { this.enablePausedHUD(); }
+};
+
+
+ThreeGen.prototype._initializeDataStructures = function() {
+  this.models = {};
+  this.entities = [];
+  this.projectiles = [];
+};
+
+
+ThreeGen.prototype._initializePhysics = function() {
+  this.gravity = this.settings.PHYSICS.gravity;
+  this.airFriction = 0.5;
 };
 
 

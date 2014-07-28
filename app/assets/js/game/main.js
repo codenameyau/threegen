@@ -29,7 +29,7 @@ var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
 var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 
 // Add crates entities
-var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 40, posZ: 60});
+var crateA = engine.Entity(smallCrate.clone(), {posX: 0, posY: 20, posZ: 60});
 // var crateB = engine.Entity(smallCrate.clone(), {posX:  0, posY: 80, posZ: 20});
 // var crateC = engine.Entity(mediumCrate.clone(), {posX: 0, posY: 40, posZ: 20});
 // var crateD = engine.Entity(mediumCrate.clone(), {posX: -2, posY: 150, posZ: 20});

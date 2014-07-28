@@ -7,21 +7,15 @@
 /****************************
  * Physics Engine Functions *
  ****************************/
-ThreeGen.prototype.enablePhysics = function() {
-  this.gravity = this.settings.PHYSICS.gravity;
-  this.airFriction = 0.5;
-};
-
-
 ThreeGen.prototype.updateEntityPhysics = function() {
-  for (var i in this.entities) {
+  for (var i=this.entities.length-1; i>=0; --i) {
     var entity = this.entities[i];
 
     // Apply gravity
     if (entity.falling) {
       // Set minimum Y position
       if (entity.belowPosition(entity.dimensions.base)) {
-        entity.translateBaseHeight();
+        entity.moveToBaseHeight();
       }
 
       // Check if obstacle under entity
@@ -47,7 +41,7 @@ ThreeGen.prototype.updateEntityPhysics = function() {
 
 
 ThreeGen.prototype.updateProjectilePhysics = function() {
-  for (var i in this.projectiles) {
+  for (var i=this.projectiles.length-1; i>=0; --i) {
     var projectile = this.projectiles[i];
     var obstacles = this.findCollisionObstacles(projectile, this.getFaceVectors());
 
@@ -65,12 +59,13 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
 
     // Apply physics
     else {
+      // [TODO] translate posX and poZ
       projectile.position.x += projectile.velocity.x;
       projectile.position.z += projectile.velocity.z;
+      this.translateEntity(projectile, -projectile.velocity.y, this.getDirectionVector('down'));
       this.accelerateX(projectile);
       this.accelerateY(projectile);
       this.accelerateZ(projectile);
-      this.translateEntity(projectile, -projectile.velocity.y, this.getDirectionVector('down'));
     }
 
   }

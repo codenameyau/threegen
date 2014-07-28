@@ -46,4 +46,11 @@ ThreeGen.prototype.utils = {
     }
   },
 
+  // Quickly deletes all items in array
+  clearArray : function(array) {
+    while (array.length) {
+      array.pop();
+    }
+  },
+
 };

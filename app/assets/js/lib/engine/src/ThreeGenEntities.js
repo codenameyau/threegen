@@ -15,7 +15,7 @@ ThreeGen.prototype.Entity = function(object, options) {
   this._initializeEntityProperties(object, options);
   this._initializeEntityMethods(object);
   this._initializeEntityStats(object, options);
-  this._initializeAnimations(object, options);
+  this._initializeEntityAnimations(object, options);
   return object;
 };
 
@@ -29,6 +29,15 @@ ThreeGen.prototype.addEntity = function(entity) {
 ThreeGen.prototype.deleteEntity = function(entity) {
   this.removeFromScene(entity);
   this.utils.removeObjectInArray(this.entities, 'id', entity.id);
+};
+
+
+ThreeGen.prototype.clearEntities = function(deletePlayer) {
+  for (var i=this.entities.length-1; i>1; i--) {
+    var entity = this.entities[i];
+    if (this.player && !deletePlayer && entity === this.player) { continue; }
+    this.deleteEntity(entity);
+  }
 };
 
 
@@ -119,6 +128,7 @@ ThreeGen.prototype.stillAlive = function(entity) {
 
 
 ThreeGen.prototype.modifyHealth = function(entity, points) {
+  // [TODO] Display damage and healing indicators
   points = points || 0;
   if (entity.stats.health) {
     entity.stats.health += points;
@@ -163,7 +173,7 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
     return direction;
   };
 
-  object.translateBaseHeight = function() {
+  object.moveToBaseHeight = function() {
     this.falling = false;
     this.velocity.y = 0;
     this.position.y = this.dimensions.base;
@@ -171,6 +181,10 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
 
   object.belowPosition = function(value) {
     return this.position.y <= value;
+  };
+
+  object.abovePosition = function(value) {
+    return this.position.y >= value;
   };
 
 };
@@ -189,7 +203,7 @@ ThreeGen.prototype._initializeEntityStats = function(object, options) {
 };
 
 
-ThreeGen.prototype._initializeAnimations = function(object, options) {
+ThreeGen.prototype._initializeEntityAnimations = function(object, options) {
   // Load options
   var animated = this.utils.checkProperty(options, 'animated', false);
   var animDuration = this.utils.checkProperty(options, 'duration', 1000);
