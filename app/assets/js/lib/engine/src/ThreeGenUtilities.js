@@ -31,6 +31,11 @@ ThreeGen.prototype.utils = {
     return Math.random() * (max - min) + min;
   },
 
+  // Returns bool whether array contains an item
+  containsItem : function(array) {
+    return (array.length > 0) ? true : false;
+  },
+
   // Removes object that has matching property value
   removeObjectInArray : function(array, property, match) {
     for (var i in array) {

@@ -47,12 +47,14 @@ ThreeGen.prototype.updateEntityPhysics = function() {
 
 
 ThreeGen.prototype.updateProjectilePhysics = function() {
+  var projectile, obstacles;
   for (var i in this.projectiles) {
-    var projectile = this.projectiles[i];
+    projectile = this.projectiles[i];
+    obstacles = this.findCollisionObstacles(projectile, this.getFaceVectors());
 
     // Destroy projectile if hits floor
     if (projectile.belowPosition(0)) {
-      // [TODO] Apply bounce
+      // [TODO] Add optional bounce parameter
       this.deleteProjectile(projectile);
     }
 
@@ -60,7 +62,6 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
     else if (this.checkCollisionVectors(projectile, this.getFaceVectors())) {
       // [TODO] Apply projectile collision effect
       console.log('hit');
-      // var target = this.getCollider()
       // this.applyCollisionEffects(target);
       this.deleteProjectile(projectile);
     }
@@ -115,3 +116,35 @@ ThreeGen.prototype.accelerateZ = function(entity) {
   entity.velocity.z += entity.acceleration.z * this.clock.delta;
 };
 
+
+/*********************************
+ * Collision Detection Functions *
+ *********************************/
+ThreeGen.prototype.getCollisionObjects = function(entity, directionVector) {
+  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 3);
+  return ray.intersectObjects(this.entities);
+};
+
+
+ThreeGen.prototype.checkCollision = function(entity, directionVector) {
+  var obstacles = this.getCollisionObjects(entity, directionVector);
+  return this.utils.containsItem(obstacles);
+};
+
+
+ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
+  for (var i in collisionVectors) {
+    if (this.checkCollision(entity, collisionVectors[i])) {return true;}
+  }
+  return false;
+};
+
+
+ThreeGen.prototype.findCollisionObstacles = function(entity, collisionVectors) {
+  var obstacles = [];
+  for (var v in collisionVectors) {
+    obstacles = this.getCollisionObjects(entity, collisionVectors[v]);
+    if (this.utils.containsItem(obstacles)) {break;}
+  }
+  return obstacles;
+};

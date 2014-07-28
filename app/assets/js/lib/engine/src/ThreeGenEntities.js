@@ -81,21 +81,6 @@ ThreeGen.prototype.scaleEntity = function(object, options) {
 };
 
 
-ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
-  for (var i in collisionVectors) {
-    if (this.checkCollision(entity, collisionVectors[i])) {return true;}
-  }
-  return false;
-};
-
-
-ThreeGen.prototype.checkCollision = function(entity, directionVector) {
-  var ray = new THREE.Raycaster(entity.position, directionVector, 0, 3);
-  var obstacles = ray.intersectObjects(this.entities);
-  return (obstacles.length > 0) ? true : false;
-};
-
-
 ThreeGen.prototype.translateEntity = function(entity, distance, directionVector) {
   var posX = entity.position.x + distance * directionVector.x * this.clock.delta;
   var posY = entity.position.y + distance * directionVector.y * this.clock.delta;
