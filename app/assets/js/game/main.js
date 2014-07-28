@@ -93,7 +93,8 @@ bunny.add(bunnyTail);
 bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
 bunny.position.set(0, 1.5, 0);
-var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 5, length: 5});
+var bunnyEntity = engine.Entity(bunny,
+  {posZ: 120, width: 5, height: 5, length: 5, health: 100});
 engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 

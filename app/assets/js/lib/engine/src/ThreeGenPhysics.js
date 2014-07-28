@@ -153,11 +153,11 @@ ThreeGen.prototype.applyProjectileCollision = function(projectile, obstacle) {
   // [TODO] Clean up stats checking
   var entity = obstacle.object;
   for (var stat in projectile.collisionEffect) {
-    if (stat === 'health') {
-      console.log(this.player.stats);
+    switch (stat) {
+    case 'health':
       this.modifyHealth(entity, projectile.collisionEffect[stat]);
-    }
-    else {
+      break;
+    default:
       entity.stats[stat] += projectile.collisionEffect[stat];
     }
   }

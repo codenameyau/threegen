@@ -14,6 +14,7 @@ ThreeGen.prototype.Entity = function(object, options) {
   // Extend entity properties and methods
   this._initializeEntityProperties(object, options);
   this._initializeEntityMethods(object);
+  this._initializeEntityStats(object, options);
   this._initializeAnimations(object, options);
   return object;
 };
@@ -118,6 +119,7 @@ ThreeGen.prototype.stillAlive = function(entity) {
 
 
 ThreeGen.prototype.modifyHealth = function(entity, points) {
+  points = points || 0;
   if (entity.stats.health) {
     entity.stats.health += points;
     this.stillAlive(entity);
@@ -148,7 +150,6 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
-  object.stats = this.settings.ENTITIES.stats;
 };
 
 
@@ -175,9 +176,22 @@ ThreeGen.prototype._initializeEntityMethods = function(object) {
 };
 
 
+ThreeGen.prototype._initializeEntityStats = function(object, options) {
+  // Load stats with default values from settings
+  var statsSettings = this.settings.ENTITIES.stats;
+  object.stats = {};
+
+  // Initialize each stat with either default value or value in options
+  for (var property in statsSettings) {
+    object.stats[property] = this.utils.checkProperty(
+      options, property, statsSettings[property]);
+  }
+};
+
+
 ThreeGen.prototype._initializeAnimations = function(object, options) {
   // Load options
-  var animated =  this.utils.checkProperty(options, 'animated', false);
+  var animated = this.utils.checkProperty(options, 'animated', false);
   var animDuration = this.utils.checkProperty(options, 'duration', 1000);
   var animKeyFrames = this.utils.checkProperty(options, 'keyframes', 20);
 
