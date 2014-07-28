@@ -1,10 +1,10 @@
 /*!
- * gulpfile.js
+ * ThreeGen - gulpfile.js
  * MIT License (c) 2014
  * codenameyau.github.io
  *
  * Description:
- * Contains scripts for an automated workflow
+ * Contains workflow automation scripts
  *
  * Installation:
  * (1) Install node.js and gulp globally
@@ -15,6 +15,9 @@
  *   gulp         - Generates dist folder for deployment
  *   gulp clean   - Removes dist folder if exists
  *   gulp test    - Runs mocha tests on specified path
+ *
+ * Todo:
+ *   gulp build   - Concats all js files in 'engine/src'
  */
 'use strict';
 

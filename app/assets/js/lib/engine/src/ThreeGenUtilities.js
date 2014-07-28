@@ -38,7 +38,7 @@ ThreeGen.prototype.utils = {
 
   // Removes object that has matching property value
   removeObjectInArray : function(array, property, match) {
-    for (var i in array) {
+    for (var i=array.length-1; i>=0; --i) {
       if (array[i][property] === match) {
         array.splice(i, 1);
         return;

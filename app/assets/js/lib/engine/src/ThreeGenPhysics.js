@@ -125,7 +125,7 @@ ThreeGen.prototype.checkCollision = function(entity, directionVector) {
 
 
 ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
-  for (var i in collisionVectors) {
+  for (var i=collisionVectors.length-1; i>=0; --i) {
     if (this.checkCollision(entity, collisionVectors[i])) {return true;}
   }
   return false;
@@ -134,8 +134,8 @@ ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
 
 ThreeGen.prototype.findCollisionObstacles = function(entity, collisionVectors) {
   var obstacles = [];
-  for (var v in collisionVectors) {
-    obstacles = this.getCollisionEntities(entity, collisionVectors[v]);
+  for (var i=collisionVectors.length-1; i>=0; --i) {
+    obstacles = this.getCollisionEntities(entity, collisionVectors[i]);
     if (this.utils.containsItem(obstacles)) {break;}
   }
   return obstacles;

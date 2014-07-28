@@ -64,7 +64,7 @@ ThreeGen.prototype.start = function() {
   this._initializePhysics();
 
   // Run scene
-  this.animateScene();
+  this.updateScene();
 };
 
 
@@ -85,7 +85,7 @@ ThreeGen.prototype.resumeGame = function() {
   this.HUD.paused.style.display = 'none';
   this.renderer.running = true;
   this.resumeClock();
-  window.requestAnimationFrame(this.animateScene.bind(this));
+  window.requestAnimationFrame(this.updateScene.bind(this));
 };
 
 
@@ -166,6 +166,7 @@ ThreeGen.prototype._initializeDirections = function() {
   // For collision detection
   var directionVectors = {
     front : [
+      new THREE.Vector3( 0,  0, -1 ),
       new THREE.Vector3( 1,  1, -1 ),
       new THREE.Vector3( 1,  0, -1 ),
       new THREE.Vector3( 1, -1, -1 ),
@@ -174,10 +175,10 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  0, -1 ),
       new THREE.Vector3(-1,  1, -1 ),
       new THREE.Vector3( 0,  1, -1 ),
-      new THREE.Vector3( 0,  0, -1 ),
     ],
 
     back : [
+      new THREE.Vector3( 0,  0,  1 ),
       new THREE.Vector3( 1,  1,  1 ),
       new THREE.Vector3( 1,  0,  1 ),
       new THREE.Vector3( 1, -1,  1 ),
@@ -186,7 +187,6 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  0,  1 ),
       new THREE.Vector3(-1,  1,  1 ),
       new THREE.Vector3( 0,  1,  1 ),
-      new THREE.Vector3( 0,  0,  1 ),
     ],
 
     left : [
@@ -198,6 +198,7 @@ ThreeGen.prototype._initializeDirections = function() {
     ],
 
     up : [
+      new THREE.Vector3( 0,  1,  0 ),
       new THREE.Vector3( 1,  1, -1 ),
       new THREE.Vector3( 1,  1,  0 ),
       new THREE.Vector3( 1,  1,  1 ),
@@ -206,10 +207,10 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1,  1,  1 ),
       new THREE.Vector3(-1,  1, -1 ),
       new THREE.Vector3( 0,  1, -1 ),
-      new THREE.Vector3( 0,  1,  0 ),
     ],
 
     down : [
+      new THREE.Vector3( 0, -1,  0 ),
       new THREE.Vector3( 1, -1, -1 ),
       new THREE.Vector3( 1, -1,  0 ),
       new THREE.Vector3( 1, -1,  1 ),
@@ -218,18 +219,17 @@ ThreeGen.prototype._initializeDirections = function() {
       new THREE.Vector3(-1, -1,  1 ),
       new THREE.Vector3(-1, -1, -1 ),
       new THREE.Vector3( 0, -1, -1 ),
-      new THREE.Vector3( 0, -1,  0 ),
     ],
   };
 
   // Bind directions to engine
   this.directions = {
     vectors : directionVectors,
-    front   : directionVectors.front.slice(-1)[0],
-    back    : directionVectors.back.slice(-1)[0],
-    left   : directionVectors.left.slice(-1)[0],
-    right   : directionVectors.right.slice(-1)[0],
-    up      : directionVectors.up.slice(-1)[0],
-    down    : directionVectors.down.slice(-1)[0],
+    front   : directionVectors.front[0],
+    back    : directionVectors.back[0],
+    left   : directionVectors.left[0],
+    right   : directionVectors.right[0],
+    up      : directionVectors.up[0],
+    down    : directionVectors.down[0],
   };
 };

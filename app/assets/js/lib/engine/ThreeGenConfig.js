@@ -47,11 +47,11 @@ function ThreeGen() {
 
     // Player
     PLAYER : {
-      rotationMultiplier : 2.0,
-      airMultiplier      : 2.0,
-      jumpHeight         : 35.0,
-      frontSpeed         : 40.0,
-      backSpeed          : 30.0,
+      rotationMultiplier : 3.0,
+      airMultiplier      : 3.0,
+      jumpHeight         : 40.0,
+      frontSpeed         : 80.0,
+      backSpeed          : 50.0,
     },
 
 
@@ -89,7 +89,7 @@ function ThreeGen() {
     HUD : {
 
       FPS : {
-        enabled : false,
+        enabled : true,
         mode : 1, // 0 -> fps, 1 -> ms
       },
 
