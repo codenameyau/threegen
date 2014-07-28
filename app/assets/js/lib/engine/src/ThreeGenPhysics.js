@@ -47,10 +47,9 @@ ThreeGen.prototype.updateEntityPhysics = function() {
 
 
 ThreeGen.prototype.updateProjectilePhysics = function() {
-  var projectile, obstacles;
   for (var i in this.projectiles) {
-    projectile = this.projectiles[i];
-    obstacles = this.findCollisionObstacles(projectile, this.getFaceVectors());
+    var projectile = this.projectiles[i];
+    var obstacles = this.findCollisionObstacles(projectile, this.getFaceVectors());
 
     // Destroy projectile if hits floor
     if (projectile.belowPosition(0)) {
@@ -60,7 +59,7 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
 
     // Check if collides with another entity
     else if (this.utils.containsItem(obstacles)) {
-      this.applyProjectileCollision(projectile, obstacles);
+      this.applyProjectileCollision(projectile, obstacles[0]);
       this.deleteProjectile(projectile);
     }
 
@@ -118,14 +117,14 @@ ThreeGen.prototype.accelerateZ = function(entity) {
 /*********************************
  * Collision Detection Functions *
  *********************************/
-ThreeGen.prototype.getCollisionObjects = function(entity, directionVector) {
+ThreeGen.prototype.getCollisionEntities = function(entity, directionVector) {
   var ray = new THREE.Raycaster(entity.position, directionVector, 0, 3);
   return ray.intersectObjects(this.entities);
 };
 
 
 ThreeGen.prototype.checkCollision = function(entity, directionVector) {
-  var obstacles = this.getCollisionObjects(entity, directionVector);
+  var obstacles = this.getCollisionEntities(entity, directionVector);
   return this.utils.containsItem(obstacles);
 };
 
@@ -141,26 +140,25 @@ ThreeGen.prototype.checkCollisionVectors = function(entity, collisionVectors) {
 ThreeGen.prototype.findCollisionObstacles = function(entity, collisionVectors) {
   var obstacles = [];
   for (var v in collisionVectors) {
-    obstacles = this.getCollisionObjects(entity, collisionVectors[v]);
+    obstacles = this.getCollisionEntities(entity, collisionVectors[v]);
     if (this.utils.containsItem(obstacles)) {break;}
   }
   return obstacles;
 };
 
 
-ThreeGen.prototype.applyProjectileCollision = function(projectile, entities) {
+ThreeGen.prototype.applyProjectileCollision = function(projectile, obstacle) {
   // [TODO] Display damage indicators
   // [TODO] Playback collision sound effects
   // [TODO] Clean up stats checking
-  for (var i in entities) {
-    var entity = entities[i].object;
-    for (var stat in projectile.collisionEffect) {
-      if (stat === 'health') {
-        this.modifyHealth(entity, projectile.collisionEffect[stat]);
-      }
-      else {
-        entity.stats[stat] += projectile.collisionEffect[stat];
-      }
+  var entity = obstacle.object;
+  for (var stat in projectile.collisionEffect) {
+    if (stat === 'health') {
+      console.log(this.player.stats);
+      this.modifyHealth(entity, projectile.collisionEffect[stat]);
+    }
+    else {
+      entity.stats[stat] += projectile.collisionEffect[stat];
     }
   }
 };

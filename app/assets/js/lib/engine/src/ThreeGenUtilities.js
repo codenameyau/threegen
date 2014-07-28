@@ -21,7 +21,7 @@ ThreeGen.prototype.utils = {
     return value;
   },
 
-  // Converts radians to degrees
+  // Converts degrees to radians
   degToRad : function(degrees) {
     return Math.PI/180 * degrees;
   },
@@ -33,7 +33,7 @@ ThreeGen.prototype.utils = {
 
   // Returns bool whether array contains an item
   containsItem : function(array) {
-    return (array.length > 0) ? true : false;
+    return array.length > 0;
   },
 
   // Removes object that has matching property value
