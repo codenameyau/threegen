@@ -10,10 +10,6 @@
 ThreeGen.prototype.enableStatsMoniter = function() {
   this.stats = new Stats();
   this.stats.setMode(this.settings.HUD.FPS.mode);
-  this.stats.domElement.style.position = 'absolute';
-  this.stats.domElement.style.top  = '0';
-  this.stats.domElement.style.left = '0';
-  this.stats.domElement.style.zIndex = 100;
   this.utils.addToDOM(this.settings.META.domElement, this.stats.domElement);
 };
 
@@ -85,16 +81,6 @@ ThreeGen.prototype.enablePausedHUD = function() {
   var settings = this.settings.HUD.PAUSE;
   var container = document.createElement('div');
   container.className = 'threegen-paused';
-  container.style.display = 'none';
-  container.style.zIndex = '125';
-  container.style.width = '100%';
-  container.style.position = 'absolute';
-  container.style.top = '40%';
-  container.style.textAlign = 'center';
-  container.style.color = 'rgba(200, 200, 200, 0.5)';
-  container.style.textTransform = 'uppercase';
-  container.style.fontSize = '30px';
-  container.style.letterSpacing = '8px';
   container.innerText = settings.message;
   this.utils.addToDOM(this.settings.META.domElement, container);
   this.HUD.paused = container;

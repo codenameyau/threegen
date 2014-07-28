@@ -1,0 +1,75 @@
+/*!
+ * ThreeGen CSS Stylesheet
+ * MIT License (c) 2014
+ * codenameyau.github.io
+ *
+ * Description:
+ * Stylizes the in-game HUDs.
+ * Feel free to edit for your own projects.
+ *
+ * Stylesheet Contents:
+ *   - HTML DOM Elements
+ *   - FPS Stats Moniter
+ *   - Game Instructions
+ *   - Game Pause
+ */
+
+
+/*********************
+ * HTML DOM Elements *
+ *********************/
+html {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body {
+  background: #ffffff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+
+/******************************
+ * mrdoob - FPS Stats Moniter *
+ ******************************/
+#stats {
+  position: absolute;
+  top : 0;
+  left: 0;
+  z-index: 100;
+}
+
+
+/***********************************
+ * ThreeGenHUD - Game Instructions *
+ ***********************************/
+
+
+/****************************
+ * ThreeGenHUD - Game Pause *
+ ****************************/
+.threegen-paused {
+  display : none;
+  z-index : 125;
+  width : 100%;
+  position : absolute;
+  top : 40%;
+  text-align : center;
+  color : rgba(200, 200, 200, 0.5);
+  text-transform : uppercase;
+  font-size : 30px;
+  letter-spacing : 8px;
+}

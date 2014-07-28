@@ -113,10 +113,7 @@ engine.mouseClickListener(function(event) {
     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,
     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
   engine.addProjectile(snowball, {health: -10});
-  // var obstacles = raycaster.intersectObjects( engine.entities );
-  // var entity = obstacles[0].object;
 });
-
 
 // Load android model and set it to player
 // var modelName = 'android';

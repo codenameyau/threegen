@@ -32,15 +32,6 @@ ThreeGen.prototype.deleteEntity = function(entity) {
 };
 
 
-ThreeGen.prototype.clearEntities = function(deletePlayer) {
-  for (var i=this.entities.length-1; i>1; --i) {
-    var entity = this.entities[i];
-    if (this.player && !deletePlayer && entity === this.player) { continue; }
-    this.deleteEntity(entity);
-  }
-};
-
-
 ThreeGen.prototype.removeFromScene = function(object) {
   if (object === this.player) { delete this.player; }
   this.scene.remove(object);

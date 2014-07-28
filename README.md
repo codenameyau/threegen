@@ -18,7 +18,6 @@ Three.js game engine. Stay tuned!
 * [+] Custom keybindings
 * [+] Mouse input
 * World model
-* Audio system
 * Loading screens
 * Memory optimization
 * Level loader
@@ -34,7 +33,6 @@ Three.js game engine. Stay tuned!
 
 ####Physics Engine
 * [+] Gravity
-* [+] Entity movement
 * [+] Raycasting collision detection
 * [+] Projectile physics
 * Air Friction
@@ -51,12 +49,14 @@ Three.js game engine. Stay tuned!
 ####Entities
 * [+] Entity creation
 * [+] Entity destruction
-* Entity health/stats
+* [+] Entity health/stats
+* [+] Entity movement
 
 ####Resource Loader
 * [+] Mesh texture
 * [+] Json model
-* Audio effects
+* Audio loader
+* Audio events
 * Music loop
 
 ####Utilities
@@ -68,12 +68,14 @@ Three.js game engine. Stay tuned!
 
 ####Game
 * [+] Game instructions HUD
-* [+] Pause
+* [+] Game pause
+* Damage indicators
 * Health HUD
-* Status HUD
-* Documentation
-* Scene graph
+* Pause menu
+* Saving
+* Loading
 * AI support
+* Documentation
 * Three.js encapsulation
 
 ####Level
