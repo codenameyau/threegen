@@ -52,14 +52,17 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
 
     // Destroy projectile if hits floor
     if (projectile.belowPosition(0)) {
-      this.deleteProjectile(projectile);
       // [TODO] Apply bounce
+      this.deleteProjectile(projectile);
     }
 
     // Check if collides with another entity
-    else if (this.checkCollisionVectors(projectile, this.getCollisionVectors('down'))) {
-      this.deleteProjectile(projectile);
+    else if (this.checkCollisionVectors(projectile, this.getFaceVectors())) {
       // [TODO] Apply projectile collision effect
+      console.log('hit');
+      // var target = this.getCollider()
+      // this.applyCollisionEffects(target);
+      this.deleteProjectile(projectile);
     }
 
     // Apply physics
@@ -83,6 +86,18 @@ ThreeGen.prototype.getDirectionVector = function(direction) {
 
 ThreeGen.prototype.getCollisionVectors = function(direction) {
   return this.directions.vectors[direction];
+};
+
+
+ThreeGen.prototype.getFaceVectors = function() {
+  return [
+    this.getDirectionVector('front'),
+    this.getDirectionVector('back'),
+    this.getDirectionVector('up'),
+    this.getDirectionVector('down'),
+    this.getDirectionVector('left'),
+    this.getDirectionVector('right'),
+  ];
 };
 
 

@@ -106,11 +106,12 @@ engine.mouseClickListener(function(event) {
   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
   var direction = raycaster.ray.direction;
+  console.log(raycaster.ray);
   var pos = engine.player.position;
   var snowball = engine.Entity(snowballMesh.clone(),
     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,
     vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
-  engine.addProjectile(snowball);
+  engine.addProjectile(snowball, {health: -10});
   // var obstacles = raycaster.intersectObjects( engine.entities );
   // var entity = obstacles[0].object;
 });

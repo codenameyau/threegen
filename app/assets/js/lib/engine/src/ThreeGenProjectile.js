@@ -4,7 +4,8 @@
 'use strict';
 
 
-ThreeGen.prototype.addProjectile = function(entity) {
+ThreeGen.prototype.addProjectile = function(entity, collisionEffect) {
+  entity.collisionEffect = collisionEffect;
   this.projectiles.push(entity);
   this.scene.add(entity);
 };
