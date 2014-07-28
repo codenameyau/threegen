@@ -56,15 +56,15 @@ engine.addEntity(crateA);
 //   engine.addEntity(newCrate);
 // }
 
-// // Add random medium crates
-// for (var i=0; i<5; i++) {
-//   var newCrate = engine.Entity(mediumCrate.clone(), {
-//     posX: engine.utils.randNumber(-20, 20),
-//     posY: engine.utils.randNumber(0, 100),
-//     posZ: engine.utils.randNumber(-20, 20)
-//   });
-//   engine.addEntity(newCrate);
-// }
+// Add random medium crates
+for (var i=0; i<5; i++) {
+  var newCrate = engine.Entity(mediumCrate.clone(), {
+    posX: engine.utils.randNumber(-20, 20),
+    posY: engine.utils.randNumber(0, 100),
+    posZ: engine.utils.randNumber(-20, 20)
+  });
+  engine.addEntity(newCrate);
+}
 
 
 // Create bunny
@@ -93,7 +93,7 @@ bunny.add(bunnyTail);
 bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
 bunny.position.set(0, 1.5, 0);
-var bunnyEntity = engine.Entity(bunny, {posZ: 80, width: 5, height: 5, length: 5});
+var bunnyEntity = engine.Entity(bunny, {posZ: 120, width: 5, height: 5, length: 5});
 engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 
@@ -106,7 +106,7 @@ engine.mouseClickListener(function(event) {
   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
   var direction = raycaster.ray.direction;
-  console.log(raycaster.ray);
+  // console.log(raycaster.ray);
   var pos = engine.player.position;
   var snowball = engine.Entity(snowballMesh.clone(),
     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,

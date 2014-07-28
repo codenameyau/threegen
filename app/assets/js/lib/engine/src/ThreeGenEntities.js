@@ -108,6 +108,18 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
 };
 
 
+ThreeGen.prototype.modifyHealth = function(entity, points) {
+  if (entity.stats.health) {
+    entity.stats.health += points;
+    if (entity.stats.health <= 0) {
+      // [TODO] Entity death animation
+      this.removeFromScene(entity);
+      this.deleteEntity(entity);
+    }
+  }
+};
+
+
 /***************************
  * Entity Internal Methods *
  ***************************/

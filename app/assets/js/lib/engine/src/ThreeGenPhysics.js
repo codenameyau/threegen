@@ -59,10 +59,8 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
     }
 
     // Check if collides with another entity
-    else if (this.checkCollisionVectors(projectile, this.getFaceVectors())) {
-      // [TODO] Apply projectile collision effect
-      console.log('hit');
-      // this.applyCollisionEffects(target);
+    else if (this.utils.containsItem(obstacles)) {
+      this.applyProjectileCollision(projectile, obstacles);
       this.deleteProjectile(projectile);
     }
 
@@ -147,4 +145,22 @@ ThreeGen.prototype.findCollisionObstacles = function(entity, collisionVectors) {
     if (this.utils.containsItem(obstacles)) {break;}
   }
   return obstacles;
+};
+
+
+ThreeGen.prototype.applyProjectileCollision = function(projectile, entities) {
+  // [TODO] Display damage indicators
+  // [TODO] Playback collision sound effects
+  // [TODO] Clean up stats checking
+  for (var i in entities) {
+    var entity = entities[i].object;
+    for (var stat in projectile.collisionEffect) {
+      if (stat === 'health') {
+        this.modifyHealth(entity, projectile.collisionEffect[stat]);
+      }
+      else {
+        entity.stats[stat] += projectile.collisionEffect[stat];
+      }
+    }
+  }
 };
