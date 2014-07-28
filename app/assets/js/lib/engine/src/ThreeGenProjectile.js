@@ -12,4 +12,5 @@ ThreeGen.prototype.addProjectile = function(entity) {
 
 ThreeGen.prototype.deleteProjectile = function(entity) {
   this.removeFromScene(entity);
+  this.utils.removeObjectInArray(this.projectiles, 'id', entity.id);
 };

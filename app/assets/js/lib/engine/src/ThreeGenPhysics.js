@@ -47,7 +47,32 @@ ThreeGen.prototype.updateEntityPhysics = function() {
 
 
 ThreeGen.prototype.updateProjectilePhysics = function() {
+  for (var i in this.projectiles) {
+    var projectile = this.projectiles[i];
 
+    // Destroy projectile if hits floor
+    if (projectile.belowPosition(0)) {
+      this.deleteProjectile(projectile);
+      // [TODO] Apply bounce
+    }
+
+    // Check if collides with another entity
+    else if (this.checkCollisionVectors(projectile, this.getCollisionVectors('down'))) {
+      this.deleteProjectile(projectile);
+      // [TODO] Apply projectile collision effect
+    }
+
+    // Apply physics
+    else {
+      projectile.position.x += projectile.velocity.x;
+      projectile.position.z += projectile.velocity.z;
+      this.accelerateX(projectile);
+      this.accelerateY(projectile);
+      this.accelerateZ(projectile);
+      this.translateEntity(projectile, -projectile.velocity.y, this.getDirectionVector('down'));
+    }
+
+  }
 };
 
 
@@ -75,12 +100,3 @@ ThreeGen.prototype.accelerateZ = function(entity) {
   entity.velocity.z += entity.acceleration.z * this.clock.delta;
 };
 
-
-ThreeGen.prototype.updateProjectile = function(entity) {
-  entity.position.x += entity.velocity.x;
-  entity.position.z += entity.velocity.z;
-  // this.moveEntity(entity, entity.velocity.x, 'right');
-  // this.moveEntity(entity, entity.velocity.z, 'front');
-  this.accelerateX(entity);
-  this.accelerateZ(entity);
-};

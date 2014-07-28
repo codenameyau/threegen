@@ -7,24 +7,6 @@
 /*************************
  * Entity Public Methods *
  *************************/
-ThreeGen.prototype.addEntity = function(entity) {
-  this.entities.push(entity);
-  this.scene.add(entity);
-};
-
-
-ThreeGen.prototype.removeFromScene = function(object) {
-  if (object === this.player) { delete this.player; }
-  this.scene.remove(object);
-};
-
-
-ThreeGen.prototype.deleteEntity = function(entity) {
-  this.removeFromScene(entity);
-  this.utils.removeObjectInArray(this.entities, 'id', entity.id);
-};
-
-
 ThreeGen.prototype.Entity = function(object, options) {
   // Scale object dimensions
   this.scaleEntity(object, options);
@@ -34,6 +16,24 @@ ThreeGen.prototype.Entity = function(object, options) {
   this._initializeEntityMethods(object);
   this._initializeAnimations(object, options);
   return object;
+};
+
+
+ThreeGen.prototype.addEntity = function(entity) {
+  this.entities.push(entity);
+  this.scene.add(entity);
+};
+
+
+ThreeGen.prototype.deleteEntity = function(entity) {
+  this.removeFromScene(entity);
+  this.utils.removeObjectInArray(this.entities, 'id', entity.id);
+};
+
+
+ThreeGen.prototype.removeFromScene = function(object) {
+  if (object === this.player) { delete this.player; }
+  this.scene.remove(object);
 };
 
 

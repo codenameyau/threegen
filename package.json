@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/codenameyau/threegen",
   "devDependencies": {
-    "gulp": "^3.8.1",
+    "gulp": "^3.8.6",
     "gulp-mocha": "^0.5.1",
     "gulp-rev": "^0.4.1",
     "gulp-uglify": "^0.3.1",
