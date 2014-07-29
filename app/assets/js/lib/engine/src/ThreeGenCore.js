@@ -227,7 +227,7 @@ ThreeGen.prototype._initializeDirections = function() {
     vectors : directionVectors,
     front   : directionVectors.front[0],
     back    : directionVectors.back[0],
-    left   : directionVectors.left[0],
+    left    : directionVectors.left[0],
     right   : directionVectors.right[0],
     up      : directionVectors.up[0],
     down    : directionVectors.down[0],

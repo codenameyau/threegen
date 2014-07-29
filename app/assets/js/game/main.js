@@ -94,24 +94,28 @@ bunny.add(bunnyEarL);
 bunny.add(bunnyEarR);
 bunny.position.set(0, 1.5, 0);
 var bunnyEntity = engine.Entity(bunny,
-  {posZ: 120, width: 5, height: 5, length: 5, health: 100});
+  {posZ: 120, width: 5, height: 5, length: 5, health: 50});
 engine.addEntity(bunnyEntity);
 engine.setPlayer(bunnyEntity);
 
 // Mouse input: snowball
 var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
 engine.mouseClickListener(function(event) {
+  // [TODO] Disable projectile creation when paused
   var projector = new THREE.Projector();
   var mouseVector = new THREE.Vector3();
   mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
   mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
+
   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
+  // var direction = raycaster.ray.direction;
   var direction = raycaster.ray.direction;
   // console.log(raycaster.ray);
   var pos = engine.player.position;
+  var force = 5;
   var snowball = engine.Entity(snowballMesh.clone(),
     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,
-    vX: direction.x*10, vY: direction.y*10, vZ: direction.z*10});
+    vX: direction.x*mouseVector.x, vY: direction.y*mouseVector.y, vZ: direction.z*force});
   engine.addProjectile(snowball, {health: -10});
 });
 

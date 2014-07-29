@@ -34,7 +34,7 @@ Three.js game engine. Stay tuned!
 ####Physics Engine
 * [+] Gravity
 * [+] Raycasting collision detection
-* [+] Projectile physics
+* Projectile physics
 * Air Friction
 
 ####Player Entity
@@ -81,6 +81,14 @@ Three.js game engine. Stay tuned!
 ####Level
 * World boundary
 * Level editor
+
+
+##Deployment and Build
+
+Build coming soon as a gulp task.
+
+To deploy run `gulp`, which minifies and concats your CSS and JS files
+and outputs them into a `dist/` folder. See `gulpfile.js` for more details.
 
 
 ##Learning Resources

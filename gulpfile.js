@@ -28,6 +28,7 @@
 var gulp   = require('gulp');
 var rimraf = require('rimraf');
 var uglify = require('gulp-uglify');
+var cssmin = require('gulp-minify-css');
 var usemin = require('gulp-usemin');
 var mocha  = require('gulp-mocha');
 var rev    = require('gulp-rev');
@@ -63,7 +64,7 @@ gulp.task('clean', function(cb) {
 gulp.task('usemin', ['clean'], function() {
   gulp.src(PATHS.index)
     .pipe(usemin({
-      css: [rev()],
+      css: [cssmin(), rev()],
       js: [uglify(), rev()],
     }))
     .pipe(gulp.dest(CONFIG.output));
