@@ -109,14 +109,14 @@ engine.mouseClickListener(function(event) {
 
   var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
   // var direction = raycaster.ray.direction;
-  var direction = raycaster.ray.direction;
+  var ray = raycaster.ray.direction;
+  var direction = new THREE.Vector3( mouseVector.x, mouseVector.y, ray.z );
   // console.log(raycaster.ray);
   var pos = engine.player.position;
-  var force = 5;
+  var velocity = 8;
   var snowball = engine.Entity(snowballMesh.clone(),
-    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1, projectile: true,
-    vX: direction.x*mouseVector.x, vY: direction.y*mouseVector.y, vZ: direction.z*force});
-  engine.addProjectile(snowball, {health: -10});
+    {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1});
+  engine.addProjectile(snowball, velocity, direction, {health: -10});
 });
 
 // Load android model and set it to player

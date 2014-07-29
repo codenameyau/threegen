@@ -51,6 +51,7 @@ Three.js game engine. Stay tuned!
 * [+] Entity destruction
 * [+] Entity health/stats
 * [+] Entity movement
+* Static and Dynamic Entities
 
 ####Resource Loader
 * [+] Mesh texture

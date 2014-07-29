@@ -15,26 +15,43 @@ ThreeGen.prototype.utils = {
     container.appendChild(element);
   },
 
+
   // Returns value of property if in object, otherwise return value
   checkProperty : function(object, property, value) {
     if (object && typeof object[property] !== 'undefined') {value = object[property];}
     return value;
   },
 
+
   // Converts degrees to radians
   degToRad : function(degrees) {
     return Math.PI/180 * degrees;
   },
+
+
+  // Converts radians to degrees
+  radToDeg : function(degrees) {
+    return 180/Math.PI * degrees;
+  },
+
+
+  // [THREE] Returns angle between vectors
+  angleBetweenVectors : function(vectorA, vectorB) {
+    return vectorA.angleTo(vectorB);
+  },
+
 
   // Returns a random number between min and max
   randNumber : function(min, max) {
     return Math.random() * (max - min) + min;
   },
 
+
   // Returns bool whether array contains an item
   containsItem : function(array) {
     return array.length > 0;
   },
+
 
   // Removes object that has matching property value
   removeObjectInArray : function(array, property, match) {
@@ -45,6 +62,7 @@ ThreeGen.prototype.utils = {
       }
     }
   },
+
 
   // Quickly deletes all items in array
   clearArray : function(array) {
