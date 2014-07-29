@@ -8,9 +8,12 @@
  * HUD FPS Stats Moniter *
  *************************/
 ThreeGen.prototype.enableStatsMoniter = function() {
+  var container = document.createElement('div');
+  container.className = 'threegen-fps-stats';
   this.stats = new Stats();
   this.stats.setMode(this.settings.HUD.FPS.mode);
-  this.utils.addToDOM(this.settings.META.domElement, this.stats.domElement);
+  container.appendChild(this.stats.domElement);
+  this.utils.addToDOM(this.settings.META.domElement, container);
 };
 
 
@@ -24,35 +27,17 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
   // HUD Container style
   var container = document.createElement('div');
   container.className = 'threegen-help-container';
-  container.style.width = '180px';
-  container.style.zIndex = '120';
-  container.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-  container.style.position = 'fixed';
-  container.style.right = '0';
-  container.style.top = '0';
-  container.style.padding = '0 15px 10px 15px';
-  container.style.letterSpacing = '1px';
-  container.style.fontFamily = 'Helvetica';
 
   // HUD Label style
   var label = document.createElement('h5');
   label.className = 'threegen-help-label';
-  label.innerHTML = 'Instructions';
-  label.style.letterSpacing = '2px';
-  label.style.textTransform = 'uppercase';
-  label.style.textAlign = 'center';
-  label.style.color = 'rgba(180, 180, 180, 0.5)';
-  label.style.cursor = 'pointer';
+  label.innerText = 'Instructions';
   container.appendChild(label);
 
   // HUD body style
   var body = document.createElement('div');
   body.className = 'threegen-help-body';
   body.innerText = instructions.description;
-  body.style.color = 'rgba(160, 160, 160, 0.8)';
-  body.style.lineHeight = '30px';
-  body.style.fontSize = '13px';
-  body.style.display = 'none';
   container.appendChild(body);
 
   // HUD Container events
@@ -74,9 +59,9 @@ ThreeGen.prototype.enableInstructionsHUD = function() {
 };
 
 
-/************************
- * HUD Game Paused Menu *
- ************************/
+/******************
+ * HUD Game Pause *
+ ******************/
 ThreeGen.prototype.enablePausedHUD = function() {
   var settings = this.settings.HUD.PAUSE;
   var container = document.createElement('div');

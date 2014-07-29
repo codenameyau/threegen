@@ -15,7 +15,7 @@ ThreeGen.prototype.utils = {
     container.appendChild(element);
   },
 
-  // Checks if object has property, otherwise give it a value
+  // Returns value of property if in object, otherwise return value
   checkProperty : function(object, property, value) {
     if (object && typeof object[property] !== 'undefined') {value = object[property];}
     return value;

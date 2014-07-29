@@ -5,7 +5,6 @@
  *
  * Description:
  * Stylizes the in-game HUDs.
- * Feel free to edit for your own projects.
  *
  * Stylesheet Contents:
  *   - HTML DOM Elements
@@ -45,7 +44,7 @@ canvas {
 /******************************
  * mrdoob - FPS Stats Moniter *
  ******************************/
-#stats {
+.threegen-fps-stats {
   position: absolute;
   top : 0;
   left: 0;
@@ -56,6 +55,33 @@ canvas {
 /***********************************
  * ThreeGenHUD - Game Instructions *
  ***********************************/
+.threegen-help-container {
+  width : 180px;
+  z-index : 120;
+  background-color : rgba(0, 0, 0, 0);
+  position : fixed;
+  right : 0;
+  top : 0;
+  margin : 0 0 10px 0;
+  letter-spacing : 1px;
+  font-family : Helvetica;
+}
+
+.threegen-help-label {
+  letter-spacing : 2px;
+  text-transform : uppercase;
+  text-align : center;
+  color : rgba(180, 180, 180, 0.5);
+  cursor : pointer;
+}
+
+.threegen-help-body {
+  margin: 0 10px 10px 10px;
+  color : rgba(160, 160, 160, 0.8);
+  line-height : 30px;
+  font-size : 13px;
+  display : none;
+}
 
 
 /****************************
