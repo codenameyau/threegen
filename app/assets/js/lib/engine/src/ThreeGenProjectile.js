@@ -10,18 +10,23 @@ ThreeGen.prototype.addProjectile = function(entity, vInitial, direction, effects
 
   // Normalize direction vector and find projection to XZ plane
   direction.normalize();
+  console.log(direction);
   var planeNormalXZ = new THREE.Vector3( 0, 1, 0 );
-  var projectionXZ  = direction.clone().projectOnPlane(planeNormalXZ);
+  var projectionXZ = direction.clone().projectOnPlane(planeNormalXZ);
+  var signX = (direction.x >= 0) ?  1 : -1;
+  var signY = (direction.y >= 0) ?  1 : 0;
+  var signZ = (direction.z >= 0) ?  1 : -1;
 
   // Compute surface angle and projection angle
   var unitVectorI = new THREE.Vector3( 1, 0, 0 );
   var surfaceAngle = projectionXZ.angleTo(unitVectorI);
   var projectionAngle = direction.angleTo(projectionXZ);
+  // console.log(entity.faceDirection(this.directions.front));
 
   // Compute entity vX, vY, vZ velocities from angles
-  entity.velocity.x =  vInitial * Math.cos(surfaceAngle);
-  entity.velocity.y =  vInitial * Math.sin(projectionAngle);
-  entity.velocity.z = -vInitial * Math.sin(surfaceAngle);
+  entity.velocity.x =  signX * vInitial * Math.cos(surfaceAngle);
+  entity.velocity.y =  signY * vInitial * Math.sin(projectionAngle);
+  entity.velocity.z =  signZ * vInitial * Math.sin(surfaceAngle);
 
   // Add collision effects then add projectile
   entity.collisionEffect = effects;

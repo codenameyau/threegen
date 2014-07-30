@@ -103,8 +103,8 @@ ThreeGen.prototype.moveEntity = function(entity, distance, direction) {
   var collisionVectors = this.getCollisionVectors(direction);
   if (this.checkCollisionVectors(entity, collisionVectors)) { return; }
 
-  // Translate if no collisions detected
-  var vector = entity.applyDirection(this.getDirectionVector(direction));
+  // Translate if no collisions detectedapplyDi
+  var vector = entity.faceDirection(this.getDirectionVector(direction));
   this.translateEntity(entity, distance, vector);
 };
 
@@ -156,7 +156,7 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
 
 ThreeGen.prototype._initializeEntityMethods = function(object) {
 
-  object.applyDirection = function(vector) {
+  object.faceDirection = function(vector) {
     var matrix = new THREE.Matrix4();
     var direction = vector.clone();
     matrix.extractRotation(this.matrix);
