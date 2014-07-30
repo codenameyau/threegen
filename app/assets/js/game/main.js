@@ -101,7 +101,6 @@ engine.setPlayer(bunnyEntity);
 // Mouse input: snowball
 var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
 engine.mouseClickListener(function(event) {
-  // [TODO] Disable projectile creation when paused
   var projector = new THREE.Projector();
   var mouseVector = new THREE.Vector3();
   mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
