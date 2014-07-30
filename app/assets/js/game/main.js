@@ -113,7 +113,7 @@ engine.mouseClickListener(function(event) {
   var direction = new THREE.Vector3( mouseVector.x, mouseVector.y, ray.z );
   // console.log(raycaster.ray);
   var pos = engine.player.position;
-  var velocity = 8;
+  var velocity = 100;
   var snowball = engine.Entity(snowballMesh.clone(),
     {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1});
   engine.addProjectile(snowball, velocity, direction, {health: -10});

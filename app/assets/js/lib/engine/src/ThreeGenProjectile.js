@@ -6,14 +6,24 @@
 
 ThreeGen.prototype.addProjectile = function(entity, vInitial, direction, effects) {
   if (!this.renderer.running) {return;}
+  // [TODO] Apply for all directions
 
-  // Compute angle between ground vector and direction vector
-  var groundVector = new THREE.Vector3( direction.x, 0, direction.z );
-  var theta = groundVector.angleTo(direction);
+  // Normalize direction vector and find projection to XZ plane
+  direction.normalize();
+  var planeNormalXZ = new THREE.Vector3( 0, 1, 0 );
+  var projectionXZ  = direction.clone().projectOnPlane(planeNormalXZ);
 
-  // Use theta and vInitial to compute vX, vY, and vZ
-  console.log(entity);
+  // Compute surface angle and projection angle
+  var unitVectorI = new THREE.Vector3( 1, 0, 0 );
+  var surfaceAngle = projectionXZ.angleTo(unitVectorI);
+  var projectionAngle = direction.angleTo(projectionXZ);
 
+  // Compute entity vX, vY, vZ velocities from angles
+  entity.velocity.x =  vInitial * Math.cos(surfaceAngle);
+  entity.velocity.y =  vInitial * Math.sin(projectionAngle);
+  entity.velocity.z = -vInitial * Math.sin(surfaceAngle);
+
+  // Add collision effects then add projectile
   entity.collisionEffect = effects;
   this.projectiles.push(entity);
   this.scene.add(entity);

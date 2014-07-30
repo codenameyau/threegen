@@ -60,9 +60,9 @@ ThreeGen.prototype.updateProjectilePhysics = function() {
     // Apply physics
     else {
       // [TODO] translate posX and poZ
-      projectile.position.x += projectile.velocity.x;
-      projectile.position.z += projectile.velocity.z;
-      this.translateEntity(projectile, -projectile.velocity.y, this.getDirectionVector('down'));
+      projectile.position.x += projectile.velocity.x * this.clock.delta;
+      projectile.position.y += projectile.velocity.y * this.clock.delta;
+      projectile.position.z += projectile.velocity.z * this.clock.delta;
       this.accelerateX(projectile);
       this.accelerateY(projectile);
       this.accelerateZ(projectile);
