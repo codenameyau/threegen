@@ -68,6 +68,21 @@ ThreeGen.prototype.start = function() {
 };
 
 
+ThreeGen.prototype.loadLevel = function(gameLevel) {
+  var error = false;
+  if (!gameLevel.resources) {
+    console.error('Error: You must define the resources for this level!');
+    error = true;
+  }
+  if (!gameLevel.level) {
+    console.error('Error: You must define a callback function for your level');
+    error = true;
+  }
+  if (error) {return;}
+  this.preloadResources(gameLevel.resources, gameLevel.level.bind(this));
+};
+
+
 /*****************************
  * Core Engine Clock Methods *
  *****************************/

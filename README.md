@@ -84,6 +84,12 @@ Three.js game engine. Stay tuned!
 * World boundary
 * Level editor
 
+####Miscellaneous Tasks
+* Script loader with Browserify
+* Gulp task: `gulp build`
+* Bower package
+
+
 
 ##Deployment and Build
 

@@ -7,6 +7,11 @@
 /*****************************
  * Resource Loader Functions *
  *****************************/
+ThreeGen.prototype.preloadResources = function(resources, callback) {
+  callback(this);
+};
+
+
 ThreeGen.prototype.loadTexture = function(filename) {
   var filePath = this.settings.PATHS.textures + filename;
   var texture  = new THREE.ImageUtils.loadTexture(filePath);
