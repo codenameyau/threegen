@@ -56,6 +56,7 @@ Three.js game engine. Stay tuned!
 ####Resource Loader
 * [+] Mesh texture
 * [+] Json model
+* Preloader
 * Audio loader
 * Audio events
 * Music loop

@@ -1,21 +1,8 @@
-/*-------JSHint Directives-----*/
-/* global THREE, ThreeGen      */
-/*-----------------------------*/
+/* global THREE */
+/* exported levelAlphaTest */
 'use strict';
 
 
-/***********************
- * Game Initialization *
- ***********************/
-var engine = new ThreeGen();
-
-// Initialize Level
-
-// Preload resources and assign name
-engine.loadLevel(levelAlphaTest);
-engine.start();
-
-// Add Lighting
 var levelAlphaTest = function(engine) {
   var lightAmbient = new THREE.HemisphereLight(0x8c8cac, 0x7c7c7c, 0.5);
   engine.scene.add(lightAmbient);
