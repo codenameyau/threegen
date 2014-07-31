@@ -64,6 +64,7 @@ ThreeGen.prototype.start = function() {
   this._initializePhysics();
 
   // Run scene
+  this.pauseGame();
   this.updateScene();
 };
 
@@ -71,14 +72,17 @@ ThreeGen.prototype.start = function() {
 ThreeGen.prototype.loadLevel = function(gameLevel) {
   var error = false;
   if (!gameLevel.resources) {
-    console.error('Error: You must define the resources for this level!');
+    console.error('Error: You must specify the resources for this level');
     error = true;
   }
   if (!gameLevel.level) {
     console.error('Error: You must define a callback function for your level');
     error = true;
   }
-  if (error) {return;}
+  if (error) {
+    this.pauseGame();
+    return;
+  }
   this.preloadResources(gameLevel.resources, gameLevel.level.bind(this));
 };
 
@@ -164,9 +168,10 @@ ThreeGen.prototype._initializeHUD = function() {
 
 
 ThreeGen.prototype._initializeDataStructures = function() {
-  this.models = {};
   this.entities = [];
   this.projectiles = [];
+  this.resources = {};
+  this.models = {};
 };
 
 

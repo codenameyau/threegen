@@ -1,17 +1,20 @@
-/* global THREE */
-/* exported levelAlphaTest */
+/*-------JSHint Directive---------*/
+/* global THREE                   */
+/* exported levelAlphaTest        */
+/*--------------------------------*/
 'use strict';
+
 
 var levelAlphaTest = {
 
-  // Define resource path
+  // Part 1: Define resources
   resources : {
 
-    textures : {
+    texture : {
       'crate' : 'crate-small.jpg',
     },
 
-    models : {
+    model : {
       'android' : 'android-animation.js',
     },
 
@@ -22,7 +25,7 @@ var levelAlphaTest = {
   },
 
 
-  // Define your level
+  // Part 2: Code your level
   level : function(engine) {
     var lightAmbient = new THREE.HemisphereLight(0x8c8cac, 0x7c7c7c, 0.5);
     engine.scene.add(lightAmbient);

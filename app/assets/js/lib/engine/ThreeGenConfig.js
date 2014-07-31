@@ -19,9 +19,9 @@ function ThreeGen() {
 
     // Files paths
     PATHS : {
-      textures : 'assets/js/game/res/texture/',
-      models   : 'assets/js/game/res/models/',
-      sound    : 'assets/js/game/res/sound/',
+      texture : 'assets/js/game/res/texture/',
+      model   : 'assets/js/game/res/models/',
+      sound   : 'assets/js/game/res/sound/',
     },
 
 

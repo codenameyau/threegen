@@ -1,7 +1,7 @@
-/*-------JSHint Directives-----*/
-/* global THREE, ThreeGen      */
-/* global levelAlphaTest       */
-/*-----------------------------*/
+/*-------JSHint Directive---------*/
+/* global ThreeGen                */
+/* global levelAlphaTest          */
+/*--------------------------------*/
 'use strict';
 
 

@@ -18,7 +18,7 @@ ThreeGen.prototype.utils = {
 
   // Returns value of property if in object, otherwise return value
   checkProperty : function(object, property, value) {
-    if (object && typeof object[property] !== 'undefined') {value = object[property];}
+    if (object && typeof object[property] !== 'undefined') { value = object[property]; }
     return value;
   },
 
@@ -66,9 +66,7 @@ ThreeGen.prototype.utils = {
 
   // Quickly deletes all items in array
   clearArray : function(array) {
-    while (array.length) {
-      array.pop();
-    }
+    while (array.length) { array.pop(); }
   },
 
 };
