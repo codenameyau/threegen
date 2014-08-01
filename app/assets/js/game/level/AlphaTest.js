@@ -40,7 +40,7 @@ var levelAlphaTest = {
     // Define crate properties
     var smallBoxGeometry = new THREE.BoxGeometry(6, 6, 6);
     var mediumBoxGeometry = new THREE.BoxGeometry(10, 10, 10);
-    var crateTexture = engine.loadTexture('crate-small.jpg');
+    var crateTexture = engine.getTexture('crate');
     var smallCrate = new THREE.Mesh( smallBoxGeometry, crateTexture );
     var mediumCrate = new THREE.Mesh( mediumBoxGeometry, crateTexture );
 

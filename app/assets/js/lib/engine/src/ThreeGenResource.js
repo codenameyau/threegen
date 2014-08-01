@@ -12,7 +12,7 @@ ThreeGen.prototype.preloadResources = function(resources, callback) {
   this.loadModels(resources.model);
   this.loadSounds(resources.sound);
   this.resumeGame();
-  console.log('All Loaded');
+  console.info('Finished Loading resources');
   callback(this);
 };
 
@@ -24,20 +24,20 @@ ThreeGen.prototype.addResource = function(type, name, path, data) {
 
 
 ThreeGen.prototype.loadTextures = function(source) {
-  var filepath, resource;
-  for (var name in source) {
-    filepath = this.settings.PATHS.texture + source[name];
-    // Check if texture is cached
-    // if (this._checkResourceCached())
-    resource = new THREE.ImageUtils.loadTexture(filepath);
-    this.addResource('texture', name, filepath, resource);
+  console.info('Loading textures...');
+  var resourceType = 'texture';
+  for (var resourceName in source) {
+    var filePath = this.settings.PATHS.texture + source[resourceName];
+    if (!this._checkResourceCached(resourceType, resourceName, filePath)) {
+      var resource = new THREE.ImageUtils.loadTexture(filePath);
+      this.addResource(resourceType, resourceName, filePath, resource);
+    }
   }
 };
 
 
 ThreeGen.prototype.loadModels = function(source) {
   console.log(source);
-
 };
 
 
@@ -45,12 +45,6 @@ ThreeGen.prototype.loadSounds = function(source) {
   console.log(source);
 };
 
-
-ThreeGen.prototype.loadTexture = function(filename) {
-  var filePath = this.settings.PATHS.texture + filename;
-  var texture  = new THREE.ImageUtils.loadTexture(filePath);
-  return new THREE.MeshLambertMaterial({ map: texture });
-};
 
 
 ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
@@ -79,6 +73,13 @@ ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
 /*****************************
  * Resource Getter Functions *
  *****************************/
+ThreeGen.prototype.getTexture = function(name) {
+  // [TODO] Optional material
+  var texture = this.resources.texture[name];
+  return new THREE.MeshLambertMaterial({ map: texture });
+};
+
+
 ThreeGen.prototype.getModel = function(modelName) {
   return this.models[modelName];
 };
