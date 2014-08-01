@@ -8,6 +8,34 @@ Three.js game engine. Stay tuned!
 * [Documentation (Coming Soon)](https://github.com/codenameyau/threegen/wiki)
 
 
+##Structuring and Bundling Your Game
+By default, your game components are designed as modules using Browserify.
+You will need to install node.js as well as globally installing Browserify.
+Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
+The included [Game Demo source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
+is one possible way to structure your game.
+
+Bundling your game into one file, `game.js`:
+
+`cd app/assets/js/game/`
+
+`browserify main.js -o game.js`
+
+To bundle all changes automatically, run:
+
+`watchify main.js -o game.js`
+
+
+##Deploying Your Game with ThreeGen
+
+Before deploying, you can follow these steps to minify and concat you CSS and JS files.
+
+1. Run `npm install`, which will download the required node packages found in `package.json`.
+
+2. Next, run `gulp`, which will minify and concat your files into a `dist/` folder.
+See `gulpfile.js` for more details.
+
+
 ##ThreeGen Architecture
 
 ####Core Engine
@@ -89,14 +117,6 @@ Three.js game engine. Stay tuned!
 * Gulp task: `gulp build`
 * Bower package
 
-
-
-##Deployment and Build
-
-Build coming soon as a gulp task.
-
-Before deploying run `gulp`, which minifies and concats your CSS and JS files
-and outputs them into a `dist/` folder. See `gulpfile.js` for more details.
 
 
 ##Learning Resources
