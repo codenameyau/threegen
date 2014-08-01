@@ -80,7 +80,7 @@ function ThreeGen() {
     HUD : {
 
       FPS : {
-        enabled : true,
+        enabled : false,
         mode : 1, // 0 -> fps, 1 -> ms
       },
 

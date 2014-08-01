@@ -167,7 +167,6 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
     airFrontSpeed : frontSpeed * airMultiplier,
     airBackSpeed  : backSpeed * airMultiplier,
   };
-
 };
 
 

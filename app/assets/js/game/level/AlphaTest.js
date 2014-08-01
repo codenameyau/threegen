@@ -96,28 +96,30 @@ var levelAlphaTest = {
     bunny.add(bunnyEarR);
     bunny.position.set(0, 1.5, 0);
     var bunnyEntity = engine.Entity(bunny,
-      {posZ: 100, width: 5, height: 5, length: 5, health: 50, frontSpeed: 150});
+      {posZ: 100, width: 5, height: 5, length: 5, health: 50, frontSpeed: 150, rotationMultiplier: 2.0});
     engine.addEntity(bunnyEntity);
     engine.setPlayer(bunnyEntity);
 
-    // Mouse input: snowball
+    // Mouse input: create snowball projectile
     var snowballMesh = new THREE.Mesh(bunnySphere, bunnyMaterial);
     engine.mouseClickListener(function(event) {
-      var projector = new THREE.Projector();
-      var mouseVector = new THREE.Vector3();
-      mouseVector.x = 2 * (event.clientX / window.innerWidth) - 1;
-      mouseVector.y = 1 - 2 * ( event.clientY / window.innerHeight );
 
-      var raycaster = projector.pickingRay( mouseVector.clone(), engine.camera );
-      var raydirection = raycaster.ray.direction;
-      raydirection.y = mouseVector.y;
-
+      // (1) Create entity
       var pos = engine.player.position;
-      var velocity = 120;
       var snowball = engine.Entity(snowballMesh.clone(),
         {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1});
-      engine.addProjectile(snowball, velocity, raydirection, {health: -10});
-      engine.playSound('jump');
+
+      // (2) Specifiy projectile parameters
+      var parameters = {
+        direction : engine.getMouseVector(event),
+        velocity : 120,
+        effects : {health: -10},
+      };
+
+      // (3) Invoke launch projectile with callback
+      engine.launchProjectile(snowball, parameters, function() {
+        engine.playSound('jump');
+      });
     });
 
     // Load android model and set it to player

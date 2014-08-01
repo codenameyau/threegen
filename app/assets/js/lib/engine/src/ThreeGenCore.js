@@ -116,30 +116,6 @@ ThreeGen.prototype.pauseGame = function() {
 };
 
 
-/*******************************
- * Core Engine Input Listeners *
- *******************************/
-ThreeGen.prototype.keyboardInput = function() {
-
-  // Listener: Toggle pov
-  if (this.keyboard.pressed(this.settings.KEYS.pov)) {
-    this.togglePOV();
-  }
-
-  // Listener: Pause game and open menu
-  else if (this.keyboard.pressed(this.settings.KEYS.menu)) {
-    this.togglePause();
-  }
-
-};
-
-
-ThreeGen.prototype.mouseClickListener = function(callback) {
-  // [TODO] Encapsulate in game code
-  window.addEventListener('click', callback.bind(this), false);
-};
-
-
 ThreeGen.prototype.togglePause = function() {
   if (this.renderer.running) {
     this.pauseGame();
