@@ -57,7 +57,8 @@ ThreeGen.prototype.start = function() {
   this._initializeHUD();
 
   // Initialize: data structures
-  this._initializeDataStructures();
+  this._initializeDataEntities();
+  this._initializeResources();
 
   // Setup physics
   this._initializeDirections();
@@ -167,11 +168,19 @@ ThreeGen.prototype._initializeHUD = function() {
 };
 
 
-ThreeGen.prototype._initializeDataStructures = function() {
+ThreeGen.prototype._initializeDataEntities = function() {
   this.entities = [];
   this.projectiles = [];
+};
+
+
+ThreeGen.prototype._initializeResources = function() {
+  var paths = this.settings.PATHS;
+  this.models = {}; // [TODO] Deprecate
   this.resources = {};
-  this.models = {};
+  for (var resourceType in paths) {
+    this.resources[resourceType] = {};
+  }
 };
 
 

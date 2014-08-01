@@ -58,8 +58,8 @@ Three.js game engine. Stay tuned!
 * [+] Json model
 * Preloader
 * Audio loader
-* Audio events
 * Music loop
+* Resource cache
 
 ####Utilities
 * [+] Debug floor grid

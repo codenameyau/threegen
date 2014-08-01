@@ -8,20 +8,30 @@
  * Resource Loader Functions *
  *****************************/
 ThreeGen.prototype.preloadResources = function(resources, callback) {
-  this.loadTextures(resources.textures);
-  this.loadModels(resources.models);
-  this.loadSounds(resources.sounds);
+  this.loadTextures(resources.texture);
+  this.loadModels(resources.model);
+  this.loadSounds(resources.sound);
   this.resumeGame();
+  console.log('All Loaded');
   callback(this);
 };
 
 
+ThreeGen.prototype.addResource = function(type, name, path, data) {
+  this.resources[type][name] = data;
+  this.resources[type][name].resourcePath = path;
+};
+
+
 ThreeGen.prototype.loadTextures = function(source) {
+  var filepath, resource;
   for (var name in source) {
-    var filePath = this.settings.PATHS.texture + name;
-    var texture  = new THREE.ImageUtils.loadTexture(filePath);
+    filepath = this.settings.PATHS.texture + source[name];
+    // Check if texture is cached
+    // if (this._checkResourceCached())
+    resource = new THREE.ImageUtils.loadTexture(filepath);
+    this.addResource('texture', name, filepath, resource);
   }
-  console.log(source);
 };
 
 
@@ -76,4 +86,13 @@ ThreeGen.prototype.getModel = function(modelName) {
 
 ThreeGen.prototype.deleteModel = function(modelName) {
   delete this.models[modelName];
+};
+
+
+/*******************************
+ * Resource Internal Utilities *
+ *******************************/
+ThreeGen.prototype._checkResourceCached = function(type, name, path) {
+  return (this.resources[type].hasOwnProperty(name) &&
+    this.resources[type][name].resourcePath === path);
 };
