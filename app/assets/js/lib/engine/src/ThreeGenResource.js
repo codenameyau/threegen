@@ -26,7 +26,6 @@ ThreeGen.prototype.addResource = function(type, name, path, data) {
 
 ThreeGen.prototype.loadResource = function(resourceType, source, loader) {
   console.info('Loading ' + resourceType + '...');
-  console.log(source);
   for (var resourceName in source) {
     var filePath = this.settings.PATHS[resourceType] + source[resourceName];
     if (!this._checkResourceCached(resourceType, resourceName, filePath)) {
@@ -47,15 +46,22 @@ ThreeGen.prototype.loadModel = function(filePath) {
 
 
 ThreeGen.prototype.loadSound = function(filePath) {
+  return new Howl({
+    urls: [filePath],
+    autoplay: false,
+    loop: false,
+    volume: 0.5,
+  });
 };
 
 
 ThreeGen.prototype.loadMusic = function(filePath) {
+  // [TODO] Add support for multiple sound files
   return new Howl({
-    urls: filePath,
-    autoplay: true,
+    urls: [filePath],
+    autoplay: false,
     loop: true,
-    volume: 0.9,
+    volume: 1.0,
   });
 };
 
@@ -101,6 +107,19 @@ ThreeGen.prototype.getModel = function(modelName) {
 
 ThreeGen.prototype.deleteModel = function(modelName) {
   delete this.models[modelName];
+};
+
+
+/****************************
+ * Resource Audio Functions *
+ ****************************/
+ThreeGen.prototype.playMusic = function(name) {
+  this.resources.music[name].play();
+};
+
+
+ThreeGen.prototype.playSound = function(name) {
+  this.resources.sound[name].play();
 };
 
 

@@ -19,11 +19,11 @@ var levelAlphaTest = {
     },
 
     sound : {
-
+      'jump' : 'effects/jump.ogg',
     },
 
     music : {
-      'labtheme' : 'music/labtheme.ogg',
+      'labtheme' : 'labtheme.ogg',
     },
 
   },
@@ -40,6 +40,9 @@ var levelAlphaTest = {
 
     // Enable floor grid (scene, size, gridsize, color)
     engine.debug.enableFloorGrid(engine.scene, 200, 10, 0x22AA22);
+
+    // Play music theme
+    engine.playMusic('labtheme');
 
     // Define crate properties
     var smallBoxGeometry = new THREE.BoxGeometry(6, 6, 6);
@@ -65,7 +68,6 @@ var levelAlphaTest = {
     //   });
     //   engine.addEntity(newCrate);
     // }
-
 
     // Create bunny
     var bunny = new THREE.Object3D();
@@ -115,6 +117,7 @@ var levelAlphaTest = {
       var snowball = engine.Entity(snowballMesh.clone(),
         {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1});
       engine.addProjectile(snowball, velocity, raydirection, {health: -10});
+      engine.playSound('jump');
     });
 
     // Load android model and set it to player

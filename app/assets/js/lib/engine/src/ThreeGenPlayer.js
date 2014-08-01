@@ -71,10 +71,8 @@ ThreeGen.prototype.updatePlayer = function() {
   }
 
   // Key: 'space' - jump
-  if (this.keyboard.pressed(this.settings.KEYS.jump) && !this.player.falling) {
-    this.player.velocity.y += this.player.movement.jumpDistance;
-    this.moveEntity(this.player, this.player.velocity.y, 'up');
-    this.player.falling = true;
+  if (this.keyboard.pressed(this.settings.KEYS.jump)) {
+    this.player.jump();
   }
 
   // [TODO] Update children of player
