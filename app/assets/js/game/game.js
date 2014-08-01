@@ -1,3 +1,51 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*-------JSHint Directive---------*/
+/* global THREE                   */
+/*--------------------------------*/
+'use strict';
+
+
+module.exports = function(engine) {
+  // [TODO] Separate entities from levels
+  var bunny = new THREE.Object3D();
+  var bunnySphere = new THREE.SphereGeometry(1, 16, 16);
+  var bunnyMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
+  var bunnyHead = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  var bunnyBody = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  var bunnyTail = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  var bunnyEarL = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  var bunnyEarR = new THREE.Mesh(bunnySphere, bunnyMaterial);
+  bunnyHead.scale.set(1.3, 1.3, 1.3);
+  bunnyBody.scale.set(1.5, 1.5, 1.8);
+  bunnyTail.scale.set(0.6, 0.6, 0.6);
+  bunnyEarL.scale.set(0.4, 1.2, 0.3);
+  bunnyEarR.scale.set(0.4, 1.2, 0.3);
+  bunnyEarL.rotation.set(0.2, 0, 0.2);
+  bunnyEarR.rotation.set(0.2, 0, -0.2);
+  bunnyHead.position.set(0, 2, -1.8);
+  bunnyTail.position.set(0, 1, 1.5);
+  bunnyEarL.position.set(-1, 4.2, -1.5);
+  bunnyEarR.position.set(1, 4.2, -1.5);
+  bunny.add(bunnyHead);
+  bunny.add(bunnyBody);
+  bunny.add(bunnyTail);
+  bunny.add(bunnyEarL);
+  bunny.add(bunnyEarR);
+  bunny.position.set(0, 1.5, 0);
+
+  // Create ThreeGen Entity
+  return engine.Entity(bunny, {
+    posZ: 100,
+    width: 5,
+    height: 5,
+    length: 5,
+    health: 50,
+    frontSpeed: 150,
+    rotationMultiplier: 2.0
+  });
+};
+
+},{}],2:[function(require,module,exports){
 /*-------JSHint Directive---------*/
 /* global THREE                   */
 /*--------------------------------*/
@@ -31,7 +79,6 @@ var levelAlphaTest = {
   // Part 2: Code your level
   level : function(engine) {
 
-    // Import modules
     var BunnyEntity = require('../entity/BunnyEntity.js');
 
     var lightAmbient = new THREE.HemisphereLight(0x8c8cac, 0x7c7c7c, 0.5);
@@ -112,3 +159,25 @@ var levelAlphaTest = {
 };
 
 module.exports = levelAlphaTest;
+
+},{"../entity/BunnyEntity.js":1}],3:[function(require,module,exports){
+/*-------JSHint Directive---------*/
+/* global ThreeGen                */
+/*--------------------------------*/
+'use strict';
+
+
+// Browserify is optional, but recommended
+var levelAlphaTest = require('./level/AlphaTest.js');
+
+
+/***********************
+ * Game Initialization *
+ ***********************/
+var engine = new ThreeGen();
+engine.start();
+
+// Load resources and level
+engine.loadLevel(levelAlphaTest);
+
+},{"./level/AlphaTest.js":2}]},{},[3]);

@@ -77,7 +77,7 @@ ThreeGen.prototype.loadLevel = function(gameLevel) {
     error = true;
   }
   if (!gameLevel.level) {
-    console.error('Error: You must define a callback function for your level');
+    console.error('Error: You must define a callback function as your level');
     error = true;
   }
   if (error) {

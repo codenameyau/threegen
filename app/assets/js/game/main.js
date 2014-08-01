@@ -1,8 +1,11 @@
 /*-------JSHint Directive---------*/
 /* global ThreeGen                */
-/* global levelAlphaTest          */
 /*--------------------------------*/
 'use strict';
+
+
+// Browserify is optional, but recommended
+var levelAlphaTest = require('./level/AlphaTest.js');
 
 
 /***********************

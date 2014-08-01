@@ -8,7 +8,7 @@
  * Projectile Public Methods *
  *****************************/
 ThreeGen.prototype.launchProjectile = function(entity, parameters, callback) {
-  // Create projector and cast ray
+  // Create projector and raycast from direction
   var direction = parameters.direction;
   var projector = new THREE.Projector();
   var raycaster = projector.pickingRay( direction.clone(), this.camera );

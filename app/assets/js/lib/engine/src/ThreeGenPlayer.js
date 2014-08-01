@@ -60,6 +60,7 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'space' - jump
   if (this.keyboard.pressed(this.settings.KEYS.jump)) {
+    // [TODO] Create Entity jump method
     if (!this.player.falling) {
       this.player.velocity.y += this.player.movement.jumpDistance;
       this.moveEntity(this.player, this.player.velocity.y, 'up');
