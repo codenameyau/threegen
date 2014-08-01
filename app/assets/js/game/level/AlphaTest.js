@@ -19,7 +19,11 @@ var levelAlphaTest = {
     },
 
     sound : {
-      'lab-theme' : 'music/lab.ogg',
+
+    },
+
+    music : {
+      'labtheme' : 'music/labtheme.ogg',
     },
 
   },

@@ -22,6 +22,7 @@ function ThreeGen() {
       texture : 'assets/js/game/res/texture/',
       model   : 'assets/js/game/res/models/',
       sound   : 'assets/js/game/res/sound/',
+      music   : 'assets/js/game/res/music/',
     },
 
 

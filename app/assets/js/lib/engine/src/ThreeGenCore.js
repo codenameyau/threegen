@@ -135,6 +135,7 @@ ThreeGen.prototype.keyboardInput = function() {
 
 
 ThreeGen.prototype.mouseClickListener = function(callback) {
+  // [TODO] Encapsulate in game code
   window.addEventListener('click', callback.bind(this), false);
 };
 
