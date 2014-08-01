@@ -34,7 +34,7 @@ Three.js game engine. Stay tuned!
 ####Physics Engine
 * [+] Gravity
 * [+] Raycasting collision detection
-* Projectile physics
+* [+] Projectile physics
 * Air Friction
 
 ####Player Entity
@@ -44,7 +44,6 @@ Three.js game engine. Stay tuned!
 * [+] Custom keybindings
 * [+] Player collision detection
 * [+] Player POV toggle
-* Universal entity for Object3D, Mesh, Model
 
 ####Entities
 * [+] Entity creation
@@ -52,14 +51,15 @@ Three.js game engine. Stay tuned!
 * [+] Entity health/stats
 * [+] Entity movement
 * Static and Dynamic Entities
+* Wrapper for Object3D, Mesh, Model
 
 ####Resource Loader
 * [+] Mesh texture
-* [+] Json model
-* Preloader
-* Audio loader
-* Music loop
-* Resource cache
+* [+] Preloader
+* [+] Resource cache
+* [+] Sound loader
+* [+] Music loader
+* Model loader
 
 ####Utilities
 * [+] Debug floor grid
@@ -95,7 +95,7 @@ Three.js game engine. Stay tuned!
 
 Build coming soon as a gulp task.
 
-To deploy run `gulp`, which minifies and concats your CSS and JS files
+Before deploying run `gulp`, which minifies and concats your CSS and JS files
 and outputs them into a `dist/` folder. See `gulpfile.js` for more details.
 
 

@@ -69,7 +69,7 @@ var levelAlphaTest = {
     //   engine.addEntity(newCrate);
     // }
 
-    // Create bunny
+    // [TODO] Separate entities from levels
     var bunny = new THREE.Object3D();
     var bunnySphere = new THREE.SphereGeometry(1, 16, 16);
     var bunnyMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
@@ -96,7 +96,7 @@ var levelAlphaTest = {
     bunny.add(bunnyEarR);
     bunny.position.set(0, 1.5, 0);
     var bunnyEntity = engine.Entity(bunny,
-      {posZ: 100, width: 5, height: 5, length: 5, health: 50});
+      {posZ: 100, width: 5, height: 5, length: 5, health: 50, frontSpeed: 150});
     engine.addEntity(bunnyEntity);
     engine.setPlayer(bunnyEntity);
 
@@ -113,7 +113,7 @@ var levelAlphaTest = {
       raydirection.y = mouseVector.y;
 
       var pos = engine.player.position;
-      var velocity = 100;
+      var velocity = 120;
       var snowball = engine.Entity(snowballMesh.clone(),
         {posX: pos.x, posY: pos.y+5, posZ: pos.z, base: 1});
       engine.addProjectile(snowball, velocity, raydirection, {health: -10});

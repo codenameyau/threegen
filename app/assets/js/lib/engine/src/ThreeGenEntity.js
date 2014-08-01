@@ -151,6 +151,23 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
   object.position.set(posX, posY, posZ);
   object.velocity = new THREE.Vector3(vX, vY, vZ);
   object.acceleration = new THREE.Vector3(aX, aY, aZ);
+
+  // Define entity movement speed
+  var airMultiplier = this.utils.checkProperty(options, 'airMultiplier', 1.0);
+  var jumpHeight = this.utils.checkProperty(options, 'jumpHeight', 40.0);
+  var frontSpeed = this.utils.checkProperty(options, 'frontSpeed', 80.0);
+  var backSpeed  = this.utils.checkProperty(options, 'backSpeed', frontSpeed * 0.8);
+  var rotationMultiplier = this.utils.checkProperty(options, 'rotationMultiplier', 1.5);
+  object.movement = {
+    airRotation   : airMultiplier * rotationMultiplier,
+    rotationSpeed : rotationMultiplier,
+    jumpDistance  : jumpHeight,
+    frontSpeed    : frontSpeed,
+    backSpeed     : backSpeed,
+    airFrontSpeed : frontSpeed * airMultiplier,
+    airBackSpeed  : backSpeed * airMultiplier,
+  };
+
 };
 
 

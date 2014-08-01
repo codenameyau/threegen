@@ -8,22 +8,10 @@
  * Player Entity Functions *
  ***************************/
 ThreeGen.prototype.setPlayer = function(entity) {
-  // Load player settings
-  this.player  = entity;
-  var settings = this.settings.PLAYER;
+  // Bind player reference to entity
+  this.player = entity;
 
-  // Setup player movement stats
-  this.player.movement = {
-    airRotation : 0.5 * settings.rotationMultiplier,
-    rotationSpeed : settings.rotationMultiplier,
-    jumpDistance : settings.jumpHeight,
-    frontSpeed : settings.frontSpeed,
-    backSpeed : settings.backSpeed,
-    airFrontSpeed : settings.frontSpeed * settings.airMultiplier,
-    airBackSpeed : settings.backSpeed * settings.airMultiplier,
-  };
-
-  // Bind target camera to player
+  // Bind target camera to entity
   this.setPlayerCamera(this.settings.CAMERA);
 };
 
@@ -72,7 +60,11 @@ ThreeGen.prototype.updatePlayer = function() {
 
   // Key: 'space' - jump
   if (this.keyboard.pressed(this.settings.KEYS.jump)) {
-    this.player.jump();
+    if (!this.player.falling) {
+      this.player.velocity.y += this.player.movement.jumpDistance;
+      this.moveEntity(this.player, this.player.velocity.y, 'up');
+      this.player.falling = true;
+    }
   }
 
   // [TODO] Update children of player

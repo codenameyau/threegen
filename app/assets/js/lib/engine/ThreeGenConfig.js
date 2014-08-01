@@ -46,16 +46,6 @@ function ThreeGen() {
     },
 
 
-    // Player
-    PLAYER : {
-      rotationMultiplier : 3.0,
-      airMultiplier      : 3.0,
-      jumpHeight         : 40.0,
-      frontSpeed         : 80.0,
-      backSpeed          : 50.0,
-    },
-
-
     // Entities
     ENTITIES : {
 
