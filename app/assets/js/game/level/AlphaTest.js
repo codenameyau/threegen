@@ -84,13 +84,11 @@ var levelAlphaTest = {
       });
     });
 
+    // [TODO] Fix model issues
     // Load android model and set it to player
-    // var modelName = 'android';
-    // engine.loadModel(modelName, 'android-animation.js', function() {
-    //   var android = engine.addEntity(engine.getModel(modelName),
-    //     {posY: 0, height: 10, base: 0});
-    //   // engine.setPlayer(android);
-    // });
+    var androidModel = engine.getModel('android');
+    var androidEntity = engine.Entity(androidModel, {height: 5});
+    engine.addEntity(androidEntity);
   },
 
 };

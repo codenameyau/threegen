@@ -12,8 +12,8 @@ Three.js game engine. Stay tuned!
 
 ###Structuring Your Game
 By default, your game components are designed as modules using Browserify.
-You will need to install node.js as well as globally installing Browserify
-and Watchify. Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
+You will need to install node.js as well as globally install Browserify and Watchify.
+Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
 
 The included [Boilerplate Game Demo](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
 is one possible way to structure your game.
@@ -42,7 +42,7 @@ Before deploying, you can follow these steps to minify and concat your CSS and J
 See `gulpfile.js` for more details.
 
 
-###Learning Resources
+##Learning Resources
 
 ####Books
 * [Jason Gregory - Game Engine Architecture (Jun 2009)](http://www.gameenginebook.com/index.html)

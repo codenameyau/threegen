@@ -9,7 +9,7 @@
  *************************/
 ThreeGen.prototype.Entity = function(object, options) {
   // Scale object dimensions
-  this.scaleEntity(object, options);
+  this.computeEntityDimensions(object, options);
 
   // Extend entity properties and methods
   this._initializeEntityProperties(object, options);
@@ -38,46 +38,47 @@ ThreeGen.prototype.removeFromScene = function(object) {
 };
 
 
-ThreeGen.prototype.scaleEntity = function(object, options) {
+ThreeGen.prototype.computeEntityDimensions = function(object, options) {
   // Scale object dimensions
   var scaleX = this.utils.checkProperty(options, 'scaleX', 1);
   var scaleY = this.utils.checkProperty(options, 'scaleY', 1);
   var scaleZ = this.utils.checkProperty(options, 'scaleZ', 1);
   object.scale.set(scaleX, scaleY, scaleZ);
 
-  // Compute Mesh dimensions
-  var entityWidth  = this.utils.checkProperty(options, 'width', 5);
-  var entityHeight = this.utils.checkProperty(options, 'height', 5);
-  var entityLength = this.utils.checkProperty(options, 'length', 5);
-  var entityBase = entityHeight/2;
+  // Set default mesh dimensions
+  var entityWidth  = 5;
+  var entityHeight = 5;
+  var entityLength = 5;
+  var entityBase = 0;
 
-  // Check if entity is sphere
-  if (object.geometry && object.geometry.parameters.radius) {
-    entityBase = object.geometry.parameters.radius;
+  // Wrapper for Mesh and Model entity
+  if (object instanceof THREE.Mesh) {
+    object.geometry.computeBoundingBox();
+    var boundBox = object.geometry.boundingBox;
+    entityHeight = boundBox.max.y - boundBox.min.y;
+    entityWidth  = boundBox.max.x - boundBox.min.x;
+    entityLength = boundBox.max.z - boundBox.min.z;
+    entityBase   = entityHeight/2;
   }
 
-  if (object.geometry) {
-    // Regular Mesh
-    if (object.geometry.parameters) {
-      entityWidth  = object.geometry.parameters.width;
-      entityHeight = object.geometry.parameters.height;
-      entityLength = object.geometry.parameters.depth;
-    }
-
-    // Object3D
-    else {
-      entityWidth  = this.utils.checkProperty(options, 'width', 5);
-      entityHeight = this.utils.checkProperty(options, 'height', 5);
-      entityLength = this.utils.checkProperty(options, 'length', 5);
-    }
+  // Wrapper for Object3D entity
+  else if (object instanceof THREE.Object3D) {
+    // [TODO] Compute dimensions for Object3D
+    // console.log('Object3D');
   }
+
+  // Override entity base dimensions
+  entityWidth  = this.utils.checkProperty(options, 'width', entityWidth);
+  entityHeight = this.utils.checkProperty(options, 'height', entityHeight);
+  entityLength = this.utils.checkProperty(options, 'length', entityLength);
+  entityBase   = this.utils.checkProperty(options, 'base', entityBase);
 
   // Re-compute geometry bounds and dimensions
   object.dimensions = {
     width  : scaleX * entityWidth,
     height : scaleY * entityHeight,
     length : scaleZ * entityLength,
-    base   : scaleY * entityBase,
+    base   : scaleY * entityBase
   };
 };
 
@@ -165,7 +166,7 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
     frontSpeed    : frontSpeed,
     backSpeed     : backSpeed,
     airFrontSpeed : frontSpeed * airMultiplier,
-    airBackSpeed  : backSpeed * airMultiplier,
+    airBackSpeed  : backSpeed * airMultiplier
   };
 };
 
@@ -226,6 +227,6 @@ ThreeGen.prototype._initializeEntityAnimations = function(object, options) {
     keyframes : animKeyFrames,
     interpolation : animDuration / animKeyFrames,
     lastKeyFrame : 0,
-    currentKeyFrame : 0,
+    currentKeyFrame : 0
   };
 };
