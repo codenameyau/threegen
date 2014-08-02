@@ -8,10 +8,10 @@
  * Resource Loader Functions *
  *****************************/
 ThreeGen.prototype.preloadResources = function(resources, callback) {
-  this.loadResource('texture', resources.texture, this.loadTexture);
-  // this.loadResource('model', resources.model, this.loadModel);
-  this.loadResource('sound', resources.sound, this.loadSound);
-  this.loadResource('music', resources.music, this.loadMusic);
+  this.loadResources('texture', resources.texture, this.loadTexture.bind(this));
+  // this.loadResources('model', resources.model, this.loadModel.bind(this));
+  this.loadResources('sound', resources.sound, this.loadSound.bind(this));
+  this.loadResources('music', resources.music, this.loadMusic.bind(this));
   this.resumeGame();
   console.info('Finished Loading resources');
   callback(this);
@@ -24,52 +24,62 @@ ThreeGen.prototype.addResource = function(type, name, path, data) {
 };
 
 
-ThreeGen.prototype.loadResource = function(resourceType, source, loader) {
+ThreeGen.prototype.loadResources = function(resourceType, source, loaderCallback) {
   console.info('Loading ' + resourceType + '...');
   for (var resourceName in source) {
     var filePath = this.settings.PATHS[resourceType] + source[resourceName];
     if (!this._checkResourceCached(resourceType, resourceName, filePath)) {
-      var resource = loader(filePath);
-      this.addResource(resourceType, resourceName, filePath, resource);
+      loaderCallback(filePath, resourceName);
     }
   }
 };
 
 
-ThreeGen.prototype.loadTexture = function(filePath) {
-  return new THREE.ImageUtils.loadTexture(filePath);
+ThreeGen.prototype.loadTexture = function(filePath, resourceName) {
+  this.addResource('texture', resourceName, filePath,
+    new THREE.ImageUtils.loadTexture(filePath));
 };
 
 
-ThreeGen.prototype.loadModel = function(filePath) {
-};
-
-
-ThreeGen.prototype.loadSound = function(filePath) {
-  return new Howl({
-    urls: [filePath],
-    autoplay: false,
-    loop: false,
-    volume: 0.5,
+ThreeGen.prototype.loadModel = function(filePath, resourceName) {
+  console.log(filePath);
+  console.log(this.jsonLoader);
+  this.jsonLoader.load(filePath, function(geometry, materials) {
+    materials.map(function(material) {
+      material.morphTargets = true;
+    });
+    var material = new THREE.MeshFaceMaterial(materials);
+    console.log(material);
+    return new THREE.Mesh(geometry, material);
   });
 };
 
 
-ThreeGen.prototype.loadMusic = function(filePath) {
+ThreeGen.prototype.loadSound = function(filePath, resourceName) {
+  this.addResource('sound', resourceName, filePath,
+    new Howl({
+      urls: [filePath],
+      autoplay: false,
+      loop: false,
+      volume: 0.5,
+    }));
+};
+
+
+ThreeGen.prototype.loadMusic = function(filePath, resourceName) {
   // [TODO] Add support for multiple sound files
-  return new Howl({
-    urls: [filePath],
-    autoplay: false,
-    loop: true,
-    volume: 1.0,
-  });
+  this.addResource('music', resourceName, filePath,
+    new Howl({
+      urls: [filePath],
+      autoplay: false,
+      loop: true,
+      volume: 1.0,
+    }));
 };
 
 
 
 // ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
-//   var filePath  = this.settings.PATHS.model + modelFile;
-//   var engineRef = this;
 
 //   // [TODO] Reuse model if it has already been loaded
 //   if (this.models[modelName]) {

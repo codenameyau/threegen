@@ -20,7 +20,7 @@ function ThreeGen() {
     // Resources paths
     PATHS : {
       texture : 'assets/js/game/res/texture/',
-      model   : 'assets/js/game/res/models/',
+      model   : 'assets/js/game/res/model/',
       sound   : 'assets/js/game/res/sound/',
       music   : 'assets/js/game/res/music/',
     },

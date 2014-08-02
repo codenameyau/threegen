@@ -1,7 +1,7 @@
 threegen
 ========
 
-##Description
+###Description
 Three.js game engine. Stay tuned!
 
 * [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
@@ -10,7 +10,7 @@ Three.js game engine. Stay tuned!
 * [ThreeGen Architecture](https://github.com/codenameyau/threegen/wiki/Architecture)
 
 
-##Structuring Your Game
+###Structuring Your Game
 By default, your game components are designed as modules using Browserify.
 You will need to install node.js as well as globally installing Browserify
 and Watchify. Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
@@ -42,7 +42,7 @@ Before deploying, you can follow these steps to minify and concat your CSS and J
 See `gulpfile.js` for more details.
 
 
-##Learning Resources
+###Learning Resources
 
 ####Books
 * [Jason Gregory - Game Engine Architecture (Jun 2009)](http://www.gameenginebook.com/index.html)
