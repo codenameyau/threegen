@@ -143,7 +143,7 @@ ThreeGen.prototype._initializeEntityProperties = function(object, options) {
 
   // Set acceleration (x,y,z)
   var aX = this.utils.checkProperty(options, 'aX', 0);
-  var aY = this.utils.checkProperty(options, 'aY', this.gravity);
+  var aY = this.utils.checkProperty(options, 'aY', this.physics.gravity);
   var aZ = this.utils.checkProperty(options, 'aZ', 0);
 
   // Extend entity properties

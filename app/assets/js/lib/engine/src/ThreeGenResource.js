@@ -7,14 +7,14 @@
 /*****************************
  * Resource Loader Functions *
  *****************************/
-ThreeGen.prototype.preloadResources = function(resources, callback) {
+ThreeGen.prototype.preloadResources = function(resources, levelCallback) {
+  // Load simple resources
   this.loadResources('texture', resources.texture, this.loadTexture.bind(this));
-  // this.loadResources('model', resources.model, this.loadModel.bind(this));
   this.loadResources('sound', resources.sound, this.loadSound.bind(this));
   this.loadResources('music', resources.music, this.loadMusic.bind(this));
-  this.resumeGame();
-  console.info('Finished Loading resources');
-  callback(this);
+
+  // Load models, run callback and resume game when done
+  this.loadModelResources(resources.model, levelCallback);
 };
 
 
@@ -41,20 +41,6 @@ ThreeGen.prototype.loadTexture = function(filePath, resourceName) {
 };
 
 
-ThreeGen.prototype.loadModel = function(filePath, resourceName) {
-  console.log(filePath);
-  console.log(this.jsonLoader);
-  this.jsonLoader.load(filePath, function(geometry, materials) {
-    materials.map(function(material) {
-      material.morphTargets = true;
-    });
-    var material = new THREE.MeshFaceMaterial(materials);
-    console.log(material);
-    return new THREE.Mesh(geometry, material);
-  });
-};
-
-
 ThreeGen.prototype.loadSound = function(filePath, resourceName) {
   this.addResource('sound', resourceName, filePath,
     new Howl({
@@ -78,26 +64,37 @@ ThreeGen.prototype.loadMusic = function(filePath, resourceName) {
 };
 
 
+ThreeGen.prototype.loadModelResources = function(source, callback) {
+  console.info('Loading models...');
+  this.preloader.model = {count: 0, total: this.utils.objectSize(source)};
+  for (var resourceName in source) {
+    var filePath = this.settings.PATHS.model + source[resourceName];
+    if (!this._checkResourceCached('model', resourceName, filePath)) {
+      this.loadModel(filePath, resourceName, callback);
+    }
+  }
+};
 
-// ThreeGen.prototype.loadModel = function(modelName, modelFile, callback) {
 
-//   // [TODO] Reuse model if it has already been loaded
-//   if (this.models[modelName]) {
-//     callback.bind(engineRef)(modelName);
-//   }
+ThreeGen.prototype.loadModel = function(filePath, resourceName, callback) {
+  var engine = this;
+  this.jsonLoader.load(filePath, function(geometry, materials) {
 
-//   // [AJAX] load JSON model then invoke callback
-//   else {
-//     this.jsonLoader.load(filePath, function(geometry, materials) {
-//       for (var i = 0; i < materials.length; i++) {
-//         materials[i].morphTargets = true;
-//       }
-//       var material = new THREE.MeshFaceMaterial(materials);
-//       engineRef.models[modelName] = new THREE.Mesh(geometry, material);
-//       callback.bind(engineRef)(modelName);
-//     });
-//   }
-// };
+    // Create MeshFaceMaterial from JSON loader
+    materials.map(function(material) { material.morphTargets = true; });
+    var material = new THREE.MeshFaceMaterial(materials);
+    engine.addResource('model', resourceName, filePath,
+      new THREE.Mesh(geometry, material));
+
+    // Invoke level callback when all models are loaded
+    engine.preloader.model.count++;
+    if (engine.preloader.model.count === engine.preloader.model.total) {
+      console.info('Finished loading resources');
+      callback(engine);
+      engine.resumeGame();
+    }
+  });
+};
 
 
 /*****************************
@@ -111,12 +108,13 @@ ThreeGen.prototype.getTexture = function(name) {
 
 
 ThreeGen.prototype.getModel = function(modelName) {
-  return this.models[modelName];
+  return this.resources.model[modelName];
 };
 
 
 ThreeGen.prototype.deleteModel = function(modelName) {
-  delete this.models[modelName];
+  // [TODO] run tests
+  delete this.resources.model[modelName];
 };
 
 

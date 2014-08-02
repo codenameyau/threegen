@@ -5,4 +5,4 @@ dist
 .sass-cache
 **~
 app/assets/js/game/game.js
-# app/assets/js/game/res/**
+app/assets/js/game/res/**

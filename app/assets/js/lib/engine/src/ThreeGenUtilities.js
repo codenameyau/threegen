@@ -35,7 +35,7 @@ ThreeGen.prototype.utils = {
   },
 
 
-  // [THREE] Returns angle between vectors
+  // Returns angle between two Vector3
   angleBetweenVectors : function(vectorA, vectorB) {
     return vectorA.angleTo(vectorB);
   },
@@ -50,6 +50,19 @@ ThreeGen.prototype.utils = {
   // Returns bool whether array contains an item
   containsItem : function(array) {
     return array.length > 0;
+  },
+
+
+  // Returns the size of objects
+  objectSize : function(object) {
+    var count = 0;
+    if (Object.keys) {count = Object.keys(object).length;}
+    else {
+      for (var key in object) {
+        if (object.hasOwnProperty(key)) {++count;}
+      }
+    }
+    return count;
   },
 
 

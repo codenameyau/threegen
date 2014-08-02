@@ -153,8 +153,8 @@ ThreeGen.prototype._initializeDataEntities = function() {
 
 ThreeGen.prototype._initializeResources = function() {
   var paths = this.settings.PATHS;
-  this.models = {}; // [TODO] Deprecate
   this.resources = {};
+  this.preloader = {};
   for (var resourceType in paths) {
     this.resources[resourceType] = {};
   }
@@ -162,8 +162,10 @@ ThreeGen.prototype._initializeResources = function() {
 
 
 ThreeGen.prototype._initializePhysics = function() {
-  this.gravity = this.settings.PHYSICS.gravity;
-  this.airFriction = 0.5;
+  this.physics = {
+    gravity : this.settings.PHYSICS.gravity,
+    airFriction : 0.5,
+  };
 };
 
 
