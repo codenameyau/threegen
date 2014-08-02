@@ -14,7 +14,7 @@ var levelAlphaTest = {
     },
 
     model : {
-      'android' : 'android-animation.js',
+      // 'android' : 'android-animation.js',
     },
 
     sound : {
@@ -60,9 +60,10 @@ var levelAlphaTest = {
 
     // Add bunny entity and set to player
     var bunny = new BunnyEntity(engine,
-      {posZ: 100, width: 5, height: 5, length: 5, health: 50, frontSpeed: 150, rotationMultiplier: 2.0});
+      {posZ: 100, base: 1.5, health: 50, frontSpeed: 150, rotationMultiplier: 2.0});
     engine.addEntity(bunny);
     engine.setPlayer(bunny);
+
     // Mouse input: create snowball projectile
     engine.mouseClickListener(function(event) {
 
@@ -84,11 +85,10 @@ var levelAlphaTest = {
       });
     });
 
-    // [TODO] Fix model issues
     // Load android model and set it to player
-    var androidModel = engine.getModel('android');
-    var androidEntity = engine.Entity(androidModel, {height: 5});
-    engine.addEntity(androidEntity);
+    // var androidModel = engine.getModel('android');
+    // var androidEntity = engine.Entity(androidModel, {posZ: -80, base: 0});
+    // engine.addEntity(androidEntity);
   },
 
 };

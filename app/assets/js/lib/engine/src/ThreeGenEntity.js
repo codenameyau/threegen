@@ -8,10 +8,8 @@
  * Entity Public Methods *
  *************************/
 ThreeGen.prototype.Entity = function(object, options) {
-  // Scale object dimensions
+  // Create Entity wrapper that extends Mesh or Object3D
   this.computeEntityDimensions(object, options);
-
-  // Extend entity properties and methods
   this._initializeEntityProperties(object, options);
   this._initializeEntityMethods(object);
   this._initializeEntityStats(object, options);
@@ -64,14 +62,14 @@ ThreeGen.prototype.computeEntityDimensions = function(object, options) {
   // Wrapper for Object3D entity
   else if (object instanceof THREE.Object3D) {
     // [TODO] Compute dimensions for Object3D
-    // console.log('Object3D');
+    // console.log(object);
   }
 
   // Override entity base dimensions
   entityWidth  = this.utils.checkProperty(options, 'width', entityWidth);
   entityHeight = this.utils.checkProperty(options, 'height', entityHeight);
   entityLength = this.utils.checkProperty(options, 'length', entityLength);
-  entityBase   = this.utils.checkProperty(options, 'base', entityBase);
+  entityBase   = this.utils.checkProperty(options, 'base', entityHeight/2);
 
   // Re-compute geometry bounds and dimensions
   object.dimensions = {

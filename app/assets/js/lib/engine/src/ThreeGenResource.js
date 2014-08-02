@@ -14,7 +14,19 @@ ThreeGen.prototype.preloadResources = function(resources, levelCallback) {
   this.loadResources('music', resources.music, this.loadMusic.bind(this));
 
   // Load models, run callback and resume game when done
-  this.loadModelResources(resources.model, levelCallback);
+  if (this.utils.objectSize(resources.model)) {
+    this.loadModelResources(resources.model, levelCallback);
+  }
+  else {
+    this.finishLoadingResources(levelCallback);
+  }
+};
+
+
+ThreeGen.prototype.finishLoadingResources = function(levelCallback) {
+  console.info('Finished loading resources');
+  levelCallback(this);
+  this.resumeGame();
 };
 
 
@@ -86,12 +98,10 @@ ThreeGen.prototype.loadModel = function(filePath, resourceName, callback) {
     engine.addResource('model', resourceName, filePath,
       new THREE.Mesh(geometry, material));
 
-    // Invoke level callback when all models are loaded
+    // Invoke callback when all models are loaded
     engine.preloader.model.count++;
     if (engine.preloader.model.count === engine.preloader.model.total) {
-      console.info('Finished loading resources');
-      callback(engine);
-      engine.resumeGame();
+      engine.finishLoadingResources(callback);
     }
   });
 };
