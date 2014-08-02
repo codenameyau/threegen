@@ -86,6 +86,7 @@ var levelAlphaTest = {
     });
 
     // Load android model and set it to player
+    // [TODO] Test player controls with models
     // var androidModel = engine.getModel('android');
     // var androidEntity = engine.Entity(androidModel, {posZ: -80, base: 0});
     // engine.addEntity(androidEntity);

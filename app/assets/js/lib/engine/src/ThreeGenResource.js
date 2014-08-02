@@ -8,12 +8,12 @@
  * Resource Loader Functions *
  *****************************/
 ThreeGen.prototype.preloadResources = function(resources, levelCallback) {
-  // Load simple resources
+  // Load simple static resources
   this.loadResources('texture', resources.texture, this.loadTexture.bind(this));
   this.loadResources('sound', resources.sound, this.loadSound.bind(this));
   this.loadResources('music', resources.music, this.loadMusic.bind(this));
 
-  // Load models, run callback and resume game when done
+  // Load json models, run callback and resume game when done
   if (this.utils.objectSize(resources.model)) {
     this.loadModelResources(resources.model, levelCallback);
   }
@@ -110,20 +110,30 @@ ThreeGen.prototype.loadModel = function(filePath, resourceName, callback) {
 /*****************************
  * Resource Getter Functions *
  *****************************/
-ThreeGen.prototype.getTexture = function(name) {
+ThreeGen.prototype.getTexture = function(textureName) {
   // [TODO] Optional material
-  var texture = this.resources.texture[name];
-  return new THREE.MeshLambertMaterial({ map: texture });
+  var texture = this.resources.texture[textureName];
+  if (texture) {
+    return new THREE.MeshLambertMaterial({ map: texture });
+  }
+  else {
+    console.error('Undefined Error: Texture \'' + textureName + '\' is not loaded');
+  }
 };
 
 
 ThreeGen.prototype.getModel = function(modelName) {
-  return this.resources.model[modelName];
+  var model = this.resources.model[modelName];
+  if (model) {
+    return model;
+  }
+  else {
+    console.error('Undefined Error: Model \'' + modelName + '\' is not loaded');
+  }
 };
 
 
 ThreeGen.prototype.deleteModel = function(modelName) {
-  // [TODO] run tests
   delete this.resources.model[modelName];
 };
 

@@ -11,7 +11,7 @@ Three.js game engine. Stay tuned!
 
 
 ###Structuring Your Game
-By default, your game components are designed as modules using Browserify.
+By default, your game components are structured as modules using Browserify.
 You will need to install node.js as well as globally install Browserify and Watchify.
 Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
 
@@ -19,6 +19,7 @@ The included [Boilerplate Game Demo](https://github.com/codenameyau/threegen/tre
 is one possible way to structure your game.
 
 #####Bundling your game into one file:
+Everytime changes are made to your game, you must run Browserify.
 
 ```bash
 cd app/assets/js/game/
@@ -26,15 +27,21 @@ browserify main.js -o game.js
 ```
 
 #####Bundling all changes automatically:
+To automatically detect and bundle changes, you can install Watchify:
 
-Install watchify: `npm install -g watchify`
+`npm install -g watchify`
 
-Then run: `watchify main.js -o game.js`
+Then run:
+
+```bash
+cd app/assets/js/game/
+watchify main.js -o game.js
+```
 
 
 ###Deploying Your Game with ThreeGen
 
-Before deploying, you can follow these steps to minify and concat your CSS and JS files.
+Before deploying, you can follow these steps to concat and minify your CSS and JS files.
 
 1. Run `npm install`, which will locally download the node packages found in `package.json`.
 2. Next run `gulp`, which will minify and concat your files into a `dist/` folder.
