@@ -4,8 +4,8 @@
 'use strict';
 
 
-module.exports = function(engine) {
-  // [TODO] Separate entities from levels
+var BunnyEntity = function(engine, options) {
+  // Create bunny geometry
   var bunny = new THREE.Object3D();
   var bunnySphere = new THREE.SphereGeometry(1, 16, 16);
   var bunnyMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
@@ -33,13 +33,16 @@ module.exports = function(engine) {
   bunny.position.set(0, 1.5, 0);
 
   // Create ThreeGen Entity
-  return engine.Entity(bunny, {
-    posZ: 100,
-    width: 5,
-    height: 5,
-    length: 5,
-    health: 50,
-    frontSpeed: 150,
-    rotationMultiplier: 2.0
-  });
+  return engine.Entity(bunny, options);
 };
+
+
+var SnowballProjectile = function(engine, options) {
+  var snowballGeometry = new THREE.SphereGeometry(1, 16, 16);
+  var snowballMaterial = new THREE.MeshLambertMaterial({color: 0xFAFAFA});
+  var snowballMesh = new THREE.Mesh(snowballGeometry, snowballMaterial);
+  return engine.Entity(snowballMesh, options);
+};
+
+exports.BunnyEntity = BunnyEntity;
+exports.SnowballProjectile = SnowballProjectile;

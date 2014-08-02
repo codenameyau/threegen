@@ -5,7 +5,7 @@
 
 
 // Browserify is optional, but recommended
-var levelAlphaTest = require('./level/AlphaTest.js');
+var levelAlphaTest = require('./level/AlphaTest');
 
 
 /***********************

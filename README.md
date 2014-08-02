@@ -1,17 +1,19 @@
 threegen
 ========
 
+##Description
 Three.js game engine. Stay tuned!
 
 * [Engine source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/lib/engine)
 * [Game Demo source code](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
 * [Documentation (Coming Soon)](https://github.com/codenameyau/threegen/wiki)
+* [ThreeGen Architecture](https://github.com/codenameyau/threegen/wiki/Architecture)
 
 
-###Structuring and Bundling Your Game
+##Structuring Your Game
 By default, your game components are designed as modules using Browserify.
-You will need to install node.js as well as globally installing Browserify.
-Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
+You will need to install node.js as well as globally installing Browserify
+and Watchify. Here is a [simple tutorial](http://engineering.yp.com/post/browserify) to get started.
 
 The included [Boilerplate Game Demo](https://github.com/codenameyau/threegen/tree/master/app/assets/js/game)
 is one possible way to structure your game.
@@ -23,33 +25,21 @@ cd app/assets/js/game/
 browserify main.js -o game.js
 ```
 
-To bundle all changes automatically, run:
+#####Bundling all changes automatically:
 
-`watchify main.js -o game.js`
+Install watchify: `npm install -g watchify`
+
+Then run: `watchify main.js -o game.js`
 
 
 ###Deploying Your Game with ThreeGen
 
-Before deploying, you can follow these steps to minify and concat you CSS and JS files.
+Before deploying, you can follow these steps to minify and concat your CSS and JS files.
 
-1. Run `npm install`, which will download the required node packages found in `package.json`.
-
+1. Run `npm install`, which will locally download the node packages found in `package.json`.
 2. Next run `gulp`, which will minify and concat your files into a `dist/` folder.
 
 See `gulpfile.js` for more details.
-
-
-##ThreeGen Architecture
-
-The game engine architecture design of ThreeGen can be found in the
-[wiki](https://github.com/codenameyau/threegen/wiki/Architecture).
-
-
-####Miscellaneous Tasks
-* [+] Game script loader with Browserify
-* Gulp task: `gulp build`
-* Bower package
-
 
 
 ##Learning Resources
